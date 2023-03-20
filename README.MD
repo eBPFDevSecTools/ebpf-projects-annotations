@@ -3,6 +3,6 @@ This repo will contain auto-extracted summaries such as implemented functionalit
 **NOTE: The copyright of original code files remain with respective owners.**
 
 ## Documentation
-Here is a description of all the fields that the annotations contain.
+A description of all the fields present in annotations is [here](documentation.md).
 ## Contact
 [Sayandeep Sen](https://www.github.com/sdsen), [Palani Kodeswaran](https://www.github.com/palanik1)

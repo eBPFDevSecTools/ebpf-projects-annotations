@@ -3,6 +3,8 @@ This repo will contain auto-extracted summaries such as implemented functionalit
 **NOTE: The copyright of original code files remain with respective owners.**
 
 ## Documentation
-A description of all the fields present in annotations is [here](documentation.md).
+1. Description of all the fields present in annotations is [here](documentation.md).
+2. Description of annotation generator script is [here](ANNOTATION_GENERATOR.md).
+3. Description of how to insert human/AI comments into annotation file is [here](COMMENT_ADDITION.md).
 ## Contact
 [Sayandeep Sen](https://www.github.com/sdsen), [Palani Kodeswaran](https://www.github.com/palanik1)

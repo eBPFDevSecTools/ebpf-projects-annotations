@@ -1,0 +1,10 @@
+__pycache__
+func.out
+cscope.files
+*.db
+*cscope*
+tags
+*.out
+*~
+*#*
+wip

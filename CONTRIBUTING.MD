@@ -2,7 +2,7 @@
 
 ## License
 
-See [LICENSE](LICENSE).
+See [LICENSE](LICENSE.apache).
 
 ## Signed-off-by
 

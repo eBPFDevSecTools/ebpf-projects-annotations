@@ -92,29 +92,29 @@ struct bpf_elf_map iface_stat_map __section("maps") = {
   "output": "static__inlineint",
   "helper": [],
   "compatibleHookpoints": [
-    "sock_ops",
-    "socket_filter",
-    "sk_skb",
-    "sk_reuseport",
-    "flow_dissector",
-    "cgroup_sock",
-    "raw_tracepoint_writable",
-    "raw_tracepoint",
-    "lwt_out",
-    "lwt_xmit",
-    "perf_event",
-    "lwt_in",
-    "sched_cls",
     "xdp",
-    "kprobe",
-    "cgroup_skb",
-    "cgroup_device",
-    "cgroup_sysctl",
+    "sched_cls",
+    "sock_ops",
     "cgroup_sock_addr",
-    "lwt_seg6local",
+    "lwt_out",
     "tracepoint",
+    "socket_filter",
+    "raw_tracepoint",
+    "sched_act",
+    "lwt_in",
     "sk_msg",
-    "sched_act"
+    "sk_skb",
+    "flow_dissector",
+    "lwt_seg6local",
+    "cgroup_skb",
+    "lwt_xmit",
+    "raw_tracepoint_writable",
+    "kprobe",
+    "cgroup_device",
+    "perf_event",
+    "cgroup_sysctl",
+    "sk_reuseport",
+    "cgroup_sock"
   ],
   "source": [
     "static __inline int compare_mac (__u8 *mac1, __u8 *mac2)\n",
@@ -172,29 +172,29 @@ static __inline int compare_mac(__u8 *mac1, __u8 *mac2) {
   "output": "static__inlineint",
   "helper": [],
   "compatibleHookpoints": [
-    "sock_ops",
-    "socket_filter",
-    "sk_skb",
-    "sk_reuseport",
-    "flow_dissector",
-    "cgroup_sock",
-    "raw_tracepoint_writable",
-    "raw_tracepoint",
-    "lwt_out",
-    "lwt_xmit",
-    "perf_event",
-    "lwt_in",
-    "sched_cls",
     "xdp",
-    "kprobe",
-    "cgroup_skb",
-    "cgroup_device",
-    "cgroup_sysctl",
+    "sched_cls",
+    "sock_ops",
     "cgroup_sock_addr",
-    "lwt_seg6local",
+    "lwt_out",
     "tracepoint",
+    "socket_filter",
+    "raw_tracepoint",
+    "sched_act",
+    "lwt_in",
     "sk_msg",
-    "sched_act"
+    "sk_skb",
+    "flow_dissector",
+    "lwt_seg6local",
+    "cgroup_skb",
+    "lwt_xmit",
+    "raw_tracepoint_writable",
+    "kprobe",
+    "cgroup_device",
+    "perf_event",
+    "cgroup_sysctl",
+    "sk_reuseport",
+    "cgroup_sock"
   ],
   "source": [
     "static __inline int is_broadcast_mac (__u8 *m)\n",
@@ -256,26 +256,6 @@ static __inline int is_broadcast_mac(__u8 *m) {
 {
   "capabilities": [
     {
-      "capability": "pkt_go_to_next_module",
-      "pkt_go_to_next_module": [
-        {
-          "Project": "libbpf",
-          "Return Type": "int",
-          "Input Params": [],
-          "Function Name": "TC_ACT_OK",
-          "Return": 0,
-          "Description": "will terminate the packet processing pipeline and allows the packet to proceed. Pass the skb onwards either to upper layers of the stack on ingress or down to the networking device driver for transmission on egress, respectively. TC_ACT_OK sets skb->tc_index based on the classid the tc BPF program set. The latter is set out of the tc BPF program itself through skb->tc_classid from the BPF context.",
-          "compatible_hookpoints": [
-            "sched_cls",
-            "sched_act"
-          ],
-          "capabilities": [
-            "pkt_go_to_next_module"
-          ]
-        }
-      ]
-    },
-    {
       "capability": "pkt_stop_processing_drop_packet",
       "pkt_stop_processing_drop_packet": [
         {
@@ -335,6 +315,26 @@ static __inline int is_broadcast_mac(__u8 *m) {
           ],
           "capabilities": [
             "map_read"
+          ]
+        }
+      ]
+    },
+    {
+      "capability": "pkt_go_to_next_module",
+      "pkt_go_to_next_module": [
+        {
+          "Project": "libbpf",
+          "Return Type": "int",
+          "Input Params": [],
+          "Function Name": "TC_ACT_OK",
+          "Return": 0,
+          "Description": "will terminate the packet processing pipeline and allows the packet to proceed. Pass the skb onwards either to upper layers of the stack on ingress or down to the networking device driver for transmission on egress, respectively. TC_ACT_OK sets skb->tc_index based on the classid the tc BPF program set. The latter is set out of the tc BPF program itself through skb->tc_classid from the BPF context.",
+          "compatible_hookpoints": [
+            "sched_cls",
+            "sched_act"
+          ],
+          "capabilities": [
+            "pkt_go_to_next_module"
           ]
         }
       ]
@@ -433,14 +433,14 @@ static __inline int is_broadcast_mac(__u8 *m) {
   ],
   "output": "static__inlineint",
   "helper": [
-    "TC_ACT_OK",
-    "TC_ACT_SHOT",
     "bpf_trace_printk",
-    "bpf_map_lookup_elem"
+    "TC_ACT_SHOT",
+    "bpf_map_lookup_elem",
+    "TC_ACT_OK"
   ],
   "compatibleHookpoints": [
-    "sched_act",
-    "sched_cls"
+    "sched_cls",
+    "sched_act"
   ],
   "source": [
     "static __inline int filter (struct  __sk_buff *skb)\n",
@@ -520,11 +520,11 @@ static __inline int is_broadcast_mac(__u8 *m) {
     "}\n"
   ],
   "called_function_list": [
-    "compare_mac",
-    "is_broadcast_mac",
     "bpf_memcpy",
+    "is_broadcast_mac",
+    "ADD_DROP_STAT",
     "ADD_PASS_STAT",
-    "ADD_DROP_STAT"
+    "compare_mac"
   ],
   "call_depth": -1,
   "humanFuncDescription": [
@@ -672,29 +672,29 @@ static __inline int filter(struct __sk_buff *skb)
   "output": "int",
   "helper": [],
   "compatibleHookpoints": [
-    "sock_ops",
-    "socket_filter",
-    "sk_skb",
-    "sk_reuseport",
-    "flow_dissector",
-    "cgroup_sock",
-    "raw_tracepoint_writable",
-    "raw_tracepoint",
-    "lwt_out",
-    "lwt_xmit",
-    "perf_event",
-    "lwt_in",
-    "sched_cls",
     "xdp",
-    "kprobe",
-    "cgroup_skb",
-    "cgroup_device",
-    "cgroup_sysctl",
+    "sched_cls",
+    "sock_ops",
     "cgroup_sock_addr",
-    "lwt_seg6local",
+    "lwt_out",
     "tracepoint",
+    "socket_filter",
+    "raw_tracepoint",
+    "sched_act",
+    "lwt_in",
     "sk_msg",
-    "sched_act"
+    "sk_skb",
+    "flow_dissector",
+    "lwt_seg6local",
+    "cgroup_skb",
+    "lwt_xmit",
+    "raw_tracepoint_writable",
+    "kprobe",
+    "cgroup_device",
+    "perf_event",
+    "cgroup_sysctl",
+    "sk_reuseport",
+    "cgroup_sock"
   ],
   "source": [
     "int bpf_filter (struct  __sk_buff *skb)\n",

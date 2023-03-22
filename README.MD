@@ -9,5 +9,7 @@ If you are using the annotations in this repository, please acknowledge the foll
 1. Description of all the fields present in annotations is [here](documentation.md).
 2. Description of annotation generator script is [here](ANNOTATION_GENERATOR.md).
 3. Description of how to insert human/AI comments into annotation file is [here](COMMENT_ADDITION.md).
+## Index of Annotated Projects
+[Index](index.md)
 ## Contact
 [Sayandeep Sen](https://www.github.com/sdsen), [Palani Kodeswaran](https://www.github.com/palanik1)

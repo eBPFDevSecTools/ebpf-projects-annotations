@@ -1,10 +1,10 @@
 #bcc
-python3 src/utils/comment_extractor.py -s  ./human_annotations/human_commented_bcc/ -d ./op/bcc/commented_bcc/bcc.db_comments.db
+python3 src/utils/comment_extractor.py -s  projects/bcc/human_annotated/ -d ./op/bcc/commented_bcc/bcc.db_comments.db
 
 cp op/bcc/commented_bcc/bcc.db_comments.db ./repo_db/bcc_annotated.db
 
 #mptm
-python3 src/utils/comment_extractor.py -s  ./human_annotations/human_commented_xdp-mptm-main/ -d ./op/xdp-mptm-main/commented_xdp-mptm-main/xdp-mptm-main.db_comments.db
+python3 src/utils/comment_extractor.py -s  projects/mptm/human_annotated/ -d ./op/xdp-mptm-main/commented_xdp-mptm-main/xdp-mptm-main.db_comments.db
 
 cp ./op/xdp-mptm-main/commented_xdp-mptm-main/xdp-mptm-main.db_comments.db ./repo_db/xdp-mptm-main_annotated.db
 

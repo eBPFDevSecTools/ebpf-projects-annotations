@@ -1,6 +1,6 @@
 # 
 Annotations of code files for ebpf-ratelimiter 
- - **Repository:** https://github.com/ebpf-networking/ebpf-ratelimiter.git
+ - **Repository:** https://github.com/cilium/cilium.git
  - **Copyrights:** 
     - The source code copyrights rest with original copyright holders as mentioned in above repository link
     - The copyright for comments rest with comment authors

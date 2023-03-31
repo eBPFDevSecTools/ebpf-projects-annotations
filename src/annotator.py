@@ -14,6 +14,48 @@ import json
 from collections import defaultdict
 from tinydb import TinyDB
 
+ret_dict = dict()
+def create_aggregate_annotation_rec(capdict, fn_name, ret_dict):
+    if fn_name in ret_dict:
+        return ret_dict[fn_name]
+    value_dict = dict()
+    en = capdict[fn_name][0]
+    value_dict['fn'] = fn_name
+    value_dict['developer_inline_comments'] = en['developer_inline_comments']
+    value_dict['humanFuncDescription'] = en['humanFuncDescription']
+    value_dict['call_depth'] = en['call_depth']
+    value_dict['called_function_list'] = en['called_function_list']
+
+    call_list = list()
+    value_dict['call_list'] = call_list
+    if len(list(en['called_function_list'])) != 0:
+        for called_f in en['called_function_list']:
+            call_list.append(create_aggregate_annotation_rec(capdict, called_f, ret_dict))
+    ret_dict[fn_name] = value_dict
+    return ret_dict 
+
+def create_aggregate_annotation(capdict):
+    ret_dict = dict()
+    for fn in capdict.keys():
+        create_aggregate_annotation_rec(capdict, fn, ret_dict)
+    print(ret_dict)
+
+map_read_fn = dict()
+map_write_fn = dict()
+
+def find_per_map_producer_consumer(capdict):
+    for fn_name in capdict:
+        for en in list(capdict[fn_name]):
+            for rd_mp in list(en['readMaps']):
+                if rd_mp not in map_read_fn:
+                    map_read_fn[rd_mp] = list()
+                map_read_fn[rd_mp].append(fn_name)
+            for wr_mp in list(en['updateMaps']):
+                if wr_mp not in map_write_fn:
+                    map_read_fn[wr_mp] = list()
+                map_write_fn[wr_mp].append(fn_name)
+
+    
 def remove_txl_missed_fn(capdict):
     for fn in capdict.keys():
         for en in capdict[fn]:
@@ -389,6 +431,6 @@ if __name__ == "__main__":
     with open(txl_struct_list, "w") as outfile:
         json.dump(txl_dict_struct, outfile)
     outfile.close()
-
+    create_aggregate_annotation(funcCapDict)
     #clean up
     clean_intermediate_files(intermediate_f_list)

@@ -10,8 +10,6 @@ import re
 import handle_c_style_comments as rmc
 from collections import defaultdict
 
-CAP="capability"
-
 def get_read_maps(lines, map_read_fn):
     map_read_set=set()
     for line in lines:
@@ -56,17 +54,6 @@ def create_capability_dict(helper_list, helperdict):
         data_list.append(data)
     return data_list
 
-def add_dict_to_cap_dict(cap_dict, cap_name):
-    if  not (cap_name in cap_dict):
-        cap_dict[cap_name] = {}
-        
-def add_helper_to_dict(cap_dict,cap_name,helper_name):
-    try:
-        helper_dict = cap_dict[cap_name]
-        helper_dict[helper_name] = 1
-    except Exception as e:
-        print(e)
-
 def generate_capabilities(helper_list,cap_dict):
     capabilities = {}
     #print("Capabilities")
@@ -108,23 +95,6 @@ def get_compatible_hookpoints(helpers,helper_hookpoint_dict):
         return None
     return list(hook_set)
 
-
-def decompile(prog_file):
-    lines = []
-    cmd = "bpftool prog dump xlated pinned " + prog_file + " > temp.c"
-    output = run_cmd(cmd)
-
-    #remove ; from bpftool output
-    cmd = "grep \";\" temp.c > dumped.c"
-    # check bpftool version. some verions dont have ";"
-    #output = run_cmd(cmd)
-    #open dumped.c
-    dumped_file = open("dumped.c",'r')
-
-    for line in dumped_file.readlines():
-        print(line)
-    return lines
-
 def load_bpf_helper_cap(fname):
     data = {}
     try:
@@ -133,7 +103,6 @@ def load_bpf_helper_cap(fname):
     except IOError as e:
         print("Could not open file: "+fname)
     return data
-
 
 def load_bpf_helper_map(fname):
     print("Filename: "+fname)
@@ -169,19 +138,6 @@ def get_helper_encoding(lines, helperdict, helperCallParams):
             helper_set.update(helper_list)
     return list(helper_set)
 
-def get_prog_id(sec_name,output):
-    lines = output.split("\n")
-    #print(lines)
-    last_line=""
-    for line in lines:
-        if sec_name in line:
-            print(line)
-            last_line = line
-    #print("Get prog_id: ",last_line)
-    prog_id = last_line.split(":")[0]
-    print(prog_id)
-    return prog_id
-
 def check_map_access(my_arr,line):
     for func in my_arr:
         idx = line.find(func)
@@ -190,13 +146,6 @@ def check_map_access(my_arr,line):
             first_entry_end = chunks.find(',')
             return chunks[:first_entry_end].replace("&","")
     return None
-
-
-def run_cmd(cmd):
-    with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=None, shell=True) as process:
-        output = process.communicate()[0].decode("utf-8")
-        print(output)
-        return output
 
 def remove_line_comments(lines):
     lines = "".join(lines)

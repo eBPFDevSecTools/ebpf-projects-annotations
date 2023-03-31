@@ -48,29 +48,29 @@
   "output": "staticinlinevoid",
   "helper": [],
   "compatibleHookpoints": [
-    "sk_msg",
     "sock_ops",
-    "flow_dissector",
-    "xdp",
-    "lwt_in",
-    "kprobe",
-    "socket_filter",
-    "cgroup_skb",
-    "sk_skb",
-    "perf_event",
     "lwt_xmit",
-    "cgroup_sock_addr",
     "raw_tracepoint_writable",
-    "cgroup_sysctl",
-    "cgroup_device",
+    "socket_filter",
+    "sk_reuseport",
     "tracepoint",
-    "lwt_out",
-    "sched_act",
-    "cgroup_sock",
     "lwt_seg6local",
+    "xdp",
+    "cgroup_sock_addr",
+    "perf_event",
     "raw_tracepoint",
-    "sched_cls",
-    "sk_reuseport"
+    "cgroup_sysctl",
+    "sk_skb",
+    "lwt_in",
+    "sk_msg",
+    "sched_act",
+    "cgroup_device",
+    "kprobe",
+    "flow_dissector",
+    "lwt_out",
+    "cgroup_skb",
+    "cgroup_sock",
+    "sched_cls"
   ],
   "source": [
     "static inline void biflow (struct flow_ctx_table_key *flow_key)\n",
@@ -142,25 +142,6 @@ SEC("xdp_fw")
 {
   "capabilities": [
     {
-      "capability": "pkt_go_to_next_module",
-      "pkt_go_to_next_module": [
-        {
-          "Project": "libbpf",
-          "Return Type": "int",
-          "Input Params": [],
-          "Function Name": "XDP_PASS",
-          "Return": 2,
-          "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
-          "compatible_hookpoints": [
-            "xdp"
-          ],
-          "capabilities": [
-            "pkt_go_to_next_module"
-          ]
-        }
-      ]
-    },
-    {
       "capability": "pkt_stop_processing_drop_packet",
       "pkt_stop_processing_drop_packet": [
         {
@@ -175,6 +156,25 @@ SEC("xdp_fw")
           ],
           "capabilities": [
             "pkt_stop_processing_drop_packet"
+          ]
+        }
+      ]
+    },
+    {
+      "capability": "pkt_go_to_next_module",
+      "pkt_go_to_next_module": [
+        {
+          "Project": "libbpf",
+          "Return Type": "int",
+          "Input Params": [],
+          "Function Name": "XDP_PASS",
+          "Return": 2,
+          "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
+          "compatible_hookpoints": [
+            "xdp"
+          ],
+          "capabilities": [
+            "pkt_go_to_next_module"
           ]
         }
       ]
@@ -267,11 +267,11 @@ SEC("xdp_fw")
   ],
   "output": "int",
   "helper": [
-    "bpf_redirect",
+    "XDP_DROP",
     "bpf_map_update_elem",
+    "bpf_redirect",
     "bpf_redirect_map",
     "XDP_PASS",
-    "XDP_DROP",
     "bpf_map_lookup_elem"
   ],
   "compatibleHookpoints": [

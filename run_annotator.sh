@@ -19,13 +19,13 @@ python3 src/annotator.py -o op/bpf-filter-master/txl_bpf-filter-master -s projec
 #netobserv
 python3 src/annotator.py -o projects/netobserv-bpf-main/intermediate/txl_netobserv-bpf-main -s projects/netobserv-bpf-main/original_source -c projects/netobserv-bpf-main/human_annotated/ -t projects/netobserv-bpf-main/intermediate/netobserv-bpf-main.function_file_list.json -u projects/netobserv-bpf-main/intermediate/netobserv-bpf-main.struct_file_list.json -p netobserv-bpf-main
 
+#suricata
+python3 src/annotator.py -o projects/suricata-master/intermediate/txl_suricata-master -s projects/suricata-master/original_source -c projects/suricata-master/human_annotated/ -t projects/suricata-master/intermediate/suricata-master.function_file_list.json -u projects/suricata-master/intermediate/suricata-master.struct_file_list.json -p suricata-master
+
 #python3 src/annotator.py -o op/kpng-master/txl_kpng-master -s examples/kpng-master/backends/ebpf/bpf -c op/kpng-master/commented_kpng-master -t op/kpng-master/kpng-master.function_file_list.json -u op/kpng-master/kpng-master.struct_file_list.json -p kpng-master
 
 #python3 src/annotator.py -o op/ingress-node-firewall-master/txl_ingress-node-firewall-master -s examples/ingress-node-firewall-master/bpf -c op/ingress-node-firewall-master/commented_ingress-node-firewall-master -t op/ingress-node-firewall-master/ingress-node-firewall-master.function_file_list.json -u op/ingress-node-firewall-master/ingress-node-firewall-master.struct_file_list.json -p ingress-node-firewall-master
 
-
-
-#python3 src/annotator.py -o op/suricata-master/txl_suricata-master -s examples/ -c op/suricata-master/commented_suricata-master -t op/suricata-master/suricata-master.function_file_list.json -u op/suricata-master/suricata-master.struct_file_list.json -p suricata-master
 
 #python3 src/annotator.py -o op/vpf-ebpf-src/txl_vpf-ebpf-src -s examples/vpf-ebpf-src -c op/vpf-ebpf-src/commented_vpf-ebpf-src -t op/vpf-ebpf-src/vpf-ebpf-src.function_file_list.json -u op/vpf-ebpf-src/vpf-ebpf-src.struct_file_list.json -p vpf-ebpf-src
 

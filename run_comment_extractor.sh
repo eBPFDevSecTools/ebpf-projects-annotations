@@ -19,3 +19,6 @@ python3 src/utils/comment_extractor.py -s projects/bpf-filter/human_annotated/ -
 cp ./op/bpf-filter-master/commented_bpf-filter-master/bpf-filter-master.db_comments.db projects/bpf-filter/bpf-filter-master_annotated.db
 
 
+#suricata
+python3 src/utils/comment_extractor.py -s projects/suricata-master/human_annotated/ -d  projects/suricata-master/human_annotated/suricata-master.db_comments.db
+

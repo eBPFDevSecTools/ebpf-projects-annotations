@@ -156,29 +156,29 @@ const u8 ip4in6[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xff, 0xff};
   "output": "staticinlinevoid",
   "helper": [],
   "compatibleHookpoints": [
-    "cgroup_device",
-    "xdp",
+    "lwt_seg6local",
     "lwt_xmit",
-    "socket_filter",
-    "cgroup_sock",
-    "raw_tracepoint",
-    "cgroup_sock_addr",
+    "flow_dissector",
     "raw_tracepoint_writable",
-    "sched_act",
+    "sock_ops",
+    "sk_reuseport",
+    "kprobe",
+    "cgroup_device",
+    "lwt_out",
+    "raw_tracepoint",
+    "socket_filter",
+    "cgroup_sock_addr",
+    "cgroup_sysctl",
+    "cgroup_sock",
     "tracepoint",
     "sched_cls",
-    "sk_skb",
-    "lwt_in",
-    "sk_msg",
-    "lwt_out",
-    "sock_ops",
-    "cgroup_skb",
-    "kprobe",
     "perf_event",
-    "sk_reuseport",
-    "flow_dissector",
-    "lwt_seg6local",
-    "cgroup_sysctl"
+    "lwt_in",
+    "sched_act",
+    "cgroup_skb",
+    "sk_msg",
+    "xdp",
+    "sk_skb"
   ],
   "source": [
     "static inline void set_flags (struct tcphdr *th, u16 *flags)\n",
@@ -218,7 +218,12 @@ const u8 ip4in6[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xff, 0xff};
   "called_function_list": [],
   "call_depth": 0,
   "humanFuncDescription": [
-    {}
+    {
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "date": ""
+    }
   ],
   "AI_func_description": [
     {
@@ -280,29 +285,29 @@ static inline void set_flags(struct tcphdr *th, u16 *flags) {
   "output": "staticinlineint",
   "helper": [],
   "compatibleHookpoints": [
-    "cgroup_device",
-    "xdp",
+    "lwt_seg6local",
     "lwt_xmit",
-    "socket_filter",
-    "cgroup_sock",
-    "raw_tracepoint",
-    "cgroup_sock_addr",
+    "flow_dissector",
     "raw_tracepoint_writable",
-    "sched_act",
+    "sock_ops",
+    "sk_reuseport",
+    "kprobe",
+    "cgroup_device",
+    "lwt_out",
+    "raw_tracepoint",
+    "socket_filter",
+    "cgroup_sock_addr",
+    "cgroup_sysctl",
+    "cgroup_sock",
     "tracepoint",
     "sched_cls",
-    "sk_skb",
-    "lwt_in",
-    "sk_msg",
-    "lwt_out",
-    "sock_ops",
-    "cgroup_skb",
-    "kprobe",
     "perf_event",
-    "sk_reuseport",
-    "flow_dissector",
-    "lwt_seg6local",
-    "cgroup_sysctl"
+    "lwt_in",
+    "sched_act",
+    "cgroup_skb",
+    "sk_msg",
+    "xdp",
+    "sk_skb"
   ],
   "source": [
     "static inline int fill_iphdr (struct iphdr *ip, void *data_end, flow_id *id, u16 *flags)\n",
@@ -344,13 +349,18 @@ static inline void set_flags(struct tcphdr *th, u16 *flags) {
     "}\n"
   ],
   "called_function_list": [
-    "set_flags",
+    "__builtin_memcpy",
     "__bpf_ntohs",
-    "__builtin_memcpy"
+    "set_flags"
   ],
   "call_depth": -1,
   "humanFuncDescription": [
-    {}
+    {
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "date": ""
+    }
   ],
   "AI_func_description": [
     {
@@ -426,29 +436,29 @@ static inline int fill_iphdr(struct iphdr *ip, void *data_end, flow_id *id, u16 
   "output": "staticinlineint",
   "helper": [],
   "compatibleHookpoints": [
-    "cgroup_device",
-    "xdp",
+    "lwt_seg6local",
     "lwt_xmit",
-    "socket_filter",
-    "cgroup_sock",
-    "raw_tracepoint",
-    "cgroup_sock_addr",
+    "flow_dissector",
     "raw_tracepoint_writable",
-    "sched_act",
+    "sock_ops",
+    "sk_reuseport",
+    "kprobe",
+    "cgroup_device",
+    "lwt_out",
+    "raw_tracepoint",
+    "socket_filter",
+    "cgroup_sock_addr",
+    "cgroup_sysctl",
+    "cgroup_sock",
     "tracepoint",
     "sched_cls",
-    "sk_skb",
-    "lwt_in",
-    "sk_msg",
-    "lwt_out",
-    "sock_ops",
-    "cgroup_skb",
-    "kprobe",
     "perf_event",
-    "sk_reuseport",
-    "flow_dissector",
-    "lwt_seg6local",
-    "cgroup_sysctl"
+    "lwt_in",
+    "sched_act",
+    "cgroup_skb",
+    "sk_msg",
+    "xdp",
+    "sk_skb"
   ],
   "source": [
     "static inline int fill_ip6hdr (struct ipv6hdr *ip, void *data_end, flow_id *id, u16 *flags)\n",
@@ -488,12 +498,17 @@ static inline int fill_iphdr(struct iphdr *ip, void *data_end, flow_id *id, u16 
     "}\n"
   ],
   "called_function_list": [
-    "set_flags",
-    "__bpf_ntohs"
+    "__bpf_ntohs",
+    "set_flags"
   ],
   "call_depth": -1,
   "humanFuncDescription": [
-    {}
+    {
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "date": ""
+    }
   ],
   "AI_func_description": [
     {
@@ -571,29 +586,29 @@ static inline int fill_ip6hdr(struct ipv6hdr *ip, void *data_end, flow_id *id, u
   "output": "staticinlineint",
   "helper": [],
   "compatibleHookpoints": [
-    "cgroup_device",
-    "xdp",
+    "lwt_seg6local",
     "lwt_xmit",
-    "socket_filter",
-    "cgroup_sock",
-    "raw_tracepoint",
-    "cgroup_sock_addr",
+    "flow_dissector",
     "raw_tracepoint_writable",
-    "sched_act",
+    "sock_ops",
+    "sk_reuseport",
+    "kprobe",
+    "cgroup_device",
+    "lwt_out",
+    "raw_tracepoint",
+    "socket_filter",
+    "cgroup_sock_addr",
+    "cgroup_sysctl",
+    "cgroup_sock",
     "tracepoint",
     "sched_cls",
-    "sk_skb",
-    "lwt_in",
-    "sk_msg",
-    "lwt_out",
-    "sock_ops",
-    "cgroup_skb",
-    "kprobe",
     "perf_event",
-    "sk_reuseport",
-    "flow_dissector",
-    "lwt_seg6local",
-    "cgroup_sysctl"
+    "lwt_in",
+    "sched_act",
+    "cgroup_skb",
+    "sk_msg",
+    "xdp",
+    "sk_skb"
   ],
   "source": [
     "static inline int fill_ethhdr (struct ethhdr *eth, void *data_end, flow_id *id, u16 *flags)\n",
@@ -623,15 +638,20 @@ static inline int fill_ip6hdr(struct ipv6hdr *ip, void *data_end, flow_id *id, u
     "}\n"
   ],
   "called_function_list": [
-    "fill_ip6hdr",
-    "memset",
-    "__bpf_ntohs",
     "fill_iphdr",
-    "__builtin_memcpy"
+    "__bpf_ntohs",
+    "__builtin_memcpy",
+    "memset",
+    "fill_ip6hdr"
   ],
   "call_depth": -1,
   "humanFuncDescription": [
-    {}
+    {
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "date": ""
+    }
   ],
   "AI_func_description": [
     {
@@ -675,72 +695,6 @@ static inline int fill_ethhdr(struct ethhdr *eth, void *data_end, flow_id *id, u
  OPENED COMMENT BEGIN 
 {
   "capabilities": [
-    {
-      "capability": "map_update",
-      "map_update": [
-        {
-          "Project": "libbpf",
-          "Return Type": "int",
-          "Description": "Add or update the <[ value ]>(IP: 2) of the entry associated to <[ key ]>(IP: 1) in <[ map ]>(IP: 0) with value. <[ flags ]>(IP: 3) is one of: BPF_NOEXIST The entry for <[ key ]>(IP: 1) must not exist in the map. BPF_EXIST The entry for <[ key ]>(IP: 1) must already exist in the map. BPF_ANY No condition on the existence of the entry for key. Flag <[ value ]>(IP: 2) BPF_NOEXIST cannot be used for maps of types BPF_MAP_TYPE_ARRAY or BPF_MAP_TYPE_PERCPU_ARRAY (all elements always exist) , the helper would return an error. ",
-          "Return": " 0 on success, or a negative error in case of failure.",
-          "Function Name": "bpf_map_update_elem",
-          "Input Params": [
-            "{Type: struct bpf_map ,Var: *map}",
-            "{Type:  const void ,Var: *key}",
-            "{Type:  const void ,Var: *value}",
-            "{Type:  u64 ,Var: flags}"
-          ],
-          "compatible_hookpoints": [
-            "socket_filter",
-            "kprobe",
-            "sched_cls",
-            "sched_act",
-            "tracepoint",
-            "xdp",
-            "perf_event",
-            "cgroup_skb",
-            "cgroup_sock",
-            "lwt_in",
-            "lwt_out",
-            "lwt_xmit",
-            "sock_ops",
-            "sk_skb",
-            "cgroup_device",
-            "sk_msg",
-            "raw_tracepoint",
-            "cgroup_sock_addr",
-            "lwt_seg6local",
-            "sk_reuseport",
-            "flow_dissector",
-            "cgroup_sysctl",
-            "raw_tracepoint_writable"
-          ],
-          "capabilities": [
-            "map_update"
-          ]
-        }
-      ]
-    },
-    {
-      "capability": "pkt_go_to_next_module",
-      "pkt_go_to_next_module": [
-        {
-          "Project": "libbpf",
-          "Return Type": "int",
-          "Input Params": [],
-          "Function Name": "TC_ACT_OK",
-          "Return": 0,
-          "Description": "will terminate the packet processing pipeline and allows the packet to proceed. Pass the skb onwards either to upper layers of the stack on ingress or down to the networking device driver for transmission on egress, respectively. TC_ACT_OK sets skb->tc_index based on the classid the tc BPF program set. The latter is set out of the tc BPF program itself through skb->tc_classid from the BPF context.",
-          "compatible_hookpoints": [
-            "sched_cls",
-            "sched_act"
-          ],
-          "capabilities": [
-            "pkt_go_to_next_module"
-          ]
-        }
-      ]
-    },
     {
       "capability": "map_read",
       "map_read": [
@@ -820,6 +774,72 @@ static inline int fill_ethhdr(struct ethhdr *eth, void *data_end, flow_id *id, u
           ],
           "capabilities": [
             "read_sys_info"
+          ]
+        }
+      ]
+    },
+    {
+      "capability": "pkt_go_to_next_module",
+      "pkt_go_to_next_module": [
+        {
+          "Project": "libbpf",
+          "Return Type": "int",
+          "Input Params": [],
+          "Function Name": "TC_ACT_OK",
+          "Return": 0,
+          "Description": "will terminate the packet processing pipeline and allows the packet to proceed. Pass the skb onwards either to upper layers of the stack on ingress or down to the networking device driver for transmission on egress, respectively. TC_ACT_OK sets skb->tc_index based on the classid the tc BPF program set. The latter is set out of the tc BPF program itself through skb->tc_classid from the BPF context.",
+          "compatible_hookpoints": [
+            "sched_cls",
+            "sched_act"
+          ],
+          "capabilities": [
+            "pkt_go_to_next_module"
+          ]
+        }
+      ]
+    },
+    {
+      "capability": "map_update",
+      "map_update": [
+        {
+          "Project": "libbpf",
+          "Return Type": "int",
+          "Description": "Add or update the <[ value ]>(IP: 2) of the entry associated to <[ key ]>(IP: 1) in <[ map ]>(IP: 0) with value. <[ flags ]>(IP: 3) is one of: BPF_NOEXIST The entry for <[ key ]>(IP: 1) must not exist in the map. BPF_EXIST The entry for <[ key ]>(IP: 1) must already exist in the map. BPF_ANY No condition on the existence of the entry for key. Flag <[ value ]>(IP: 2) BPF_NOEXIST cannot be used for maps of types BPF_MAP_TYPE_ARRAY or BPF_MAP_TYPE_PERCPU_ARRAY (all elements always exist) , the helper would return an error. ",
+          "Return": " 0 on success, or a negative error in case of failure.",
+          "Function Name": "bpf_map_update_elem",
+          "Input Params": [
+            "{Type: struct bpf_map ,Var: *map}",
+            "{Type:  const void ,Var: *key}",
+            "{Type:  const void ,Var: *value}",
+            "{Type:  u64 ,Var: flags}"
+          ],
+          "compatible_hookpoints": [
+            "socket_filter",
+            "kprobe",
+            "sched_cls",
+            "sched_act",
+            "tracepoint",
+            "xdp",
+            "perf_event",
+            "cgroup_skb",
+            "cgroup_sock",
+            "lwt_in",
+            "lwt_out",
+            "lwt_xmit",
+            "sock_ops",
+            "sk_skb",
+            "cgroup_device",
+            "sk_msg",
+            "raw_tracepoint",
+            "cgroup_sock_addr",
+            "lwt_seg6local",
+            "sk_reuseport",
+            "flow_dissector",
+            "cgroup_sysctl",
+            "raw_tracepoint_writable"
+          ],
+          "capabilities": [
+            "map_update"
           ]
         }
       ]
@@ -934,14 +954,14 @@ static inline int fill_ethhdr(struct ethhdr *eth, void *data_end, flow_id *id, u
   ],
   "output": "staticinlineint",
   "helper": [
-    "bpf_map_update_elem",
-    "TC_ACT_OK",
     "bpf_map_lookup_elem",
-    "bpf_ktime_get_ns"
+    "bpf_ktime_get_ns",
+    "TC_ACT_OK",
+    "bpf_map_update_elem"
   ],
   "compatibleHookpoints": [
-    "sched_act",
-    "sched_cls"
+    "sched_cls",
+    "sched_act"
   ],
   "source": [
     "static inline int flow_monitor (struct  __sk_buff *skb, u8 direction)\n",
@@ -1004,14 +1024,19 @@ static inline int fill_ethhdr(struct ethhdr *eth, void *data_end, flow_id *id, u
     "}\n"
   ],
   "called_function_list": [
-    "bpf_ringbuf_submit",
+    "bpf_ringbuf_reserve",
     "fill_ethhdr",
     "bpf_printk",
-    "bpf_ringbuf_reserve"
+    "bpf_ringbuf_submit"
   ],
   "call_depth": -1,
   "humanFuncDescription": [
-    {}
+    {
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "date": ""
+    }
   ],
   "AI_func_description": [
     {
@@ -1122,29 +1147,29 @@ SEC("tc_ingress")
   "output": "int",
   "helper": [],
   "compatibleHookpoints": [
-    "cgroup_device",
-    "xdp",
+    "lwt_seg6local",
     "lwt_xmit",
-    "socket_filter",
-    "cgroup_sock",
-    "raw_tracepoint",
-    "cgroup_sock_addr",
+    "flow_dissector",
     "raw_tracepoint_writable",
-    "sched_act",
+    "sock_ops",
+    "sk_reuseport",
+    "kprobe",
+    "cgroup_device",
+    "lwt_out",
+    "raw_tracepoint",
+    "socket_filter",
+    "cgroup_sock_addr",
+    "cgroup_sysctl",
+    "cgroup_sock",
     "tracepoint",
     "sched_cls",
-    "sk_skb",
-    "lwt_in",
-    "sk_msg",
-    "lwt_out",
-    "sock_ops",
-    "cgroup_skb",
-    "kprobe",
     "perf_event",
-    "sk_reuseport",
-    "flow_dissector",
-    "lwt_seg6local",
-    "cgroup_sysctl"
+    "lwt_in",
+    "sched_act",
+    "cgroup_skb",
+    "sk_msg",
+    "xdp",
+    "sk_skb"
   ],
   "source": [
     "int ingress_flow_parse (struct  __sk_buff *skb)\n",
@@ -1157,7 +1182,12 @@ SEC("tc_ingress")
   ],
   "call_depth": -1,
   "humanFuncDescription": [
-    {}
+    {
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "date": ""
+    }
   ],
   "AI_func_description": [
     {
@@ -1194,29 +1224,29 @@ SEC("tc_egress")
   "output": "int",
   "helper": [],
   "compatibleHookpoints": [
-    "cgroup_device",
-    "xdp",
+    "lwt_seg6local",
     "lwt_xmit",
-    "socket_filter",
-    "cgroup_sock",
-    "raw_tracepoint",
-    "cgroup_sock_addr",
+    "flow_dissector",
     "raw_tracepoint_writable",
-    "sched_act",
+    "sock_ops",
+    "sk_reuseport",
+    "kprobe",
+    "cgroup_device",
+    "lwt_out",
+    "raw_tracepoint",
+    "socket_filter",
+    "cgroup_sock_addr",
+    "cgroup_sysctl",
+    "cgroup_sock",
     "tracepoint",
     "sched_cls",
-    "sk_skb",
-    "lwt_in",
-    "sk_msg",
-    "lwt_out",
-    "sock_ops",
-    "cgroup_skb",
-    "kprobe",
     "perf_event",
-    "sk_reuseport",
-    "flow_dissector",
-    "lwt_seg6local",
-    "cgroup_sysctl"
+    "lwt_in",
+    "sched_act",
+    "cgroup_skb",
+    "sk_msg",
+    "xdp",
+    "sk_skb"
   ],
   "source": [
     "int egress_flow_parse (struct  __sk_buff *skb)\n",
@@ -1229,7 +1259,12 @@ SEC("tc_egress")
   ],
   "call_depth": -1,
   "humanFuncDescription": [
-    {}
+    {
+      "description": "",
+      "author": "",
+      "authorEmail": "",
+      "date": ""
+    }
   ],
   "AI_func_description": [
     {

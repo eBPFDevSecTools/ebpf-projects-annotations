@@ -73,7 +73,12 @@ def update_human_func_description(comments_db,comment_dict):
 def get_human_func_description(human_comments_file, path, func_name):
     cdict = {}
     if human_comments_file == None:
+        cdict['description'] = ""
+        cdict['author'] = ""
+        cdict['authorEmail'] = ""
+        cdict['date'] = ""
         return cdict
+
     db = TinyDB(human_comments_file)
     fname = path.split('/')[-1]
     print("Searching for: File: "+fname+" funcName: "+func_name)

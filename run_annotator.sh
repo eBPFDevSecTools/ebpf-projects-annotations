@@ -16,13 +16,14 @@ python3 src/annotator.py -o op/ebpf-ratelimiter-main/txl_ebpf-ratelimiter-main -
 #bpf-filter
 python3 src/annotator.py -o op/bpf-filter-master/txl_bpf-filter-master -s projects/bpf-filter/original_source/ebpf/ -c op/bpf-filter-master/commented_bpf-filter-master -t op/bpf-filter-master/bpf-filter-master.function_file_list.json -u op/bpf-filter-master/bpf-filter-master.struct_file_list.json -p bpf-filter-master
 
-
+#netobserv
+python3 src/annotator.py -o projects/netobserv-bpf-main/intermediate/txl_netobserv-bpf-main -s projects/netobserv-bpf-main/original_source -c projects/netobserv-bpf-main/human_annotated/ -t projects/netobserv-bpf-main/intermediate/netobserv-bpf-main.function_file_list.json -u projects/netobserv-bpf-main/intermediate/netobserv-bpf-main.struct_file_list.json -p netobserv-bpf-main
 
 #python3 src/annotator.py -o op/kpng-master/txl_kpng-master -s examples/kpng-master/backends/ebpf/bpf -c op/kpng-master/commented_kpng-master -t op/kpng-master/kpng-master.function_file_list.json -u op/kpng-master/kpng-master.struct_file_list.json -p kpng-master
 
 #python3 src/annotator.py -o op/ingress-node-firewall-master/txl_ingress-node-firewall-master -s examples/ingress-node-firewall-master/bpf -c op/ingress-node-firewall-master/commented_ingress-node-firewall-master -t op/ingress-node-firewall-master/ingress-node-firewall-master.function_file_list.json -u op/ingress-node-firewall-master/ingress-node-firewall-master.struct_file_list.json -p ingress-node-firewall-master
 
-#python3 src/annotator.py -o op/netobserv-bpf-main/txl_netobserv-bpf-main -s examples/netobserv-bpf-main -c op/netobserv-bpf-main/commented_netobserv-bpf-main -t op/netobserv-bpf-main/netobserv-bpf-main.function_file_list.json -u op/netobserv-bpf-main/netobserv-bpf-main.struct_file_list.json -p netobserv-bpf-main
+
 
 #python3 src/annotator.py -o op/suricata-master/txl_suricata-master -s examples/ -c op/suricata-master/commented_suricata-master -t op/suricata-master/suricata-master.function_file_list.json -u op/suricata-master/suricata-master.struct_file_list.json -p suricata-master
 

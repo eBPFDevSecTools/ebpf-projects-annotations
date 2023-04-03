@@ -1,5 +1,4 @@
-# 
-Annotations of code files for netobserv-bpf-main
+#Annotations of code files for netobserv-bpf-main
  - **Repository:** https://github.com/netobserv/netobserv-ebpf-agent.git
  - **Copyrights:** 
     - The source code copyrights rest with original copyright holders as mentioned in above repository link

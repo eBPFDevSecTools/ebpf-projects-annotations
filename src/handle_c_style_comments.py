@@ -16,7 +16,7 @@ def find_c_style_comment_matches(data, comment_regex_pattern=r'//.*?$|/\*.*?\*/'
         matches.append({
             'start_line': start_line,
             'end_line': end_line,
-            'text': matched_text
+            'text': matched_text.replace('\n','').replace('/*','').replace('//','').replace('*/','')
         })
     return matches
 

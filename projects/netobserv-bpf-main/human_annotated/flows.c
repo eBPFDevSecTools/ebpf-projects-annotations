@@ -89,7 +89,7 @@ const u8 ip4in6[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xff, 0xff};
     {
       "start_line": 1,
       "end_line": 15,
-      "text": "/*\n    Flows v2. A Flow-metric generator using TC.\n\n    This program can be hooked on to TC ingress/egress hook to monitor packets\n    to/from an interface.\n\n    Logic:\n        1) Store flow information in a per-cpu hash map.\n        2) Upon flow completion (tcp->fin event), evict the entry from map, and\n           send to userspace through ringbuffer.\n           Eviction for non-tcp flows need to done by userspace\n        3) When the map is full, we send the new flow entry to userspace via ringbuffer,\n            until an entry is available.\n        4) When hash collision is detected, we send the new entry to userpace via ringbuffer.\n*/"
+      "text": "\n    Flows v2. A Flow-metric generator using TC.\n\n    This program can be hooked on to TC ingress/egress hook to monitor packets\n    to/from an interface.\n\n    Logic:\n        1) Store flow information in a per-cpu hash map.\n        2) Upon flow completion (tcp->fin event), evict the entry from map, and\n           send to userspace through ringbuffer.\n           Eviction for non-tcp flows need to done by userspace\n        3) When the map is full, we send the new flow entry to userspace via ringbuffer,\n            until an entry is available.\n        4) When hash collision is detected, we send the new entry to userpace via ringbuffer.\n"
     },
     {
       "start_line": 40,
@@ -219,10 +219,10 @@ const u8 ip4in6[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xff, 0xff};
   "call_depth": 0,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This is a void return type function and is called only for tcp packets, it takes in tcphdr and a variable flags, a pointer to unsigned short. Based on the tcp flags set in the packet, SYN/ACK/FIN/RST/PSH/URG/ECE/CWR it copies the same information to the address pointed to by the flags variable and returns.",
+      "author": "Dushyant Behl",
+      "authorEmail": "dushyantbehl@in.ibm.com",
+      "date": "31-Mar-2023"
     }
   ],
   "AI_func_description": [
@@ -356,10 +356,10 @@ static inline void set_flags(struct tcphdr *th, u16 *flags) {
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This function takes in an ipv4 header ip, data end pointer, pointer to a flow_id struct id, and a pointer to an unsigned short as variable flags , it dereferences the ipv4 header and copies the src, dst ip, protocol to the pointer id. It next copies the UDP or TCP information from the packet and copies the src and dst ports. In case of tcp it also calls set_flags function on the tcp header with flags as the argument which copies the TCP information in the flags variable. If packet is incorrect it returns DISCARD else returns SUBMIT.",
+      "author": "Dushyant Behl",
+      "authorEmail": "dushyantbehl@in.ibm.com",
+      "date": "31-Mar-2023"
     }
   ],
   "AI_func_description": [
@@ -504,10 +504,10 @@ static inline int fill_iphdr(struct iphdr *ip, void *data_end, flow_id *id, u16 
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This function takes in an ipv6 header ip, data end pointer, pointer to a flow_id struct id, and a pointer to an unsigned short as variable flags, it dereferences the ipv6 header and copies the src, dst ip, protocol to the pointer id. It next copies the UDP or TCP information from the packet and copies the src and dst ports. In case of tcp it also calls set_flags function on the tcp header with flags as the argument which copies the TCP information in the flags variable. If packet is incorrect it returns DISCARD else returns SUBMIT.",
+      "author": "Dushyant Behl",
+      "authorEmail": "dushyantbehl@in.ibm.com",
+      "date": "31-Mar-2023"
     }
   ],
   "AI_func_description": [
@@ -647,10 +647,11 @@ static inline int fill_ip6hdr(struct ipv6hdr *ip, void *data_end, flow_id *id, u
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This function takes in an eth header, data_end pointer, pointer to a flow_id struct id, and a pointer to an unsigned short as variable flags. It copies the dst, src mac and protocol info from eth header to the flow repsented by id and then based on if the packet is IP or IPV6 it either calls fill_iphdr or fill_iphdr6 with the passed arguments to fill the ip header information in the flow variable. If packet is incorrect it returns DISCARD else returns SUBMIT.",
+      "author": "Dushyant Behl",
+      "authorEmail": "dushyantbehl@in.ibm.com",
+      "date": "31-Mar-2023"
+
     }
   ],
   "AI_func_description": [
@@ -1032,10 +1033,10 @@ static inline int fill_ethhdr(struct ethhdr *eth, void *data_end, flow_id *id, u
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This function takes in an packet as an sk_buff skb, and a direction info which says if the packet is coming via INGRESS or EGRESS. If sampling (a global variable) is defined it checks if this packet should be sampled by calling bpf_get_prandom_u32 and taking a mod if it against the sampling global value, if its not zero it proceeds else the packet is let passed by TC_ACK_OK. The function then calls fill_ethhdr function with appropriate arguments which extracts the flow information for this packet. if the fill_ethhdr returns DISCRAD packet is let passed via TCP_ACK_OK. This function then constructs a struct id with ingress interface and direction which is used as a key to lookup in the aggregrate_flows hash map. If the map returns a valid entry then this packets info and current time extracted via bpf_ktime_get_ns is added to the value and updated in the hashmap else if the key is not present it tries to insert the entry in the hashmap if successful if passes and else the packet and its flow information is pushed on to a ring buffer called direct_flows. In any case, the function returns TC_ACK_OK.",
+      "author": "Dushyant Behl",
+      "authorEmail": "dushyantbehl@in.ibm.com",
+      "date": "31-Mar-2023"
     }
   ],
   "AI_func_description": [
@@ -1183,10 +1184,10 @@ SEC("tc_ingress")
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This is a wrapper function and will call flow_monitor with the passed skb as argument and INGRESS as the direction.",
+      "author": "Dushyant Behl",
+      "authorEmail": "dushyantbehl@in.ibm.com",
+      "date": "31-Mar-2023"
     }
   ],
   "AI_func_description": [
@@ -1260,10 +1261,10 @@ SEC("tc_egress")
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This is a wrapper function and will call flow_monitor with the passed skb as argument and EGRESS as the direction.",
+      "author": "Dushyant Behl",
+      "authorEmail": "dushyantbehl@in.ibm.com",
+      "date": "31-Mar-2023"
     }
   ],
   "AI_func_description": [

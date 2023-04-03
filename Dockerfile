@@ -40,7 +40,8 @@ RUN ./InstallTxl
 WORKDIR /root
 ADD asset asset
 ADD src src
-ADD run1.sh run1.sh
-ADD op op
-ADD examples examples
+ADD run_annotator.sh run_annotator.sh
+ADD run_comment_extractor.sh run_comment_extractor.sh
+ADD projects projects
+#ADD examples examples
 #RUN ./run.sh

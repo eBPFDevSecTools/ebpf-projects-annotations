@@ -356,7 +356,7 @@ static inline void set_flags(struct tcphdr *th, u16 *flags) {
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "This function takes in an ipv4 header ip, data end pointer, pointer to a flow_id struct id, and a pointer to an unsigned short as variable flags , it decodes the ipv4 header and copies the src, dst ip, protocol to the pointer id. It next copies the UDP or TCP information from the packet and copies the src and dst ports. In case of tcp it also calls set_flags function on the tcp header with flags as the argument which copies the TCP information in the flags variable. If packet is incorrect it returns DISCARD else returns SUBMIT.",
+      "description": "This function takes in an ipv4 header ip, data end pointer, pointer to a flow_id struct id, and a pointer to an unsigned short as variable flags , it dereferences the ipv4 header and copies the src, dst ip, protocol to the pointer id. It next copies the UDP or TCP information from the packet and copies the src and dst ports. In case of tcp it also calls set_flags function on the tcp header with flags as the argument which copies the TCP information in the flags variable. If packet is incorrect it returns DISCARD else returns SUBMIT.",
       "author": "Dushyant Behl",
       "authorEmail": "dushyantbehl@in.ibm.com",
       "date": "31-Mar-2023"
@@ -504,7 +504,7 @@ static inline int fill_iphdr(struct iphdr *ip, void *data_end, flow_id *id, u16 
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "This function takes in an ipv6 header ip, data end pointer, pointer to a flow_id struct id, and a pointer to an unsigned short as variable flags, it decodes the ipv6 header and copies the src, dst ip, protocol to the pointer id. It next copies the UDP or TCP information from the packet and copies the src and dst ports. In case of tcp it also calls set_flags function on the tcp header with flags as the argument which copies the TCP information in the flags variable. If packet is incorrect it returns DISCARD else returns SUBMIT.",
+      "description": "This function takes in an ipv6 header ip, data end pointer, pointer to a flow_id struct id, and a pointer to an unsigned short as variable flags, it dereferences the ipv6 header and copies the src, dst ip, protocol to the pointer id. It next copies the UDP or TCP information from the packet and copies the src and dst ports. In case of tcp it also calls set_flags function on the tcp header with flags as the argument which copies the TCP information in the flags variable. If packet is incorrect it returns DISCARD else returns SUBMIT.",
       "author": "Dushyant Behl",
       "authorEmail": "dushyantbehl@in.ibm.com",
       "date": "31-Mar-2023"

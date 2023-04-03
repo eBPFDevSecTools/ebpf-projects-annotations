@@ -24,7 +24,7 @@ TODO: Expand README to include additional capabilities moved into annotator
 ```
 python3 src/annotator.py
 usage: annotator.py [-h] [-annotate_only ANNOTATE_ONLY] -s SRC_DIR -o TXL_OP_DIR [-c OPENED_COMMENT_STUB_FOLDER] [-r BPFHELPERFILE]
-                    [-t TXL_FUNCTION_LIST] [-u TXL_STRUCT_LIST] [--isCilium]
+                    [-t TXL_FUNCTION_LIST] [-u TXL_STRUCT_LIST] 
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -41,7 +41,6 @@ optional arguments:
                         JSON with information regarding functions present. output of foundation_maker.py
   -u TXL_STRUCT_LIST, --txl_struct_list TXL_STRUCT_LIST
                         JSON with information regarding structures present. output of foundation_maker.py
-  --isCilium            whether repository is cilium
 
 ```
 

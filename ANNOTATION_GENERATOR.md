@@ -44,6 +44,6 @@ optional arguments:
 
 ```
 
-NOTE: **The description given above might be dated, always check examples given in run1.sh for latest capabilities.**
+NOTE: **The description given above might be dated, always check examples given in run_annotator.sh for latest capabilities.**
  
 

@@ -22,7 +22,7 @@ function create_dirs {
 
     # TODO: Might have code in specific subdirectories so best if users did that for now.
     # Clone the source
-    echo "User should run the below command and keep the bpf directory only, deleting others"
+    echo "Run the below command and keep the bpf directory only, deleting others"
     echo "git clone --depth=1 ${PROJECT_URL} ${ORIGINAL_SRC} && rm -rf ${ORIGINAL_SRC}/.git && cd ${ORIGINAL_SRC}"
 }
 

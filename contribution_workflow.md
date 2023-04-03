@@ -32,23 +32,25 @@ This all can be done via the [scripts/execute_workflow.sh](./scripts/execute_wor
 
 Let's say for a project `ingress-node-firewall-master` who's url is `https://github.com/openshift/ingress-node-firewall.git`
 
-* To create necessary directories user can run
+* To create necessary directories user can run the below command
 
 `./scripts/execute_workflow.sh create_dirs ingress-node-firewall-master https://github.com/openshift/ingress-node-firewall.git`
 
+When run in a shell the output will look like below,
+
 ```
 $ ./scripts/execute_workflow.sh create_dirs ingress-node-firewall-master https://github.com/openshift/ingress-node-firewall.git
-User should run the below command and keep the bpf directory only, deleting others
+Run the below command and keep the bpf directory only, deleting others
 git clone --depth=1 https://github.com/openshift/ingress-node-firewall.git projects/ingress-node-firewall-master/original_source && rm -rf projects/ingress-node-firewall-master/original_source/.git && cd projects/ingress-node-firewall-master/original_source
 ```
 
-* After that user can follow the comments on the commandline and fetch the repo - 
+* After that user can follow the comments on the commandline and fetch the repo, which can be run like - 
 
 ```
 $ git clone --depth=1 https://github.com/openshift/ingress-node-firewall.git projects/ingress-node-firewall-master/original_source && rm -rf projects/ingress-node-firewall-master/original_source/.git && cd projects/ingress-node-firewall-master/original_source
 ```
 
-We need to keep only the bpf source files and delete everything else.
+*Note:- We need to keep only the bpf source files and delete everything else.*
 
 * To annotate the project and create a human comments stub we run - 
 

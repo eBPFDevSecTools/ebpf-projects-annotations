@@ -218,10 +218,10 @@
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This function performs a static tail call to another function.",
+      "author": "Dushyant Behl",
+      "authorEmail": "dushyantbehl@in.ibm.com",
+      "date": "31-Mar-2023"
     }
   ],
   "AI_func_description": [

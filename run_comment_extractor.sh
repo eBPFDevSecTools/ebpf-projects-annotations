@@ -22,3 +22,5 @@ cp ./op/bpf-filter-master/commented_bpf-filter-master/bpf-filter-master.db_comme
 #suricata
 python3 src/utils/comment_extractor.py -s projects/suricata-master/human_annotated/ -d  projects/suricata-master/human_annotated/suricata-master.db_comments.db
 
+#netobserv
+python3 src/utils/comment_extractor.py -s projects/netobserv-bpf-main/human_annotated -d  projects/netobserv-bpf-main/human_annotated/netobserv-bpf-main.db_comments.db

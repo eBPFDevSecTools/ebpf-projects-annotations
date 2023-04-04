@@ -1,5 +1,5 @@
 # 
-Annotations of code files for ebpf-ratelimiter 
+Annotations of code files for cilium 
  - **Repository:** https://github.com/cilium/cilium.git
  - **Copyrights:** 
     - The source code copyrights rest with original copyright holders as mentioned in above repository link

@@ -1,6 +1,6 @@
 # 
-Annotations of code files for bpf-filter
- - **Repository:** https://github.com/ebpf-networking/bpf-filter.git
+Annotations of code files for katran
+ - **Repository:** https://github.com/facebookincubator/katran.git
  - **Copyrights:** 
     - The source code copyrights rest with original copyright holders as mentioned in above repository link
     - The copyright for comments rest with comment authors

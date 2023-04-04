@@ -189,7 +189,7 @@ struct vlan_hdr {
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "The function extracts the src and dest IP addresses of the packet, and checks whether they are in the list of IPs to be dropped. If yes, count of packet drops is incremented by 1, and function returns 0. If not, function returns -1.",
+      "description": "The function extracts the src and dest IP addresses of the IPv4 packet, and checks whether they are in the list of IPs to be dropped. If yes, count of packet drops is incremented by 1, and function returns 0. If not, function returns -1.",
       "author": "Pragna Mamidipaka",
       "authorEmail": "pragna.pune@gmail.com",
       "date": "2023-04-04"
@@ -300,10 +300,10 @@ static __always_inline int ipv4_filter(struct __sk_buff *skb)
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function does not filter any IPv6 packets. It returns -1 for all packets.",
+      "author": "Pragna Mamidipaka",
+      "authorEmail": "pragna.pune@gmail.com",
+      "date": "2023-04-04"
     }
   ],
   "AI_func_description": [
@@ -395,10 +395,10 @@ static __always_inline int ipv6_filter(struct __sk_buff *skb)
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function checks whether the packet is an IPv4 packet or an IPv6 packet, and correspondingly calls the filter functions.",
+      "author": "Pragna Mamidipaka",
+      "authorEmail": "pragna.pune@gmail.com",
+      "date": "2023-04-04"
     }
   ],
   "AI_func_description": [

@@ -189,10 +189,10 @@ struct vlan_hdr {
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function extracts the src and dest IP addresses of the packet, and checks whether they are in the list of IPs to be dropped. If yes, count of packet drops is incremented by 1, and function returns 0. If not, function returns -1.",
+      "author": "Pragna Mamidipaka",
+      "authorEmail": "pragna.pune@gmail.com",
+      "date": "2023-04-04"
     }
   ],
   "AI_func_description": [

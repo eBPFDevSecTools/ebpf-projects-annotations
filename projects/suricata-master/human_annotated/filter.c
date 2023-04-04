@@ -395,7 +395,7 @@ static __always_inline int ipv6_filter(struct __sk_buff *skb)
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "The function checks whether the packet is an IPv4 packet or an IPv6 packet, and correspondingly calls the filter functions.",
+      "description": "The function checks whether the packet is an IPv4 packet or an IPv6 packet, and correspondingly calls the filter functions. If the packet does not contain any IP header, then -1 is returned.",
       "author": "Pragna Mamidipaka",
       "authorEmail": "pragna.pune@gmail.com",
       "date": "2023-04-04"

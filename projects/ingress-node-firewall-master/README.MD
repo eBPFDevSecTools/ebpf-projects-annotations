@@ -1,5 +1,5 @@
 # 
-Annotations of code files for ebpf-ratelimiter 
+Annotations of code files for ingress-node-firewall 
  - **Repository:** https://github.com/openshift/ingress-node-firewall.git
  - **Copyrights:** 
     - The source code copyrights rest with original copyright holders as mentioned in above repository link

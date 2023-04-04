@@ -1,5 +1,5 @@
 # 
-Annotations of code files for ebpf-ratelimiter 
+Annotations of code files for bcc 
  - **Repository:** https://github.com/iovisor/bcc
  - **Copyrights:** 
     - The source code copyrights rest with original copyright holders as mentioned in above repository link

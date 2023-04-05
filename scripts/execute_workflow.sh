@@ -20,7 +20,7 @@ function create_dirs {
     # Create the directories
     mkdir -p ${PROJECT_DIR}
     mkdir -p ${ORIGINAL_SRC} ${HUMAN_ANNOTATED} ${INTERMEDIATE_FILES}
-    cp asset/README.MD ${PROJECT_DIR}
+    cp ${README} ${PROJECT_DIR}
     
     # TODO: Might have code in specific subdirectories so best if users did that for now.
     # Clone the source

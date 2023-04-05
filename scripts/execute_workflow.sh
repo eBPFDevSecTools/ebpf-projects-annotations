@@ -14,12 +14,14 @@ INTERMEDIATE_FILES=${PROJECT_DIR}/intermediate_files
 
 ANNOTATOR=src/annotator.py
 COMMENT_EXTRACTOR=src/utils/comment_extractor.py
+README=asset/README.MD
 
 function create_dirs {
     # Create the directories
     mkdir -p ${PROJECT_DIR}
     mkdir -p ${ORIGINAL_SRC} ${HUMAN_ANNOTATED} ${INTERMEDIATE_FILES}
-
+    cp asset/README.MD ${PROJECT_DIR}
+    
     # TODO: Might have code in specific subdirectories so best if users did that for now.
     # Clone the source
     echo "Run the below command and keep the bpf directory only, deleting others"

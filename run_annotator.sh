@@ -29,4 +29,7 @@ python3 src/annotator.py -o projects/suricata-master/intermediate/txl_suricata-m
 
 #python3 src/annotator.py -o op/vpf-ebpf-src/txl_vpf-ebpf-src -s examples/vpf-ebpf-src -c op/vpf-ebpf-src/commented_vpf-ebpf-src -t op/vpf-ebpf-src/vpf-ebpf-src.function_file_list.json -u op/vpf-ebpf-src/vpf-ebpf-src.struct_file_list.json -p vpf-ebpf-src
 
+#tpc-ebpf
+python3 src/annotator.py -o projects/tpc-ebpf/intermediate/txl_tpc-ebpf -s projects/tpc-ebpf/original_source -c projects/tpc-ebpf/human_annotated/ -t projects/tpc-ebpf/intermediate/tpc-ebpf.function_file_list.json -u projects/tpc-ebpf/intermediate/tpc-ebpf.struct_file_list.json -p tpc-ebpf
+
 

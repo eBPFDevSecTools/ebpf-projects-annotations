@@ -258,25 +258,15 @@ def parseTXLStructOutputFile(fileName, map_file_def_dict):
 if __name__ == "__main__":
 
     my_parser = argparse.ArgumentParser()
-    my_parser.add_argument('-annotate_only',
-            action='store',
-            default=False)
-    my_parser.add_argument('-s','--src_dir',action='store',required=True,
-            help='directory with source code')
-    my_parser.add_argument('-o','--txl_op_dir',action='store',required=True,
-            help='directory to put txl annotated files')
-    my_parser.add_argument('-p','--db_file',action='store',required=True,
-            help='sqlite3 db name')
-    my_parser.add_argument('-c','--opened_comment_stub_folder',action='store',required=False,
-            help='directory to put source files with comment stub')
-    my_parser.add_argument('-r','--bpfHelperFile', type=str,required=False,
-            help='Information regarding bpf_helper_funcitons ')
-    my_parser.add_argument('-t','--txl_function_list',action='store',required=False,
-            help='JSON with information regarding functions present. output of foundation_maker.py')
-    my_parser.add_argument('-u','--txl_struct_list',action='store',required=False,
-            help='JSON with information regarding structures present. output of foundation_maker.py')
-    my_parser.add_argument('-d','--human_comments_file', action='store',required=False,
-            help='JSON with information containing human comments ')
+    my_parser.add_argument('-annotate_only',action='store',default=False)
+    my_parser.add_argument('-s','--src_dir',action='store',required=True,help='directory with source code')
+    my_parser.add_argument('-o','--txl_op_dir',action='store',required=True,help='directory to put txl annotated files')
+    my_parser.add_argument('-p','--db_file',action='store',required=True,help='sqlite3 db name')
+    my_parser.add_argument('-c','--opened_comment_stub_folder',action='store',required=False,help='directory to put source files with comment stub')
+    my_parser.add_argument('-r','--bpfHelperFile', type=str,required=False,help='Information regarding bpf_helper_funcitons ')
+    my_parser.add_argument('-t','--txl_function_list',action='store',required=False,help='JSON with information regarding functions present. output of foundation_maker.py')
+    my_parser.add_argument('-u','--txl_struct_list',action='store',required=False,help='JSON with information regarding structures present. output of foundation_maker.py')
+    my_parser.add_argument('-d','--human_comments_file', action='store',required=False,help='JSON with information containing human comments ')
 
     args = my_parser.parse_args()
     #print(vars(args))
@@ -315,7 +305,6 @@ if __name__ == "__main__":
     repo_name = repo_path.split("/")[-1]
     db_file = args.db_file +".db"
 
-    
     txl_func_list = repo_name+".function_file_list.json"
     if(args.txl_function_list is not None):
         txl_func_list = args.txl_function_list

@@ -209,9 +209,7 @@ def get_capability_dict(code_lines, helperdict):
     helperCallParams = defaultdict(list)
     helpers_list = get_helper_list(code_lines, helperdict)
     op_dict = {}
-    print("Found helpers"+ str(helpers_list))
     op_dict["capabilities"] = create_capability_dict(helpers_list, helperdict)
-    print("Capabilities helpers"+ str(op_dict["capabilities"]))
     op_dict["helperCallParams"] = helperCallParams
     return op_dict
 

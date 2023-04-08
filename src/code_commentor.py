@@ -37,14 +37,6 @@ def get_update_maps(lines, map_update_fn):
             map_update_set.add(mapname)
     return list(map_update_set)
 
-def get_helper_list(lines,helperdict):
-    helper_set= set()
-    for line in lines:
-        present= check_and_return_func_present(helperdict,line)
-        if present != None:
-            helper_set.update(present)
-    return list(helper_set)
-
 def create_capability_dict(helper_list, helperdict):
     cap_dict = {}
     for fn in helper_list:
@@ -163,19 +155,18 @@ def load_bpf_helper_map(fname):
 def check_and_return_func_present(helperdict, line):
     hls =  list()
     for helper in helperdict.keys():
-        if line.find(' '+helper)>=0:
+        if line.find(helper)>=0 :
+            if line.find('bpf_'+helper) >= 0:
+                continue
             hls.append(helper)
     return hls
 
-def get_helper_encoding(lines, helperdict, helperCallParams):
+def get_helper_list(lines,helperdict):
     helper_set= set()
     for line in lines:
-        helper_list = check_and_return_func_present(helperdict,line)
-        if len(helper_list) > 0:
-            #experimental stuff disabled for now XXX
-            #for helper in helper_list:
-            #append_helper_details(line, helper, helper_set, helperCallParams)
-            helper_set.update(helper_list)
+        present= check_and_return_func_present(helperdict,line)
+        if present != None:
+            helper_set.update(present)
     return list(helper_set)
 
 def get_prog_id(sec_name,output):
@@ -215,9 +206,8 @@ def remove_line_comments(lines):
     
 def get_capability_dict(code_lines, helperdict):
     code_lines = remove_line_comments(code_lines)
-
     helperCallParams = defaultdict(list)
-    helpers_list = get_helper_encoding(code_lines, helperdict, helperCallParams)
+    helpers_list = get_helper_list(code_lines, helperdict)
     op_dict = {}
     op_dict["capabilities"] = create_capability_dict(helpers_list, helperdict)
     op_dict["helperCallParams"] = helperCallParams

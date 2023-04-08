@@ -206,9 +206,6 @@ def remove_line_comments(lines):
     
 def get_capability_dict(code_lines, helperdict):
     code_lines = remove_line_comments(code_lines)
-    print("<----->")
-    print(code_lines)
-    print("<----->")
     helperCallParams = defaultdict(list)
     helpers_list = get_helper_list(code_lines, helperdict)
     op_dict = {}
@@ -284,7 +281,6 @@ def parseTXLFunctionOutputFileForComments(txlFile, opFile, srcFile, helperdict, 
             srcSeen = False
             #dump to file
             funcName = funcName.replace('*','')
-            print("funcname: "+funcName)
             capability_dict = get_capability_dict(srcLineList[startLine:endLine], helperdict)
             capability_dict['startLine'] = startLine
             capability_dict['endLine'] = endLine

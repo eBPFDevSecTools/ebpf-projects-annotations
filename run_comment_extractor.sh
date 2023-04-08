@@ -24,3 +24,7 @@ python3 src/utils/comment_extractor.py -s projects/suricata-master/human_annotat
 
 #netobserv
 python3 src/utils/comment_extractor.py -s projects/netobserv-bpf-main/human_annotated -d  projects/netobserv-bpf-main/human_annotated/netobserv-bpf-main.db_comments.db
+
+
+#ingress-node-firewall-master
+python3 src/utils/comment_extractor.py -s projects/ingress-node-firewall-master/human_annotated -d  projects/ingress-node-firewall-master/human_annotated/ingress-node-firewall-master.db_comments.db

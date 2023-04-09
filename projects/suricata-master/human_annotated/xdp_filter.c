@@ -323,10 +323,10 @@ struct bpf_map_def SEC("maps") global_bypass = {
   "call_depth": 0,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This function extracts and returns the source port of the TCP and UDP packets. Returns -1 if the packet is invalid. Returns 0 if the packet is neither TCP nor UDP.",
+      "author": "R V B R N Aaseesh",
+      "authorEmail": "aaseesh.rallapalli@gmail.com",
+      "date": "2023-04-04"
     }
   ],
   "AI_func_description": [
@@ -432,10 +432,10 @@ static __always_inline int get_sport(void *trans_data, void *data_end,
   "call_depth": 0,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This function extracts and returns the destination port of the TCP and UDP packets. Returns -1 if the packet is invalid. Returns 0 if the packet is neither TCP nor UDP.",
+      "author": "R V B R N Aaseesh",
+      "authorEmail": "aaseesh.rallapalli@gmail.com",
+      "date": "2023-04-04"
     }
   ],
   "AI_func_description": [
@@ -806,10 +806,10 @@ static __always_inline int get_dport(void *trans_data, void *data_end,
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This function filters the IPv4 packets. If the L4 protocol is TCP, tuple.ip_proto is set to 1. If it is UDP, tuple.ip_proto is set to 0. The source port and destination port of the packet are also extracted. The packet is DROPPED if the packets' ports are not able to get extracted. The tuple array consists of the identification fields for the packet such as - src address, destination address, src port, dest port, vlan0 and vlan1 (used for VLAN flow tracking) which are then used as a key to lookup in the map. If it exists, the number of packets is incremented by 1 and the bytes is incremented by the length of the packet. The increments are done using atomic operations if the map type is BPF_MAP_TYPE_ARRAY. If GOT_TX_PEER flag is enabled, the key0 is initialized as 0. The key is then searched in tx_peer_int BPF MAP. The packet is dropped if the key doesn't exist. Otherwise, the packet is redirect to the corresponding port. If ENCRYPTED_TLS_BYPASS flag is set, the key1 variable is initialized to 0. Then, the transport protocol is checked if it is secured. If the protocol is secured, the key1 is searched in the tls_bypass_count and incremented appropriately. If BUILD_CPUMAP flag is set, the hash is generated using the src and dst addresses using the SuperFastHash function. A destination CPU is selected from the available CPUs using this hash as key. If the corresponding value exists in the map, the packet is redirected to the destination CPU, otherwise it is dropped. If the RSS_QUE_NUMBERS macro is defined, the hash is generated using src and dst addresses using the SuperFastHash function. The rx_queue_index field of the context variable is updated with the hash. The packet is PASSED.",
+      "author": "R V B R N Aaseesh",
+      "authorEmail": "aaseesh.rallapalli@gmail.com",
+      "date": "2023-04-04"
     }
   ],
   "AI_func_description": [
@@ -1242,10 +1242,10 @@ static int __always_inline filter_ipv4(struct xdp_md *ctx, void *data, __u64 nh_
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This function filters the IPv6 packets. If the L4 protocol is TCP, tuple.ip_proto is set to 1. If it is UDP, tuple.ip_proto is set to 0. The source port and destination port of the packet are also extracted. The packet is DROPPED if the packets' ports are not able to get extracted. The tuple array consists of the identification fields for the packet such as - src address, destination address, src port, dest port, vlan0 and vlan1 (used for VLAN flow tracking) which are then used as a key to lookup in the map. If it exists, the number of packets is incremented by 1 and the bytes is incremented by the length of the packet. The increments are done using atomic operations if the map type is BPF_MAP_TYPE_ARRAY. If GOT_TX_PEER flag is enabled, the key0 is initialized as 0. The key is then searched in tx_peer_int BPF MAP. The packet is dropped if the key doesn't exist. Otherwise, the packet is redirect to the corresponding port. If ENCRYPTED_TLS_BYPASS flag is set, the key1 variable is initialized to 0. Then, the transport protocol is checked if it is secured. If the protocol is secured, the key1 is searched in the tls_bypass_count and incremented appropriately. If BUILD_CPUMAP flag is set, the hash is generated using the src and dst addresses using the SuperFastHash function. A destination CPU is selected from the available CPUs using this hash as key. If the corresponding value exists in the map, the packet is redirected to the destination CPU, otherwise it is dropped. If the RSS_QUE_NUMBERS macro is defined, the hash is generated using src and dst addresses using the SuperFastHash function. The rx_queue_index field of the context variable is updated with the hash. The packet is PASSED.",
+      "author": "R V B R N Aaseesh",
+      "authorEmail": "aaseesh.rallapalli@gmail.com",
+      "date": "2023-04-05"
     }
   ],
   "AI_func_description": [
@@ -1557,10 +1557,10 @@ static int __always_inline filter_ipv6(struct xdp_md *ctx, void *data, __u64 nh_
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This hash function filter, filters the Ethernet packets based on the IP packet version. If GLOBAL_BYPASS flag is set, then the key0 is initialized to 0 and is checked in the global_bypass map. If the key exists, the same key0 is checked in tx_peer_int map. If the key doesn't exist, the packet is dropped. Othereise, the tx_port is written into the tx_peer map. If GLOBAL_BYPASS is not set, the fields vlan0 is set to the last 12 bits of the VLAN TCI field and vlan1 is set to 0 if the VLAN_TRACKING is off else it is set to the last 12 bits of the VLAN TCI field(since vlan0 is stripped by the OS). Based on the version of IP packets, the function filter_ipv4 or filter_ipv6 is invoked accordingly. If it is neither of them -1 is returned.",
+      "author": "R V B R N Aaseesh",
+      "authorEmail": "aaseesh.rallapalli@gmail.com",
+      "date": "2023-04-05"
     }
   ],
   "AI_func_description": [

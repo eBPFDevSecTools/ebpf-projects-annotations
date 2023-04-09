@@ -123,10 +123,10 @@
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "This function is the implementation of the SuperFastHash algorithm by Paul Hsieh of MIT. This function returns the hash of length len, for the input data based on the random state initval.",
+      "author": "R V B R N Aaseesh",
+      "authorEmail": "aaseesh.rallapalli@gmail.com",
+      "date": "2023-04-05"
     }
   ],
   "AI_func_description": [

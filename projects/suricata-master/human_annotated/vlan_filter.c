@@ -100,7 +100,7 @@
     {
       "description": "This function checks the last 12 bits of VLAN TCI field of the skb. Returns -1 if vlan ID is either 2 or 4, otherwise 0.",
       "author": "R V B R N Aaseesh",
-      "authorEmail": "ee20btech11060@iith.ac.in",
+      "authorEmail": "aaseesh.rallapalli@gmail.com",
       "date": "2023-04-04"
     }
   ],

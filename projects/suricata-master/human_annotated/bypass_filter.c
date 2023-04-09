@@ -285,7 +285,7 @@ struct vlan_hdr {
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "This function filters the IPv4 packets based on the Transport protocol. If the L4 protocol is TCP,tuple.ip_proto is set to 1. If it is UDP tuple.ip_proto is set to 0. If it is neither is set to -1. The tuple array consists of the identification fields for the packet such as- src address, destination address, src port, dest port, vlan0 and vlan1(used for VLAN flow tracking) which are then used as a key to lookup in the map. If it exists, the no. of packets is incremented by 1 and the bytes is incremented by the length of the packet. Else -1 is returned.",
+      "description": "This function filters the IPv4 packets based on the Transport protocol. It does so by reading the packet header offset that is stored in skb->cb (control block). If the L4 protocol is TCP,tuple.ip_proto is set to 1. If it is UDP tuple.ip_proto is set to 0. If it is neither is set to -1. The tuple array consists of the identification fields for the packet such as- src address, destination address, src port, dest port, vlan0 and vlan1(used for VLAN flow tracking) which are then used as a key to lookup in the map. If it exists, the no. of packets is incremented by 1 and the bytes is incremented by the length of the packet and the function returns 0. Else -1 is returned.",
       "author": "Madhuri Annavazzala",
       "authorEmail": "madhuriannavazzala@gmail.com",
       "date": "2023-04-04"
@@ -565,7 +565,7 @@ static __always_inline int ipv4_filter(struct __sk_buff *skb, __u16 vlan0, __u16
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "This function filters the IPv6 packets based on the Transport protocol. If the L4 protocol is TCP,tuple.ip_proto is set to 1. If it is UDP tuple.ip_proto is set to 0. If it is neither is set to -1. The tuple array consists of the identification fields for the packet such as- src address, destination address, src port, dest port, vlan0 and vlan1(used for VLAN flow tracking) which are then used as a key to lookup in the map. If it exists, the no. of packets is incremented by 1 and the bytes is incremented by the length of the packet. Else -1 is returned.",
+      "description": "This function filters the IPv6 packets based on the Transport protocol. It does so by reading the packet header offset that is stored in skb->cb (control block). If the L4 protocol is TCP,tuple.ip_proto is set to 1. If it is UDP tuple.ip_proto is set to 0. If it is neither is set to -1. The tuple array consists of the identification fields for the packet such as- src address, destination address, src port, dest port, vlan0 and vlan1(used for VLAN flow tracking) which are then used as a key to lookup in the map. If it exists, the no. of packets is incremented by 1 and the bytes is incremented by the length of the packet and the function returns 0. Else -1 is returned.",
       "author": "Madhuri Annavazzala",
       "authorEmail": "madhuriannavazzala@gmail.com",
       "date": "2023-04-04"
@@ -751,7 +751,7 @@ static __always_inline int ipv6_filter(struct __sk_buff *skb, __u16 vlan0, __u16
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "This hash function filter, filters the Ethernet packets based on the IP packet version. Initially, the fields vlan0 is set to the last 12 bits of the VLAN TCI field and vlan1 is set to 0 if the VLAN_TRACKING is off else it is set to the last 12 bits of the VLAN TCI field(since vlan0 is stripped by the OS). Based on the version of IP packets, the function ipv4_filter or ipv6_filter is invoked accordingly. If it is neither of them -1 is returned.",
+      "description": "This hash function filter, filters the Ethernet packets based on the ethernet packet type.Initially, the fields vlan0 is set to the last 12 bits of the VLAN TCI field and vlan1 is set to 0 if the VLAN_TRACKING is off else it is set to the last 12 bits of the VLAN TCI field(since vlan0 is stripped by the OS). The next header offset is then stored in skb control block. Based on the version of IP packets, the function ipv4_filter or ipv6_filter is invoked accordingly. If it is neither of them -1 is returned.",
       "author": "Madhuri Annavazzala",
       "authorEmail": "madhuriannavazzala@gmail.com",
       "date": "2023-04-04"

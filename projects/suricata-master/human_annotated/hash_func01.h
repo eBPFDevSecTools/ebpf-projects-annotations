@@ -125,7 +125,7 @@
     {
       "description": "This function is the implementation of the SuperFastHash algorithm by Paul Hsieh of MIT. This function returns the hash of length len, for the input data based on the random state initval.",
       "author": "R V B R N Aaseesh",
-      "authorEmail": "ee20btech11060@iith.ac.in",
+      "authorEmail": "aaseesh.rallapalli@gmail.com",
       "date": "2023-04-05"
     }
   ],

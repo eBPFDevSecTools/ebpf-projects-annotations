@@ -217,7 +217,7 @@ static __always_inline int ipv4_hash(struct __sk_buff *skb)
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "The function takes an IPv6 address and computes a hash by bitwise OR of its four octets.",
+      "description": "The function takes an IPv6 address and computes a hash by bitwise XOR of its four octets.",
       "author": "Pragna Mamidipaka",
       "authorEmail": "pragna.pune@gmail.com",
       "date": "2023-04-05"

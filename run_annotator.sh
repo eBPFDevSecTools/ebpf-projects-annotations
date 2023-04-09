@@ -31,8 +31,6 @@ python3 src/annotator.py -o projects/ingress-node-firewall-master/intermediate/t
 #ebpf-samples
 python3 src/annotator.py -o projects/ebpf-samples/intermediate/txl_ebpf-samples -s projects/ebpf-samples/original_source -c projects/ebpf-samples/human_annotated -t projects/ebpf-samples/intermediate/ebpf-samples.function_file_list.json -u projects/ebpf-samples/intermediate/ebpf-samples.struct_file_list.json -p ebpf-samples
 
-
-
 #python3 src/annotator.py -o op/kpng-master/txl_kpng-master -s examples/kpng-master/backends/ebpf/bpf -c op/kpng-master/commented_kpng-master -t op/kpng-master/kpng-master.function_file_list.json -u op/kpng-master/kpng-master.struct_file_list.json -p kpng-master
 
 

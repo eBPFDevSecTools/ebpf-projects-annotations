@@ -51,7 +51,7 @@ struct vlan_hdr {
     {
       "start_line": 1,
       "end_line": 16,
-      "text": "/* Copyright (C) 2018 Open Information Security Foundation\n *\n * You can copy, redistribute or modify this Program under the terms of\n * the GNU General Public License version 2 as published by the Free\n * Software Foundation.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * version 2 along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA\n * 02110-1301, USA.\n */"
+      "text": "/* Copyright (C) 2018 Open Information Security Foundation\n *\n * You can copy, redistribute or modify this Program under the terms of\n * the GNU General Public License version 2 as published by the Free\n * Software Foundation.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * version 2 along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA\n * 02110-1301, USA.\n *"
     },
     {
       "start_line": 53,
@@ -122,10 +122,10 @@ struct vlan_hdr {
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function computes a hash for a given packet, by adding the source and destination IP addresses.",
+      "author": "Pragna Mamidipaka",
+      "authorEmail": "pragna.pune@gmail.com",
+      "date": "2023-04-05"
     }
   ],
   "AI_func_description": [
@@ -217,10 +217,10 @@ static __always_inline int ipv4_hash(struct __sk_buff *skb)
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function takes an IPv6 address and computes a hash by bitwise XOR of its four octets.",
+      "author": "Pragna Mamidipaka",
+      "authorEmail": "pragna.pune@gmail.com",
+      "date": "2023-04-05"
     }
   ],
   "AI_func_description": [
@@ -305,10 +305,10 @@ static inline __u32 ipv6_addr_hash(struct __sk_buff *ctx, __u64 off)
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function uses source address hash and destination address hash of a packet, and returns the sum of the two as the final hash value.",
+      "author": "Pragna Mamidipaka",
+      "authorEmail": "pragna.pune@gmail.com",
+      "date": "2023-04-05"
     }
   ],
   "AI_func_description": [
@@ -466,10 +466,10 @@ static __always_inline int ipv6_hash(struct __sk_buff *skb)
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function parses the ethernet and VLAN headers to extract the IP header. Based on whether it is an IPv4 packet or IPv6 packet, the corresponding hashing functions are called and hash values are returned. If IP header is not present, the ether type is returned. ",
+      "author": "Pragna Mamidipaka",
+      "authorEmail": "pragna.pune@gmail.com",
+      "date": "2023-04-05"
     }
   ],
   "AI_func_description": [

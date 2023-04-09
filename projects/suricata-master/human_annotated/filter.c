@@ -101,7 +101,7 @@ struct vlan_hdr {
     {
       "start_line": 1,
       "end_line": 16,
-      "text": "/* Copyright (C) 2018 Open Information Security Foundation\n *\n * You can copy, redistribute or modify this Program under the terms of\n * the GNU General Public License version 2 as published by the Free\n * Software Foundation.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * version 2 along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA\n * 02110-1301, USA.\n */"
+      "text": "/* Copyright (C) 2018 Open Information Security Foundation\n *\n * You can copy, redistribute or modify this Program under the terms of\n * the GNU General Public License version 2 as published by the Free\n * Software Foundation.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * version 2 along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA\n * 02110-1301, USA.\n *"
     }
   ],
   "updateMaps": [],
@@ -189,10 +189,10 @@ struct vlan_hdr {
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function extracts the src and dst IP addresses of the IPv4 packet, and checks whether the dst address is in the list of IPs to be dropped. If yes, count of packet drops is incremented by 1, and function returns 0. If not, function returns -1.",
+      "author": "Pragna Mamidipaka",
+      "authorEmail": "pragna.pune@gmail.com",
+      "date": "2023-04-04"
     }
   ],
   "AI_func_description": [
@@ -300,10 +300,10 @@ static __always_inline int ipv4_filter(struct __sk_buff *skb)
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function does not filter any IPv6 packets. It returns -1 for all packets.",
+      "author": "Pragna Mamidipaka",
+      "authorEmail": "pragna.pune@gmail.com",
+      "date": "2023-04-04"
     }
   ],
   "AI_func_description": [
@@ -395,10 +395,10 @@ static __always_inline int ipv6_filter(struct __sk_buff *skb)
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function checks whether the packet is an IPv4 packet or an IPv6 packet, and correspondingly calls the filter functions. If the packet does not contain any IP header, then -1 is returned.",
+      "author": "Pragna Mamidipaka",
+      "authorEmail": "pragna.pune@gmail.com",
+      "date": "2023-04-04"
     }
   ],
   "AI_func_description": [

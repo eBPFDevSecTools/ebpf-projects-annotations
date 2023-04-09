@@ -148,10 +148,10 @@
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The move_path function looks up the destination information in dst_map using id as the key. If the lookup returns a non-NULL value, i.e. the destination is found, then the validity of key is checked.The key needs be greater than or equal to zero and less than MAX_SRH_BY_DEST. If the key is valid, the segment routing header information is stored and the socket options are set. The variable rv stores the return value of the bpf_setsockopt function. The bpf_setsockopt returns 0 on success, hence the move_path will return 1. If the dst_infos is NULL or invalid, the move_path function returns 0.",
+      "author": "Madhuri Annavazzala",
+      "authorEmail": "madhuriannavazzala@gmail.com",
+      "date": "2023-04-09"
     }
   ],
   "AI_func_description": [
@@ -312,10 +312,10 @@ SEC("sockops")
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The bpf_ktime_get_ns function returns the time elapsed since system boot, in nanoseconds. If the skops->family is not AF_INET6, the function terminates by returning 0. This is done to only allow flow for scp. Next, the get_flow_id_from_sock function fetches the current flow details from the socket. If the skops->op is set to either BPF_SOCK_OPS_TCP_CONNECT_CB(Calls BPF program right before an active connection is initialized) or BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB(Calls BPF program when a passive connection is established), then move_path is called with the current flow's remote address and key set to 1. move_path returns 1 on success, 0 on failure which is stored in the rv variable. This value is stored in skops->reply and the function returns 0.",
+      "author": "Madhuri Annavazzala",
+      "authorEmail": "madhuriannavazzala@gmail.com",
+      "date": "2023-04-09"
     }
   ],
   "AI_func_description": [

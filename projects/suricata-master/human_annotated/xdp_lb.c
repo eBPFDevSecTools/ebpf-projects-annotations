@@ -246,7 +246,7 @@ struct bpf_map_def SEC("maps") cpus_count = {
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "This function composes the hash of the extracted IPv4 packet. After the initial bounds check, the cpu_hash is composed by adding the source and destination addresses. This is done in order to be able to hit the same CPU in case the source and destination IP pairs are the same. The SuperFastHash method is used to compose the hash. It takes in 3 arguments- constant character format of the composed cpu_hash, its length and a variable to add randomness called INITVAL. If the CPU assigned is greater than the maximum CPUs, modulus operator is used to wrap around and find a CPU within the maximum allocated range. If no CPU is assigned, the XDP-ABORTED action is returned. Else, the bpf_redirect_map is called to redirect the flow from one CPU to another allocated CPU.",",
+      "description": "This function computes the hash of the extracted IPv4 packet. After the initial bounds check, the cpu_hash is composed by adding the source and destination addresses. This is done in order to be able to hit the same CPU in case the source and destination IP pairs are the same. The SuperFastHash method is used to compose the hash. It takes in 3 arguments- constant character format of the composed cpu_hash, its length and a variable to add randomness called INITVAL. If the CPU assigned is greater than the maximum CPUs, modulus operator is used to wrap around and find a CPU within the maximum allocated range. If no CPU is assigned, the XDP-ABORTED action is returned. Else, the bpf_redirect_map is called to redirect the flow from one CPU to another allocated CPU.",",
       "author": "Madhuri Annavazzala",
       "authorEmail": "madhuriannavazzala@gmail.com",
       "date": "2023-04-05"
@@ -634,7 +634,7 @@ static int __always_inline hash_ipv6(void *data, void *data_end)
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "This function extracts the encapsulated IP header packet to be hashed. Initially the GRE header is processed to get the GRE_VERSION and GRE_ROUTING information. Then any ERPSAN and VLAN headers present are stripped to reach the ETHERNET HEADER. Based on the version of the IP packet mentioned the relevant function handles the hashing. i.e. either hash_ipv4 or hash_ipv6. If an IP header is not present the packet is passed onto the usual system packet processing stack.",
+      "description": "This function extracts the encapsulated IP header packet to be hashed. Initially the GRE header is processed to get the GRE_VERSION and GRE_ROUTING information. Then any ERPSAN and VLAN headers present are stripped to reach the ETHERNET HEADER. Based on the version of the IP packet mentioned the relevant function handles the hashing. i.e. either hash_ipv4 or hash_ipv6. If an IP header is not present the packet is passed onto the usual onto the usual kernel network processing stack.",
       "author": "Madhuri Annavazzala",
       "authorEmail": "madhuriannavazzala@gmail.com",
       "date": "2023-04-05"

@@ -18,7 +18,7 @@ RUN apt-get update && apt-get upgrade && apt-get dist-upgrade && apt-get install
 	python3-pip \
 	exuberant-ctags \
 	vim 
-i
+
 #install python dependencies
 RUN python3 -m pip install command
 RUN python3 -m pip install pytest-shutil

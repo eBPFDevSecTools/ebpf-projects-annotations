@@ -250,10 +250,10 @@ struct snapshot_arg {
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The function take_snapshot takes the snapshot or stores the current state of the flow. When the function is invoked with a reason(op) a map lookup is performed to check if a previous snapshot for the st_map exists, if so the current state is firstly saved before moving ahead. A amp lookup is performed with st_map and indices ranging from 0 to MAX_SNAPSHOTS-1 and stored in the curr_snapshot. The snapshot with the highest index signifies the latest snapshot. Fields pertaining to these such as sequence number,index etc is stored in arg.max_seq, arg.oldest_seq, arg.new_snapshot and arg.best_idx. If arg.new_snapshot is non-NULL, then the memory of the flow_info is copied into arg.new_snapshot->flow and the memory block of flow_id is stored into arg.new_snapshot->flow_id. This information along with the current system time, incremented sequence number and the reason is updated in the map.",
+      "author": "Madhuri Annavazzala",
+      "authorEmail": "madhuriannavazzala@gmail.com",
+      "date": "2023-04-12"
     }
   ],
   "AI_func_description": [

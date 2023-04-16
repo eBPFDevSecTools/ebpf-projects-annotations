@@ -84,7 +84,7 @@ def load_data(index_name):
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='Indexing elasticsearch documents.')
-    parser.add_argument('--index', default='index.json', help='Elasticsearch index name.',required=True)
+    parser.add_argument('--index_name', default='index.json', help='Elasticsearch index name.',required=True)
 
     settings = {
     "number_of_shards": 2,

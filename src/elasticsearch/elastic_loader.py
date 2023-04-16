@@ -109,4 +109,4 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
     create_index(args)
-    load_data(index_name)
+    load_data(args.index_name)

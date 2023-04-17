@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<doc>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/loxilb_libdp_main.c" funcheader="int main ()" startline="6" endline="9">
+int main ()
+{
+    return loxilb_main (NULL);
+}
+</source>
+</doc>

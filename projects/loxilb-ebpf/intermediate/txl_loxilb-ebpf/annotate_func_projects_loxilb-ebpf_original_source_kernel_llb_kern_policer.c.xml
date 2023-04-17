@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<doc>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_policer.c" funcheader="static int do_dp_policer (void *ctx, struct xfi *xf, int egr)" startline="13" endline="142">
+static int do_dp_policer (void *ctx, struct xfi *xf, int egr)
+{
+    struct dp_pol_tact *pla;
+    int ret = 0;
+    __u64 ts_now;
+    __u64 ts_last;
+    __u32 ntoks;
+    __u32 polid;
+    __u32 inbytes;
+    __u64 acc_toks;
+    __u64 usecs_elapsed;
+    ts_now = bpf_ktime_get_ns ();
+    if (egr) {
+        polid = xf->qm.opolid;
+    }
+    else {
+        polid = xf->qm.ipolid;
+    }
+    pla = bpf_map_lookup_elem (& polx_map, & polid);
+    if (!pla) {
+        return 0;
+    }
+    inbytes = xf->pm.l3_len;
+    bpf_spin_lock (&pla->lock);
+    ts_last = pla->pol.lastc_uts;
+    pla->pol.lastc_uts = ts_now;
+    usecs_elapsed = (ts_now - ts_last) / NSECS_IN_USEC;
+    acc_toks = pla->pol.toksc_pus * usecs_elapsed;
+    if (acc_toks > 0) {
+        if (pla->pol.cbs > pla->pol.tok_c) {
+            ntoks = pla->pol.cbs - pla->pol.tok_c;
+            if (acc_toks > ntoks) {
+                acc_toks -= ntoks;
+                pla->pol.tok_c += ntoks;
+            }
+            else {
+                pla->pol.tok_c += acc_toks;
+                acc_toks = 0;
+            }
+        }
+    }
+    else {
+        pla->pol.lastc_uts = ts_last;
+    }
+    ts_last = pla->pol.laste_uts;
+    pla->pol.laste_uts = ts_now;
+    usecs_elapsed = (ts_now - ts_last) / NSECS_IN_USEC;
+    acc_toks = pla->pol.tokse_pus * usecs_elapsed;
+    if (acc_toks) {
+        if (pla->pol.ebs > pla->pol.tok_e) {
+            ntoks = pla->pol.ebs - pla->pol.tok_e;
+            if (acc_toks > ntoks) {
+                acc_toks -= ntoks;
+                pla->pol.tok_e += ntoks;
+            }
+            else {
+                pla->pol.tok_e += acc_toks;
+                acc_toks = 0;
+            }
+        }
+    }
+    else {
+        pla->pol.laste_uts = ts_last;
+    }
+    if (pla->pol.color_aware == 0) {
+        if (pla->pol.tok_e < inbytes) {
+            xf->qm.ocol = LLB_PIPE_COL_RED;
+        }
+        else if (pla->pol.tok_c < inbytes) {
+            xf->qm.ocol = LLB_PIPE_COL_YELLOW;
+            pla->pol.tok_e -= inbytes;
+        }
+        else {
+            pla->pol.tok_c -= inbytes;
+            pla->pol.tok_e -= inbytes;
+            xf->qm.ocol = LLB_PIPE_COL_GREEN;
+        }
+    }
+    else {
+        if (xf->qm.icol == LLB_PIPE_COL_NONE) {
+            ret = -1;
+            goto out;
+        }
+        if (xf->qm.icol == LLB_PIPE_COL_RED) {
+            xf->qm.ocol = LLB_PIPE_COL_RED;
+            goto out;
+        }
+        if (pla->pol.tok_e < inbytes) {
+            xf->qm.ocol = LLB_PIPE_COL_RED;
+        }
+        else if (pla->pol.tok_c < inbytes) {
+            if (xf->qm.icol == LLB_PIPE_COL_GREEN) {
+                xf->qm.ocol = LLB_PIPE_COL_YELLOW;
+            }
+            else {
+                xf->qm.ocol = xf->qm.icol;
+            }
+            pla->pol.tok_e -= inbytes;
+        }
+        else {
+            pla->pol.tok_c -= inbytes;
+            pla->pol.tok_e -= inbytes;
+            xf->qm.ocol = xf->qm.icol;
+        }
+    }
+out :
+    if (pla->pol.drop_prio < xf->qm.ocol) {
+        ret = 1;
+        pla->pol.ps.drop_packets += 1;
+        LLBS_PPLN_DROP (xf);
+    }
+    else {
+        pla->pol.ps.pass_packets += 1;
+    }
+    bpf_spin_unlock (&pla->lock);
+    return ret;
+}
+</source>
+</doc>

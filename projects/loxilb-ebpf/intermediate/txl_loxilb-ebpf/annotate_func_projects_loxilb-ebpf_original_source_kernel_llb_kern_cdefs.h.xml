@@ -1,0 +1,1611 @@
+<?xml version="1.0"?>
+<doc>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static void __always_inline dp_do_map_stats (struct xdp_md *ctx, struct xfi *xf, int xtbl, int cidx)" startline="568" endline="631">
+static void __always_inline dp_do_map_stats (struct xdp_md *ctx, struct xfi *xf, int xtbl, int cidx)
+{
+    struct dp_pb_stats *pb;
+    struct dp_pb_stats pb_new;
+    void *map = NULL;
+    int key = cidx;
+    switch (xtbl) {
+    case LL_DP_RTV4_STATS_MAP :
+        map = &rt_v4_stats_map;
+        break;
+    case LL_DP_RTV6_STATS_MAP :
+        map = &rt_v6_stats_map;
+        break;
+    case LL_DP_CT_STATS_MAP :
+        map = &ct_stats_map;
+        break;
+    case LL_DP_INTF_STATS_MAP :
+        map = &intf_stats_map;
+        break;
+    case LL_DP_TX_INTF_STATS_MAP :
+        map = &tx_intf_stats_map;
+        break;
+    case LL_DP_BD_STATS_MAP :
+        map = &bd_stats_map;
+        break;
+    case LL_DP_TX_BD_STATS_MAP :
+        map = &tx_bd_stats_map;
+        break;
+    case LL_DP_TMAC_STATS_MAP :
+        map = &tmac_stats_map;
+        break;
+    case LL_DP_SESS4_STATS_MAP :
+        map = &sess_v4_stats_map;
+        break;
+    case LL_DP_NAT_STATS_MAP :
+        map = &nat_stats_map;
+        break;
+    case LL_DP_FW4_STATS_MAP :
+        map = &fw_v4_stats_map;
+        break;
+    default :
+        return;
+    }
+    pb = bpf_map_lookup_elem (map, & key);
+    if (pb) {
+        pb->bytes += xf->pm.py_bytes;
+        pb->packets += 1;
+        LL_DBG_PRINTK ("[STAT] %d %llu %llu\n", key, pb->bytes, pb->packets);
+        return;
+    }
+    pb_new.bytes = xf->pm.py_bytes;
+    ;
+    pb_new.packets = 1;
+    bpf_map_update_elem (map, &key, &pb_new, BPF_ANY);
+    return;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static void __always_inline dp_ipv4_new_csum (struct iphdr *iph)" startline="633" endline="647">
+static void __always_inline dp_ipv4_new_csum (struct iphdr *iph)
+{
+    __u16 *iph16 = (__u16 *) iph;
+    __u32 csum;
+    int i;
+    iph->check = 0;
+
+#pragma clang loop unroll(full)
+    for (i = 0, csum = 0; i < sizeof (*iph) >> 1; i++)
+        csum += *iph16++;
+    iph->check = ~((csum & 0xffff) + (csum >> 16));
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_csum_tcall (void *ctx, struct xfi *xf)" startline="695" endline="711">
+static int __always_inline dp_csum_tcall (void *ctx, struct xfi *xf)
+{
+    int z = 0;
+    __u32 crc = 0xffffffff;
+    xf->km.skey[0] = 0;
+    *(__u16*) &xf->km.skey[2] = xf->pm.l4_off;
+    *(__u16*) &xf->km.skey[4] = xf->pm.l3_plen;
+    *(__u32*) &xf->km.skey[8] = crc;
+    bpf_map_update_elem (&xfis, &z, xf, BPF_ANY);
+    TCALL_CRC1 ();
+    return DP_PASS;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_sunp_tcall (void *ctx, struct xfi *xf)" startline="713" endline="722">
+static int __always_inline dp_sunp_tcall (void *ctx, struct xfi *xf)
+{
+    int z = 0;
+    bpf_map_update_elem (&xfis, &z, xf, BPF_ANY);
+    bpf_tail_call (ctx, &pgm_tbl, LLB_DP_SUNP_PGM_ID2);
+    return DP_PASS;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_pkt_is_l2mcbc (struct xfi *xf, void *md)" startline="724" endline="734">
+static int __always_inline dp_pkt_is_l2mcbc (struct xfi *xf, void *md)
+{
+    struct  __sk_buff *b = md;
+    if (b->pkt_type == PACKET_MULTICAST || b->pkt_type == PACKET_BROADCAST) {
+        return 1;
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_vlan_info (struct xfi *xf, void *md)" startline="736" endline="748">
+static int __always_inline dp_vlan_info (struct xfi *xf, void *md)
+{
+    struct  __sk_buff *b = md;
+    if (b->vlan_present) {
+        xf->l2m.vlan[0] = bpf_htons ((__u16) (b->vlan_tci));
+        return 1;
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_add_l2 (void *md, int delta)" startline="750" endline="754">
+static int __always_inline dp_add_l2 (void *md, int delta)
+{
+    return bpf_skb_change_head (md, delta, 0);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_remove_l2 (void *md, int delta)" startline="756" endline="761">
+static int __always_inline dp_remove_l2 (void *md, int delta)
+{
+    return bpf_skb_adjust_room (md, -delta, BPF_ADJ_ROOM_MAC, BPF_F_ADJ_ROOM_FIXED_GSO);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_buf_add_room (void *md, int delta, __u64 flags)" startline="763" endline="768">
+static int __always_inline dp_buf_add_room (void *md, int delta, __u64 flags)
+{
+    return bpf_skb_adjust_room (md, delta, BPF_ADJ_ROOM_MAC, flags);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_buf_delete_room (void *md, int delta, __u64 flags)" startline="770" endline="775">
+static int __always_inline dp_buf_delete_room (void *md, int delta, __u64 flags)
+{
+    return bpf_skb_adjust_room (md, -delta, BPF_ADJ_ROOM_MAC, flags);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_redirect_port (void *tbl, struct xfi *xf)" startline="777" endline="789">
+static int __always_inline dp_redirect_port (void *tbl, struct xfi *xf)
+{
+    int *oif;
+    int key = xf->pm.oport;
+    oif = bpf_map_lookup_elem (tbl, & key);
+    if (!oif) {
+        return TC_ACT_SHOT;
+    }
+    LL_DBG_PRINTK ("[REDR] port %d OIF %d\n", key, *oif);
+    return bpf_redirect (*oif, 0);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_rewire_port (void *tbl, struct xfi *xf)" startline="791" endline="802">
+static int __always_inline dp_rewire_port (void *tbl, struct xfi *xf)
+{
+    int *oif;
+    int key = xf->pm.oport;
+    oif = bpf_map_lookup_elem (tbl, & key);
+    if (!oif) {
+        return TC_ACT_SHOT;
+    }
+    return bpf_redirect (*oif, BPF_F_INGRESS);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_record_it (void *skb, struct xfi *xf)" startline="804" endline="815">
+static int __always_inline dp_record_it (void *skb, struct xfi *xf)
+{
+    int *oif;
+    int key = LLB_PORT_NO;
+    oif = bpf_map_lookup_elem (& tx_intf_map, & key);
+    if (!oif) {
+        return TC_ACT_SHOT;
+    }
+    return bpf_clone_redirect (skb, *oif, 0);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_remove_vlan_tag (void *ctx, struct xfi *xf)" startline="817" endline="833">
+static int __always_inline dp_remove_vlan_tag (void *ctx, struct xfi *xf)
+{
+    void *dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    struct ethhdr *eth;
+    bpf_skb_vlan_pop (ctx);
+    eth = DP_TC_PTR (DP_PDATA (ctx));
+    dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    if (eth + 1 > dend) {
+        return -1;
+    }
+    memcpy (eth->h_dest, xf->l2m.dl_dst, 6);
+    memcpy (eth->h_source, xf->l2m.dl_src, 6);
+    eth->h_proto = xf->l2m.dl_type;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_insert_vlan_tag (void *ctx, struct xfi *xf, __be16 vlan)" startline="835" endline="850">
+static int __always_inline dp_insert_vlan_tag (void *ctx, struct xfi *xf, __be16 vlan)
+{
+    void *dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    struct ethhdr *eth;
+    bpf_skb_vlan_push (ctx, bpf_ntohs (xf->l2m.dl_type), bpf_ntohs (vlan));
+    eth = DP_TC_PTR (DP_PDATA (ctx));
+    dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    if (eth + 1 > dend) {
+        return -1;
+    }
+    memcpy (eth->h_dest, xf->l2m.dl_dst, 6);
+    memcpy (eth->h_source, xf->l2m.dl_src, 6);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_swap_vlan_tag (void *ctx, struct xfi *xf, __be16 vlan)" startline="852" endline="857">
+static int __always_inline dp_swap_vlan_tag (void *ctx, struct xfi *xf, __be16 vlan)
+{
+    bpf_skb_vlan_pop (ctx);
+    return dp_insert_vlan_tag (ctx, xf, vlan);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_tcp_src_ip6 (void *md, struct xfi *xf, __be32 *xip)" startline="859" endline="875">
+static int __always_inline dp_set_tcp_src_ip6 (void *md, struct xfi *xf, __be32 *xip)
+{
+    int tcp_csum_off = xf->pm.l4_off + offsetof (struct tcphdr, check);
+    int ip_src_off = xf->pm.l3_off + offsetof (struct ipv6hdr, saddr);
+    __be32 *old_sip = xf->l34m.saddr;
+    bpf_l4_csum_replace (md, tcp_csum_off, old_sip[0], xip[0], BPF_F_PSEUDO_HDR | sizeof (*xip));
+    bpf_l4_csum_replace (md, tcp_csum_off, old_sip[1], xip[1], BPF_F_PSEUDO_HDR | sizeof (*xip));
+    bpf_l4_csum_replace (md, tcp_csum_off, old_sip[2], xip[2], BPF_F_PSEUDO_HDR | sizeof (*xip));
+    bpf_l4_csum_replace (md, tcp_csum_off, old_sip[3], xip[3], BPF_F_PSEUDO_HDR | sizeof (*xip));
+    bpf_skb_store_bytes (md, ip_src_off, xip, sizeof (xf->l34m.saddr), 0);
+    DP_XADDR_CP (xf->l34m.saddr, xip);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_tcp_src_ip (void *md, struct xfi *xf, __be32 xip)" startline="877" endline="892">
+static int __always_inline dp_set_tcp_src_ip (void *md, struct xfi *xf, __be32 xip)
+{
+    int ip_csum_off = xf->pm.l3_off + offsetof (struct iphdr, check);
+    int tcp_csum_off = xf->pm.l4_off + offsetof (struct tcphdr, check);
+    int ip_src_off = xf->pm.l3_off + offsetof (struct iphdr, saddr);
+    __be32 old_sip = xf->l34m.saddr4;
+    bpf_l4_csum_replace (md, tcp_csum_off, old_sip, xip, BPF_F_PSEUDO_HDR | sizeof (xip));
+    bpf_l3_csum_replace (md, ip_csum_off, old_sip, xip, sizeof (xip));
+    bpf_skb_store_bytes (md, ip_src_off, &xip, sizeof (xip), 0);
+    xf->l34m.saddr4 = xip;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_tcp_dst_ip6 (void *md, struct xfi *xf, __be32 *xip)" startline="894" endline="910">
+static int __always_inline dp_set_tcp_dst_ip6 (void *md, struct xfi *xf, __be32 *xip)
+{
+    int tcp_csum_off = xf->pm.l4_off + offsetof (struct tcphdr, check);
+    int ip_dst_off = xf->pm.l3_off + offsetof (struct ipv6hdr, daddr);
+    __be32 *old_dip = xf->l34m.daddr;
+    bpf_l4_csum_replace (md, tcp_csum_off, old_dip[0], xip[0], BPF_F_PSEUDO_HDR | sizeof (*xip));
+    bpf_l4_csum_replace (md, tcp_csum_off, old_dip[1], xip[1], BPF_F_PSEUDO_HDR | sizeof (*xip));
+    bpf_l4_csum_replace (md, tcp_csum_off, old_dip[2], xip[2], BPF_F_PSEUDO_HDR | sizeof (*xip));
+    bpf_l4_csum_replace (md, tcp_csum_off, old_dip[3], xip[3], BPF_F_PSEUDO_HDR | sizeof (*xip));
+    bpf_skb_store_bytes (md, ip_dst_off, xip, sizeof (xf->l34m.saddr), 0);
+    DP_XADDR_CP (xf->l34m.daddr, xip);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_tcp_dst_ip (void *md, struct xfi *xf, __be32 xip)" startline="912" endline="926">
+static int __always_inline dp_set_tcp_dst_ip (void *md, struct xfi *xf, __be32 xip)
+{
+    int ip_csum_off = xf->pm.l3_off + offsetof (struct iphdr, check);
+    int tcp_csum_off = xf->pm.l4_off + offsetof (struct tcphdr, check);
+    int ip_dst_off = xf->pm.l3_off + offsetof (struct iphdr, daddr);
+    __be32 old_dip = xf->l34m.daddr4;
+    bpf_l4_csum_replace (md, tcp_csum_off, old_dip, xip, BPF_F_PSEUDO_HDR | sizeof (xip));
+    bpf_l3_csum_replace (md, ip_csum_off, old_dip, xip, sizeof (xip));
+    bpf_skb_store_bytes (md, ip_dst_off, &xip, sizeof (xip), 0);
+    xf->l34m.daddr4 = xip;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_tcp_sport (void *md, struct xfi *xf, __be16 xport)" startline="928" endline="940">
+static int __always_inline dp_set_tcp_sport (void *md, struct xfi *xf, __be16 xport)
+{
+    int tcp_csum_off = xf->pm.l4_off + offsetof (struct tcphdr, check);
+    int tcp_sport_off = xf->pm.l4_off + offsetof (struct tcphdr, source);
+    __be32 old_sport = xf->l34m.source;
+    bpf_l4_csum_replace (md, tcp_csum_off, old_sport, xport, sizeof (xport));
+    bpf_skb_store_bytes (md, tcp_sport_off, &xport, sizeof (xport), 0);
+    xf->l34m.source = xport;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_tcp_dport (void *md, struct xfi *xf, __be16 xport)" startline="942" endline="954">
+static int __always_inline dp_set_tcp_dport (void *md, struct xfi *xf, __be16 xport)
+{
+    int tcp_csum_off = xf->pm.l4_off + offsetof (struct tcphdr, check);
+    int tcp_dport_off = xf->pm.l4_off + offsetof (struct tcphdr, dest);
+    __be32 old_dport = xf->l34m.dest;
+    bpf_l4_csum_replace (md, tcp_csum_off, old_dport, xport, sizeof (xport));
+    bpf_skb_store_bytes (md, tcp_dport_off, &xport, sizeof (xport), 0);
+    xf->l34m.dest = xport;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_udp_src_ip6 (void *md, struct xfi *xf, __be32 *xip)" startline="956" endline="969">
+static int __always_inline dp_set_udp_src_ip6 (void *md, struct xfi *xf, __be32 *xip)
+{
+    int udp_csum_off = xf->pm.l4_off + offsetof (struct udphdr, check);
+    int ip_src_off = xf->pm.l3_off + offsetof (struct ipv6hdr, saddr);
+    __be16 csum = 0;
+    bpf_skb_store_bytes (md, udp_csum_off, &csum, sizeof (csum), 0);
+    bpf_skb_store_bytes (md, ip_src_off, xip, sizeof (xf->l34m.saddr), 0);
+    DP_XADDR_CP (xf->l34m.saddr, xip);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_udp_src_ip (void *md, struct xfi *xf, __be32 xip)" startline="971" endline="987">
+static int __always_inline dp_set_udp_src_ip (void *md, struct xfi *xf, __be32 xip)
+{
+    int ip_csum_off = xf->pm.l3_off + offsetof (struct iphdr, check);
+    int udp_csum_off = xf->pm.l4_off + offsetof (struct udphdr, check);
+    int ip_src_off = xf->pm.l3_off + offsetof (struct iphdr, saddr);
+    __be16 csum = 0;
+    __be32 old_sip = xf->l34m.saddr4;
+    bpf_skb_store_bytes (md, udp_csum_off, &csum, sizeof (csum), 0);
+    bpf_l3_csum_replace (md, ip_csum_off, old_sip, xip, sizeof (xip));
+    bpf_skb_store_bytes (md, ip_src_off, &xip, sizeof (xip), 0);
+    xf->l34m.saddr4 = xip;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_udp_dst_ip6 (void *md, struct xfi *xf, __be32 *xip)" startline="989" endline="1002">
+static int __always_inline dp_set_udp_dst_ip6 (void *md, struct xfi *xf, __be32 *xip)
+{
+    int udp_csum_off = xf->pm.l4_off + offsetof (struct udphdr, check);
+    int ip_dst_off = xf->pm.l3_off + offsetof (struct ipv6hdr, daddr);
+    __be16 csum = 0;
+    bpf_skb_store_bytes (md, udp_csum_off, &csum, sizeof (csum), 0);
+    bpf_skb_store_bytes (md, ip_dst_off, xip, sizeof (xf->l34m.daddr), 0);
+    DP_XADDR_CP (xf->l34m.daddr, xip);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_udp_dst_ip (void *md, struct xfi *xf, __be32 xip)" startline="1004" endline="1020">
+static int __always_inline dp_set_udp_dst_ip (void *md, struct xfi *xf, __be32 xip)
+{
+    int ip_csum_off = xf->pm.l3_off + offsetof (struct iphdr, check);
+    int udp_csum_off = xf->pm.l4_off + offsetof (struct udphdr, check);
+    int ip_dst_off = xf->pm.l3_off + offsetof (struct iphdr, daddr);
+    __be16 csum = 0;
+    __be32 old_dip = xf->l34m.daddr4;
+    bpf_skb_store_bytes (md, udp_csum_off, &csum, sizeof (csum), 0);
+    bpf_l3_csum_replace (md, ip_csum_off, old_dip, xip, sizeof (xip));
+    bpf_skb_store_bytes (md, ip_dst_off, &xip, sizeof (xip), 0);
+    xf->l34m.daddr4 = xip;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_udp_sport (void *md, struct xfi *xf, __be16 xport)" startline="1022" endline="1035">
+static int __always_inline dp_set_udp_sport (void *md, struct xfi *xf, __be16 xport)
+{
+    int udp_csum_off = xf->pm.l4_off + offsetof (struct udphdr, check);
+    int udp_sport_off = xf->pm.l4_off + offsetof (struct udphdr, source);
+    __be16 csum = 0;
+    bpf_skb_store_bytes (md, udp_csum_off, &csum, sizeof (csum), 0);
+    bpf_skb_store_bytes (md, udp_sport_off, &xport, sizeof (xport), 0);
+    xf->l34m.source = xport;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_udp_dport (void *md, struct xfi *xf, __be16 xport)" startline="1037" endline="1050">
+static int __always_inline dp_set_udp_dport (void *md, struct xfi *xf, __be16 xport)
+{
+    int udp_csum_off = xf->pm.l4_off + offsetof (struct udphdr, check);
+    int udp_dport_off = xf->pm.l4_off + offsetof (struct udphdr, dest);
+    __be16 csum = 0;
+    bpf_skb_store_bytes (md, udp_csum_off, &csum, sizeof (csum), 0);
+    bpf_skb_store_bytes (md, udp_dport_off, &xport, sizeof (xport), 0);
+    xf->l34m.dest = xport;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_icmp_src_ip6 (void *md, struct xfi *xf, __be32 *xip)" startline="1052" endline="1061">
+static int __always_inline dp_set_icmp_src_ip6 (void *md, struct xfi *xf, __be32 *xip)
+{
+    int ip_src_off = xf->pm.l3_off + offsetof (struct ipv6hdr, saddr);
+    bpf_skb_store_bytes (md, ip_src_off, xip, sizeof (struct in6_addr), 0);
+    DP_XADDR_CP (xf->l34m.saddr, xip);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_icmp_src_ip (void *md, struct xfi *xf, __be32 xip)" startline="1063" endline="1075">
+static int __always_inline dp_set_icmp_src_ip (void *md, struct xfi *xf, __be32 xip)
+{
+    int ip_csum_off = xf->pm.l3_off + offsetof (struct iphdr, check);
+    int ip_src_off = xf->pm.l3_off + offsetof (struct iphdr, saddr);
+    __be32 old_sip = xf->l34m.saddr4;
+    bpf_l3_csum_replace (md, ip_csum_off, old_sip, xip, sizeof (xip));
+    bpf_skb_store_bytes (md, ip_src_off, &xip, sizeof (xip), 0);
+    xf->l34m.saddr4 = xip;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_icmp_dst_ip6 (void *md, struct xfi *xf, __be32 *xip)" startline="1077" endline="1086">
+static int __always_inline dp_set_icmp_dst_ip6 (void *md, struct xfi *xf, __be32 *xip)
+{
+    int ip_dst_off = xf->pm.l3_off + offsetof (struct ipv6hdr, daddr);
+    bpf_skb_store_bytes (md, ip_dst_off, xip, sizeof (struct in6_addr), 0);
+    DP_XADDR_CP (xf->l34m.daddr, xip);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_icmp_dst_ip (void *md, struct xfi *xf, __be32 xip)" startline="1088" endline="1100">
+static int __always_inline dp_set_icmp_dst_ip (void *md, struct xfi *xf, __be32 xip)
+{
+    int ip_csum_off = xf->pm.l3_off + offsetof (struct iphdr, check);
+    int ip_dst_off = xf->pm.l3_off + offsetof (struct iphdr, daddr);
+    __be32 old_dip = xf->l34m.daddr4;
+    bpf_l3_csum_replace (md, ip_csum_off, old_dip, xip, sizeof (xip));
+    bpf_skb_store_bytes (md, ip_dst_off, &xip, sizeof (xip), 0);
+    xf->l34m.daddr4 = xip;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_sctp_src_ip6 (void *md, struct xfi *xf, __be32 *xip)" startline="1102" endline="1111">
+static int __always_inline dp_set_sctp_src_ip6 (void *md, struct xfi *xf, __be32 *xip)
+{
+    int ip_src_off = xf->pm.l3_off + offsetof (struct ipv6hdr, saddr);
+    bpf_skb_store_bytes (md, ip_src_off, xip, sizeof (struct in6_addr), 0);
+    DP_XADDR_CP (xf->l34m.saddr, xip);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_sctp_src_ip (void *md, struct xfi *xf, __be32 xip)" startline="1113" endline="1125">
+static int __always_inline dp_set_sctp_src_ip (void *md, struct xfi *xf, __be32 xip)
+{
+    int ip_csum_off = xf->pm.l3_off + offsetof (struct iphdr, check);
+    int ip_src_off = xf->pm.l3_off + offsetof (struct iphdr, saddr);
+    __be32 old_sip = xf->l34m.saddr4;
+    bpf_l3_csum_replace (md, ip_csum_off, old_sip, xip, sizeof (xip));
+    bpf_skb_store_bytes (md, ip_src_off, &xip, sizeof (xip), 0);
+    xf->l34m.saddr4 = xip;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_sctp_dst_ip6 (void *md, struct xfi *xf, __be32 *xip)" startline="1127" endline="1136">
+static int __always_inline dp_set_sctp_dst_ip6 (void *md, struct xfi *xf, __be32 *xip)
+{
+    int ip_dst_off = xf->pm.l3_off + offsetof (struct ipv6hdr, daddr);
+    bpf_skb_store_bytes (md, ip_dst_off, xip, sizeof (struct in6_addr), 0);
+    DP_XADDR_CP (xf->l34m.daddr, xip);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_sctp_dst_ip (void *md, struct xfi *xf, __be32 xip)" startline="1138" endline="1150">
+static int __always_inline dp_set_sctp_dst_ip (void *md, struct xfi *xf, __be32 xip)
+{
+    int ip_csum_off = xf->pm.l3_off + offsetof (struct iphdr, check);
+    int ip_dst_off = xf->pm.l3_off + offsetof (struct iphdr, daddr);
+    __be32 old_dip = xf->l34m.daddr4;
+    bpf_l3_csum_replace (md, ip_csum_off, old_dip, xip, sizeof (xip));
+    bpf_skb_store_bytes (md, ip_dst_off, &xip, sizeof (xip), 0);
+    xf->l34m.daddr4 = xip;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_sctp_sport (void *md, struct xfi *xf, __be16 xport)" startline="1152" endline="1164">
+static int __always_inline dp_set_sctp_sport (void *md, struct xfi *xf, __be16 xport)
+{
+    uint32_t csum = 0;
+    int sctp_csum_off = xf->pm.l4_off + offsetof (struct sctphdr, checksum);
+    int sctp_sport_off = xf->pm.l4_off + offsetof (struct sctphdr, source);
+    bpf_skb_store_bytes (md, sctp_csum_off, &csum, sizeof (csum), 0);
+    bpf_skb_store_bytes (md, sctp_sport_off, &xport, sizeof (xport), 0);
+    xf->l34m.source = xport;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_set_sctp_dport (void *md, struct xfi *xf, __be16 xport)" startline="1166" endline="1178">
+static int __always_inline dp_set_sctp_dport (void *md, struct xfi *xf, __be16 xport)
+{
+    uint32_t csum = 0;
+    int sctp_csum_off = xf->pm.l4_off + offsetof (struct sctphdr, checksum);
+    int sctp_dport_off = xf->pm.l4_off + offsetof (struct sctphdr, dest);
+    bpf_skb_store_bytes (md, sctp_csum_off, &csum, sizeof (csum), 0);
+    bpf_skb_store_bytes (md, sctp_dport_off, &xport, sizeof (xport), 0);
+    xf->l34m.dest = xport;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_dnat (void *ctx, struct xfi *xf, __be32 xip, __be16 xport)" startline="1180" endline="1255">
+static int __always_inline dp_do_dnat (void *ctx, struct xfi *xf, __be32 xip, __be16 xport)
+{
+    void *dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    if (xf->l34m.nw_proto == IPPROTO_TCP) {
+        struct tcphdr *tcp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (tcp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (xip == 0) {
+            xip = xf->l34m.saddr4;
+            dp_set_tcp_src_ip (ctx, xf, xf->l34m.daddr4);
+            dp_set_tcp_dst_ip (ctx, xf, xip);
+        }
+        else {
+            if (xf->nm.nrip4) {
+                dp_set_tcp_src_ip (ctx, xf, xf->nm.nrip4);
+            }
+            dp_set_tcp_dst_ip (ctx, xf, xip);
+        }
+        dp_set_tcp_dport (ctx, xf, xport);
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_UDP) {
+        struct udphdr *udp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (udp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (xip == 0) {
+            xip = xf->l34m.saddr4;
+            dp_set_udp_src_ip (ctx, xf, xf->l34m.daddr4);
+            dp_set_udp_dst_ip (ctx, xf, xip);
+        }
+        else {
+            if (xf->nm.nrip4) {
+                dp_set_udp_src_ip (ctx, xf, xf->nm.nrip4);
+            }
+            dp_set_udp_dst_ip (ctx, xf, xip);
+        }
+        dp_set_udp_dport (ctx, xf, xport);
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_SCTP) {
+        struct sctphdr *sctp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (sctp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (xip == 0) {
+            xip = xf->l34m.saddr4;
+            dp_set_sctp_src_ip (ctx, xf, xf->l34m.daddr4);
+            dp_set_sctp_dst_ip (ctx, xf, xip);
+        }
+        else {
+            if (xf->nm.nrip4) {
+                dp_set_sctp_src_ip (ctx, xf, xf->nm.nrip4);
+            }
+            dp_set_sctp_dst_ip (ctx, xf, xip);
+        }
+        dp_set_sctp_dport (ctx, xf, xport);
+
+#ifdef HAVE_DP_SCTP_SUM
+        dp_csum_tcall (ctx, xf);
+
+#endif
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_ICMP) {
+        if (xf->nm.nrip4) {
+            dp_set_icmp_src_ip (ctx, xf, xf->nm.nrip4);
+        }
+        dp_set_icmp_dst_ip (ctx, xf, xip);
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_dnat6 (void *ctx, struct xfi *xf, __be32 *xip, __be16 xport)" startline="1257" endline="1332">
+static int __always_inline dp_do_dnat6 (void *ctx, struct xfi *xf, __be32 *xip, __be16 xport)
+{
+    void *dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    if (xf->l34m.nw_proto == IPPROTO_TCP) {
+        struct tcphdr *tcp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (tcp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (DP_XADDR_ISZR (xip)) {
+            DP_XADDR_CP (xip, xf->l34m.saddr);
+            dp_set_tcp_src_ip6 (ctx, xf, xf->l34m.daddr);
+            dp_set_tcp_dst_ip6 (ctx, xf, xip);
+        }
+        else {
+            if (!DP_XADDR_ISZR(xf->nm.nrip)) {
+                dp_set_tcp_src_ip6 (ctx, xf, xf->nm.nrip);
+            }
+            dp_set_tcp_dst_ip6 (ctx, xf, xip);
+        }
+        dp_set_tcp_dport (ctx, xf, xport);
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_UDP) {
+        struct udphdr *udp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (udp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (DP_XADDR_ISZR (xip)) {
+            DP_XADDR_CP (xip, xf->l34m.saddr);
+            dp_set_udp_src_ip6 (ctx, xf, xf->l34m.daddr);
+            dp_set_udp_dst_ip6 (ctx, xf, xip);
+        }
+        else {
+            if (!DP_XADDR_ISZR(xf->nm.nrip)) {
+                dp_set_udp_src_ip6 (ctx, xf, xf->nm.nrip);
+            }
+            dp_set_udp_dst_ip6 (ctx, xf, xip);
+        }
+        dp_set_udp_dport (ctx, xf, xport);
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_SCTP) {
+        struct sctphdr *sctp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (sctp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (DP_XADDR_ISZR (xip)) {
+            DP_XADDR_CP (xip, xf->l34m.saddr);
+            dp_set_sctp_src_ip6 (ctx, xf, xf->l34m.daddr);
+            dp_set_sctp_dst_ip6 (ctx, xf, xip);
+        }
+        else {
+            if (!DP_XADDR_ISZR(xf->nm.nrip)) {
+                dp_set_sctp_src_ip6 (ctx, xf, xf->nm.nrip);
+            }
+            dp_set_sctp_dst_ip6 (ctx, xf, xip);
+        }
+        dp_set_sctp_dport (ctx, xf, xport);
+
+#ifdef HAVE_DP_SCTP_SUM
+        dp_csum_tcall (ctx, xf);
+
+#endif
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_ICMP) {
+        if (!DP_XADDR_ISZR(xf->nm.nrip)) {
+            dp_set_icmp_src_ip6 (ctx, xf, xf->nm.nrip);
+        }
+        dp_set_icmp_dst_ip6 (ctx, xf, xip);
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_snat (void *ctx, struct xfi *xf, __be32 xip, __be16 xport)" startline="1334" endline="1409">
+static int __always_inline dp_do_snat (void *ctx, struct xfi *xf, __be32 xip, __be16 xport)
+{
+    void *dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    if (xf->l34m.nw_proto == IPPROTO_TCP) {
+        struct tcphdr *tcp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (tcp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (xip == 0) {
+            xip = xf->l34m.saddr4;
+            dp_set_tcp_src_ip (ctx, xf, xf->l34m.daddr4);
+            dp_set_tcp_dst_ip (ctx, xf, xip);
+        }
+        else {
+            dp_set_tcp_src_ip (ctx, xf, xip);
+            if (xf->nm.nrip4) {
+                dp_set_tcp_dst_ip (ctx, xf, xf->nm.nrip4);
+            }
+        }
+        dp_set_tcp_sport (ctx, xf, xport);
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_UDP) {
+        struct udphdr *udp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (udp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (xip == 0) {
+            xip = xf->l34m.saddr4;
+            dp_set_udp_src_ip (ctx, xf, xf->l34m.daddr4);
+            dp_set_udp_dst_ip (ctx, xf, xip);
+        }
+        else {
+            dp_set_udp_src_ip (ctx, xf, xip);
+            if (xf->nm.nrip4) {
+                dp_set_udp_dst_ip (ctx, xf, xf->nm.nrip4);
+            }
+        }
+        dp_set_udp_sport (ctx, xf, xport);
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_SCTP) {
+        struct sctphdr *sctp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (sctp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (xip == 0) {
+            xip = xf->l34m.saddr4;
+            dp_set_sctp_src_ip (ctx, xf, xf->l34m.daddr4);
+            dp_set_sctp_dst_ip (ctx, xf, xip);
+        }
+        else {
+            dp_set_sctp_src_ip (ctx, xf, xip);
+            if (xf->nm.nrip4) {
+                dp_set_sctp_dst_ip (ctx, xf, xf->nm.nrip4);
+            }
+        }
+        dp_set_sctp_sport (ctx, xf, xport);
+
+#ifdef HAVE_DP_SCTP_SUM
+        dp_csum_tcall (ctx, xf);
+
+#endif
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_ICMP) {
+        dp_set_icmp_src_ip (ctx, xf, xip);
+        if (xf->nm.nrip4) {
+            dp_set_icmp_dst_ip (ctx, xf, xf->nm.nrip4);
+        }
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_snat6 (void *ctx, struct xfi *xf, __be32 *xip, __be16 xport)" startline="1411" endline="1486">
+static int __always_inline dp_do_snat6 (void *ctx, struct xfi *xf, __be32 *xip, __be16 xport)
+{
+    void *dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    if (xf->l34m.nw_proto == IPPROTO_TCP) {
+        struct tcphdr *tcp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (tcp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (DP_XADDR_ISZR (xip)) {
+            DP_XADDR_CP (xip, xf->l34m.saddr);
+            dp_set_tcp_src_ip6 (ctx, xf, xf->l34m.daddr);
+            dp_set_tcp_dst_ip6 (ctx, xf, xip);
+        }
+        else {
+            dp_set_tcp_src_ip6 (ctx, xf, xip);
+            if (!DP_XADDR_ISZR(xf->nm.nrip)) {
+                dp_set_tcp_dst_ip6 (ctx, xf, xf->nm.nrip);
+            }
+        }
+        dp_set_tcp_sport (ctx, xf, xport);
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_UDP) {
+        struct udphdr *udp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (udp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (DP_XADDR_ISZR (xip)) {
+            DP_XADDR_CP (xip, xf->l34m.saddr);
+            dp_set_udp_src_ip6 (ctx, xf, xf->l34m.daddr);
+            dp_set_udp_dst_ip6 (ctx, xf, xip);
+        }
+        else {
+            dp_set_udp_src_ip6 (ctx, xf, xip);
+            if (!DP_XADDR_ISZR(xf->nm.nrip)) {
+                dp_set_udp_dst_ip6 (ctx, xf, xf->nm.nrip);
+            }
+        }
+        dp_set_udp_sport (ctx, xf, xport);
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_SCTP) {
+        struct sctphdr *sctp = DP_ADD_PTR (DP_PDATA (ctx), xf->pm.l4_off);
+        if (sctp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        if (DP_XADDR_ISZR (xip)) {
+            DP_XADDR_CP (xip, xf->l34m.saddr);
+            dp_set_sctp_src_ip6 (ctx, xf, xf->l34m.daddr);
+            dp_set_sctp_dst_ip6 (ctx, xf, xip);
+        }
+        else {
+            dp_set_sctp_src_ip6 (ctx, xf, xip);
+            if (!DP_XADDR_ISZR(xf->nm.nrip)) {
+                dp_set_sctp_dst_ip6 (ctx, xf, xf->nm.nrip);
+            }
+        }
+        dp_set_sctp_sport (ctx, xf, xport);
+
+#ifdef HAVE_DP_SCTP_SUM
+        dp_csum_tcall (ctx, xf);
+
+#endif
+    }
+    else if (xf->l34m.nw_proto == IPPROTO_ICMP) {
+        dp_set_icmp_src_ip6 (ctx, xf, xip);
+        if (!DP_XADDR_ISZR(xf->nm.nrip)) {
+            dp_set_icmp_dst_ip6 (ctx, xf, xf->nm.nrip);
+        }
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_dnat64 (void *md, struct xfi *xf)" startline="1488" endline="1582">
+static int __always_inline dp_do_dnat64 (void *md, struct xfi *xf)
+{
+    struct iphdr *iph;
+    struct ethhdr *eth;
+    struct tcphdr *tcp;
+    struct udphdr *udp;
+    struct vlanhdr *vlh;
+    __be32 sum;
+    void *dend;
+    if (xf->l34m.nw_proto != IPPROTO_TCP && xf->l34m.nw_proto != IPPROTO_UDP) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    if (bpf_skb_change_proto (md, bpf_htons (ETH_P_IP), 0) < 0) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    eth = DP_TC_PTR (DP_PDATA (md));
+    dend = DP_TC_PTR (DP_PDATA_END (md));
+    if (eth + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    xf->l2m.dl_type = bpf_htons (ETH_P_IP);
+    memcpy (eth->h_dest, xf->l2m.dl_dst, 2 * 6);
+    if (xf->l2m.vlan[0] != 0) {
+        vlh = DP_ADD_PTR (eth, sizeof (* eth));
+        if (vlh + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        eth->h_proto = bpf_htons (0x8100);
+        vlh->h_vlan_encapsulated_proto = xf->l2m.dl_type;
+    }
+    else {
+        eth->h_proto = xf->l2m.dl_type;
+    }
+    iph = (void *) (eth + 1);
+    if (iph + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    xf->pm.l3_len = xf->pm.l3_plen + sizeof (*iph);
+    xf->pm.l3_off = DP_DIFF_PTR (iph, eth);
+    xf->pm.l4_off = DP_DIFF_PTR ((iph + 1), eth);
+    iph->version = 4;
+    iph->ihl = 5;
+    iph->tot_len = bpf_htons (xf->pm.l3_len);
+    iph->ttl = 64;
+    iph->protocol = xf->l34m.nw_proto;
+    iph->saddr = xf->nm.nrip4;
+    iph->daddr = xf->nm.nxip4;
+    dp_ipv4_new_csum ((void *) iph);
+    if (xf->l34m.nw_proto == IPPROTO_TCP) {
+        tcp = (void *) (iph + 1);
+        if (tcp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        sum = bpf_csum_diff (xf -> l34m.saddr, sizeof (xf -> l34m.saddr), & iph -> saddr, sizeof (iph -> saddr), 0);
+        sum = bpf_csum_diff (xf -> l34m.daddr, sizeof (xf -> l34m.daddr), & iph -> daddr, sizeof (iph -> daddr), sum);
+        bpf_l4_csum_replace (md, xf->pm.l4_off + offsetof (struct tcphdr, check), 0, sum, BPF_F_PSEUDO_HDR);
+        dp_set_tcp_dport (md, xf, xf->nm.nxport);
+    }
+    else {
+        udp = (void *) (iph + 1);
+        if (udp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        dp_set_udp_dport (md, xf, xf->nm.nxport);
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_snat46 (void *md, struct xfi *xf)" startline="1584" endline="1677">
+static int __always_inline dp_do_snat46 (void *md, struct xfi *xf)
+{
+    struct ipv6hdr *ip6h;
+    struct ethhdr *eth;
+    struct tcphdr *tcp;
+    struct udphdr *udp;
+    struct vlanhdr *vlh;
+    __be32 sum;
+    void *dend;
+    if (xf->l34m.nw_proto != IPPROTO_TCP && xf->l34m.nw_proto != IPPROTO_UDP) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    if (bpf_skb_change_proto (md, bpf_htons (ETH_P_IPV6), 0) < 0) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    eth = DP_TC_PTR (DP_PDATA (md));
+    dend = DP_TC_PTR (DP_PDATA_END (md));
+    if (eth + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    xf->l2m.dl_type = bpf_htons (ETH_P_IPV6);
+    memcpy (eth->h_dest, xf->l2m.dl_dst, 2 * 6);
+    if (xf->l2m.vlan[0] != 0) {
+        vlh = DP_ADD_PTR (eth, sizeof (* eth));
+        if (vlh + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        eth->h_proto = bpf_htons (0x8100);
+        vlh->h_vlan_encapsulated_proto = xf->l2m.dl_type;
+    }
+    else {
+        eth->h_proto = xf->l2m.dl_type;
+    }
+    ip6h = (void *) (eth + 1);
+    if (ip6h + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    xf->pm.l3_len = xf->pm.l3_plen + sizeof (*ip6h);
+    xf->pm.l3_off = DP_DIFF_PTR (ip6h, eth);
+    xf->pm.l4_off = DP_DIFF_PTR ((ip6h + 1), eth);
+    ip6h->version = 6;
+    ip6h->payload_len = bpf_htons (xf->pm.l3_plen);
+    ip6h->hop_limit = 64;
+    ip6h->flow_lbl[0] = 0;
+    ip6h->flow_lbl[1] = 0;
+    ip6h->flow_lbl[2] = 0;
+    ip6h->nexthdr = xf->l34m.nw_proto;
+    memcpy (&ip6h->saddr, xf->nm.nxip, 16);
+    memcpy (&ip6h->daddr, xf->nm.nrip, 16);
+    if (xf->l34m.nw_proto == IPPROTO_TCP) {
+        tcp = (void *) (ip6h + 1);
+        if (tcp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        sum = bpf_csum_diff (& xf -> l34m.saddr [0], 4, (void *) & ip6h -> saddr, sizeof (ip6h -> saddr), 0);
+        sum = bpf_csum_diff (& xf -> l34m.daddr [0], 4, (void *) & ip6h -> daddr, sizeof (ip6h -> daddr), sum);
+        bpf_l4_csum_replace (md, xf->pm.l4_off + offsetof (struct tcphdr, check), 0, sum, BPF_F_PSEUDO_HDR);
+        dp_set_tcp_sport (md, xf, xf->nm.nxport);
+    }
+    else {
+        udp = (void *) (ip6h + 1);
+        if (udp + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        dp_set_udp_sport (md, xf, xf->nm.nxport);
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static __u32 __always_inline dp_get_pkt_hash (void *md)" startline="1679" endline="1684">
+static __u32 __always_inline dp_get_pkt_hash (void *md)
+{
+    bpf_set_hash_invalid (md);
+    return bpf_get_hash_recalc (md);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_pktbuf_read (void *md, __u32 off, void *tobuf, __u32 tolen)" startline="1686" endline="1690">
+static int __always_inline dp_pktbuf_read (void *md, __u32 off, void *tobuf, __u32 tolen)
+{
+    return bpf_skb_load_bytes (md, off, tobuf, tolen);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_pktbuf_write (void *md, __u32 off, void *frmbuf, __u32 frmlen, __u64 flags)" startline="1692" endline="1696">
+static int __always_inline dp_pktbuf_write (void *md, __u32 off, void *frmbuf, __u32 frmlen, __u64 flags)
+{
+    return bpf_skb_store_bytes (md, off, frmbuf, frmlen, flags);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_pkt_is_l2mcbc (struct xfi *xf, void *md)" startline="1713" endline="1730">
+static int __always_inline dp_pkt_is_l2mcbc (struct xfi *xf, void *md)
+{
+    if (xf->l2m.dl_dst[0] & 1) {
+        return 1;
+    }
+    if (xf->l2m.dl_dst[0] == 0xff && xf->l2m.dl_dst[1] == 0xff && xf->l2m.dl_dst[2] == 0xff && xf->l2m.dl_dst[3] == 0xff && xf->l2m.dl_dst[4] == 0xff && xf->l2m.dl_dst[5] == 0xff) {
+        return 1;
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_add_l2 (void *md, int delta)" startline="1732" endline="1736">
+static int __always_inline dp_add_l2 (void *md, int delta)
+{
+    return bpf_xdp_adjust_head (md, -delta);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_remove_l2 (void *md, int delta)" startline="1738" endline="1742">
+static int __always_inline dp_remove_l2 (void *md, int delta)
+{
+    return bpf_xdp_adjust_head (md, delta);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_buf_add_room (void *md, int delta, __u64 flags)" startline="1744" endline="1748">
+static int __always_inline dp_buf_add_room (void *md, int delta, __u64 flags)
+{
+    return bpf_xdp_adjust_head (md, -delta);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_buf_delete_room (void *md, int delta, __u64 flags)" startline="1750" endline="1754">
+static int __always_inline dp_buf_delete_room (void *md, int delta, __u64 flags)
+{
+    return bpf_xdp_adjust_head (md, delta);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_redirect_port (void *tbl, struct xfi *xf)" startline="1756" endline="1760">
+static int __always_inline dp_redirect_port (void *tbl, struct xfi *xf)
+{
+    return bpf_redirect_map (tbl, xf->pm.oport, 0);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_rewire_port (void *tbl, struct xfi *xf)" startline="1762" endline="1767">
+static int __always_inline dp_rewire_port (void *tbl, struct xfi *xf)
+{
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_record_it (void *ctx, struct xfi *xf)" startline="1769" endline="1774">
+static int __always_inline dp_record_it (void *ctx, struct xfi *xf)
+{
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_remove_vlan_tag (void *ctx, struct xfi *xf)" startline="1782" endline="1801">
+static int __always_inline dp_remove_vlan_tag (void *ctx, struct xfi *xf)
+{
+    void *start = DP_TC_PTR (DP_PDATA (ctx));
+    void *dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    struct ethhdr *eth;
+    struct vlanhdr *vlh;
+    if (start + (sizeof (*eth) + sizeof (*vlh)) > dend) {
+        return -1;
+    }
+    eth = DP_ADD_PTR (DP_PDATA (ctx), (int) sizeof (struct vlanhdr));
+    memcpy (eth->h_dest, xf->l2m.dl_dst, 6);
+    memcpy (eth->h_source, xf->l2m.dl_src, 6);
+    eth->h_proto = xf->l2m.dl_type;
+    if (dp_remove_l2 (ctx, (int) sizeof (struct vlanhdr))) {
+        return -1;
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_insert_vlan_tag (void *ctx, struct xfi *xf, __be16 vlan)" startline="1803" endline="1838">
+static int __always_inline dp_insert_vlan_tag (void *ctx, struct xfi *xf, __be16 vlan)
+{
+    struct ethhdr *neth;
+    struct vlanhdr *vlh;
+    void *dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    if (dp_add_l2 (ctx, (int) sizeof (struct vlanhdr))) {
+        return -1;
+    }
+    neth = DP_TC_PTR (DP_PDATA (ctx));
+    dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    if (DP_TC_PTR (neth) + sizeof (*neth) > dend) {
+        return -1;
+    }
+    memcpy (neth->h_dest, xf->l2m.dl_dst, 6);
+    memcpy (neth->h_source, xf->l2m.dl_src, 6);
+    neth->h_proto = bpf_htons (ETH_P_8021Q);
+    vlh = DP_ADD_PTR (DP_PDATA (ctx), sizeof (* neth));
+    if (DP_TC_PTR (vlh) + sizeof (*vlh) > dend) {
+        return -1;
+    }
+    vlh->h_vlan_TCI = vlan;
+    vlh->h_vlan_encapsulated_proto = xf->l2m.dl_type;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_swap_vlan_tag (void *ctx, struct xfi *xf, __be16 vlan)" startline="1840" endline="1861">
+static int __always_inline dp_swap_vlan_tag (void *ctx, struct xfi *xf, __be16 vlan)
+{
+    struct ethhdr *eth;
+    struct vlanhdr *vlh;
+    void *start = DP_TC_PTR (DP_PDATA (ctx));
+    void *dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    if ((start + sizeof (*eth)) > dend) {
+        return -1;
+    }
+    eth = DP_TC_PTR (DP_PDATA (ctx));
+    memcpy (eth->h_dest, xf->l2m.dl_dst, 6);
+    memcpy (eth->h_source, xf->l2m.dl_src, 6);
+    vlh = DP_ADD_PTR (DP_PDATA (ctx), sizeof (* eth));
+    if (DP_TC_PTR (vlh) + sizeof (*vlh) > dend) {
+        return -1;
+    }
+    vlh->h_vlan_TCI = vlan;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_snat (void *ctx, struct xfi *xf, __be32 xip, __be16 xport)" startline="1863" endline="1868">
+static int __always_inline dp_do_snat (void *ctx, struct xfi *xf, __be32 xip, __be16 xport)
+{
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_snat6 (void *ctx, struct xfi *xf, __be32 *xip, __be16 xport)" startline="1870" endline="1875">
+static int __always_inline dp_do_snat6 (void *ctx, struct xfi *xf, __be32 *xip, __be16 xport)
+{
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_dnat (void *ctx, struct xfi *xf, __be32 xip, __be16 xport)" startline="1877" endline="1882">
+static int __always_inline dp_do_dnat (void *ctx, struct xfi *xf, __be32 xip, __be16 xport)
+{
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_dnat6 (void *ctx, struct xfi *xf, __be32 *xip, __be16 xport)" startline="1884" endline="1889">
+static int __always_inline dp_do_dnat6 (void *ctx, struct xfi *xf, __be32 *xip, __be16 xport)
+{
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_dnat64 (void *ctx, struct xfi *xf)" startline="1891" endline="1896">
+static int __always_inline dp_do_dnat64 (void *ctx, struct xfi *xf)
+{
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_snat46 (void *ctx, struct xfi *xf)" startline="1898" endline="1903">
+static int __always_inline dp_do_snat46 (void *ctx, struct xfi *xf)
+{
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static __u32 __always_inline dp_get_pkt_hash (void *md)" startline="1905" endline="1910">
+static __u32 __always_inline dp_get_pkt_hash (void *md)
+{
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_pktbuf_read (void *md, __u32 off, void *buf, __u32 tolen)" startline="1912" endline="1917">
+static int __always_inline dp_pktbuf_read (void *md, __u32 off, void *buf, __u32 tolen)
+{
+    return -1;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_pktbuf_write (void *md, __u32 off, void *frmbuf, __u32 frmlen, __u64 flags)" startline="1919" endline="1924">
+static int __always_inline dp_pktbuf_write (void *md, __u32 off, void *frmbuf, __u32 frmlen, __u64 flags)
+{
+    return -1;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_out_vlan (void *ctx, struct xfi *xf)" startline="1928" endline="1974">
+static int __always_inline dp_do_out_vlan (void *ctx, struct xfi *xf)
+{
+    void *start = DP_TC_PTR (DP_PDATA (ctx));
+    void *dend = DP_TC_PTR (DP_PDATA_END (ctx));
+    struct ethhdr *eth;
+    int vlan;
+    vlan = xf->pm.bd;
+    if (vlan == 0) {
+        if (xf->l2m.vlan[0] != 0) {
+            if (dp_remove_vlan_tag (ctx, xf) != 0) {
+                LLBS_PPLN_DROP (xf);
+                return -1;
+            }
+        }
+        else {
+            if (start + sizeof (*eth) > dend) {
+                LLBS_PPLN_DROP (xf);
+                return -1;
+            }
+            eth = DP_TC_PTR (DP_PDATA (ctx));
+            memcpy (eth->h_dest, xf->l2m.dl_dst, 6);
+            memcpy (eth->h_source, xf->l2m.dl_src, 6);
+        }
+        return 0;
+    }
+    else {
+        eth = DP_TC_PTR (DP_PDATA (ctx));
+        if (xf->l2m.vlan[0] != 0) {
+            if (dp_swap_vlan_tag (ctx, xf, vlan) != 0) {
+                LLBS_PPLN_DROP (xf);
+                return -1;
+            }
+        }
+        else {
+            if (dp_insert_vlan_tag (ctx, xf, vlan) != 0) {
+                LLBS_PPLN_DROP (xf);
+                return -1;
+            }
+        }
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_pop_outer_l2_metadata (void *md, struct xfi *xf)" startline="1976" endline="1986">
+static int __always_inline dp_pop_outer_l2_metadata (void *md, struct xfi *xf)
+{
+    memcpy (&xf->l2m.dl_type, &xf->il2m.dl_type, sizeof (xf->l2m) - sizeof (xf->l2m.vlan));
+    memcpy (xf->pm.lkup_dmac, xf->il2m.dl_dst, 6);
+    xf->il2m.valid = 0;
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_pop_outer_metadata (void *md, struct xfi *xf, int l2tun)" startline="1988" endline="2008">
+static int __always_inline dp_pop_outer_metadata (void *md, struct xfi *xf, int l2tun)
+{
+    memcpy (&xf->l34m, &xf->il34m, sizeof (xf->l34m));
+    xf->pm.tcp_flags = xf->pm.itcp_flags;
+    xf->pm.l4fin = xf->pm.il4fin;
+    xf->pm.l3_off = xf->pm.il3_off;
+    xf->pm.l3_len = xf->pm.il3_len;
+    xf->pm.l3_plen = xf->pm.il3_plen;
+    xf->pm.l4_off = xf->pm.il4_off;
+    xf->il34m.valid = 0;
+    xf->tm.tun_decap = 1;
+    if (l2tun) {
+        return dp_pop_outer_l2_metadata (md, xf);
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_strip_ipip (void *md, struct xfi *xf)" startline="2010" endline="2052">
+static int __always_inline dp_do_strip_ipip (void *md, struct xfi *xf)
+{
+    struct ethhdr *eth;
+    void *dend;
+    int olen = sizeof (struct iphdr);
+    if (dp_buf_delete_room (md, olen, BPF_F_ADJ_ROOM_FIXED_GSO) < 0) {
+        LL_DBG_PRINTK ("Failed gtph remove\n");
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    eth = DP_TC_PTR (DP_PDATA (md));
+    dend = DP_TC_PTR (DP_PDATA_END (md));
+    if (eth + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    memcpy (eth->h_dest, xf->l2m.dl_dst, 2 * 6);
+    eth->h_proto = xf->l2m.dl_type;
+    xf->l2m.vlan[0] = 0;
+    xf->l2m.vlan[1] = 0;
+
+#if 0
+    memcpy (&xf->l34m, &xf->il34m, sizeof (xf->l34m));
+    memcpy (xf->pm.lkup_dmac, eth->h_dest, 6);
+    xf->il34m.valid = 0;
+    xf->il2m.valid = 0;
+    xf->tm.tun_decap = 1;
+
+#endif
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_ins_ipip (void *md, struct xfi *xf, __be32 rip, __be32 sip, __be32 tid, int skip_md)" startline="2054" endline="2128">
+static int __always_inline dp_do_ins_ipip (void *md, struct xfi *xf, __be32 rip, __be32 sip, __be32 tid, int skip_md)
+{
+    void *dend;
+    struct ethhdr *eth;
+    struct iphdr *iph;
+    int olen;
+    __u64 flags;
+    olen = sizeof (*iph);
+    flags = BPF_F_ADJ_ROOM_FIXED_GSO | BPF_F_ADJ_ROOM_ENCAP_L3_IPV4;
+    if (dp_buf_add_room (md, olen, flags)) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    eth = DP_TC_PTR (DP_PDATA (md));
+    dend = DP_TC_PTR (DP_PDATA_END (md));
+    if (eth + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    iph = (void *) (eth + 1);
+    if (iph + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    iph->version = 4;
+    iph->ihl = 5;
+    iph->tot_len = bpf_htons (xf->pm.l3_len + olen);
+    iph->ttl = 64;
+    iph->protocol = IPPROTO_IPIP;
+    iph->saddr = sip;
+    iph->daddr = rip;
+    dp_ipv4_new_csum ((void *) iph);
+    xf->tm.tun_encap = 1;
+    if (skip_md) {
+        return 0;
+    }
+    memcpy (&xf->il34m, &xf->l34m, sizeof (xf->l34m));
+    xf->pm.lkup_dmac[0] = 0xff;
+    xf->l34m.saddr4 = sip;
+    xf->l34m.daddr4 = rip;
+    xf->l34m.source = 0;
+    xf->l34m.dest = 0;
+    xf->pm.l4_off = xf->pm.l3_off + sizeof (*iph);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_strip_vxlan (void *md, struct xfi *xf, int olen)" startline="2130" endline="2175">
+static int __always_inline dp_do_strip_vxlan (void *md, struct xfi *xf, int olen)
+{
+    struct ethhdr *eth;
+    struct vlanhdr *vlh;
+    void *dend;
+    if (dp_buf_delete_room (md, olen, BPF_F_ADJ_ROOM_FIXED_GSO) < 0) {
+        LL_DBG_PRINTK ("Failed MAC remove\n");
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    eth = DP_TC_PTR (DP_PDATA (md));
+    dend = DP_TC_PTR (DP_PDATA_END (md));
+    if (eth + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    memcpy (eth->h_dest, xf->il2m.dl_dst, 2 * 6);
+    if (xf->il2m.vlan[0] != 0) {
+        vlh = DP_ADD_PTR (eth, sizeof (* eth));
+        if (vlh + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        vlh->h_vlan_encapsulated_proto = xf->il2m.dl_type;
+    }
+    else {
+        eth->h_proto = xf->il2m.dl_type;
+    }
+
+#if 0
+    memcpy (&xf->l34m, &xf->il34m, sizeof (xf->l34m));
+    memcpy (&xf->l2m, &xf->il2m, sizeof (xf->l2m));
+    memcpy (xf->pm.lkup_dmac, eth->h_dest, 6);
+    xf->il34m.valid = 0;
+    xf->il2m.valid = 0;
+    xf->tm.tun_decap = 1;
+
+#endif
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_ins_vxlan (void *md, struct xfi *xf, __be32 rip, __be32 sip, __be32 tid, int skip_md)" startline="2177" endline="2330">
+static int __always_inline dp_do_ins_vxlan (void *md, struct xfi *xf, __be32 rip, __be32 sip, __be32 tid, int skip_md)
+{
+    void *dend;
+    struct ethhdr *eth;
+    struct ethhdr *ieth;
+    struct iphdr *iph;
+    struct udphdr *udp;
+    struct vxlanhdr *vx;
+    int olen, l2_len;
+    __u64 flags;
+    if (xf->l2m.vlan[0] != 0) {
+        if (dp_remove_vlan_tag (md, xf) < 0) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+    }
+    olen = sizeof (*iph) + sizeof (*udp) + sizeof (*vx);
+    l2_len = sizeof (*eth);
+    flags = BPF_F_ADJ_ROOM_FIXED_GSO | BPF_F_ADJ_ROOM_ENCAP_L3_IPV4 | BPF_F_ADJ_ROOM_ENCAP_L4_UDP | BPF_F_ADJ_ROOM_ENCAP_L2 (l2_len);
+    olen += l2_len;
+    if (dp_buf_add_room (md, olen, flags)) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    eth = DP_TC_PTR (DP_PDATA (md));
+    dend = DP_TC_PTR (DP_PDATA_END (md));
+    if (eth + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+
+#if 0
+    if (xf->l2m.vlan[0]) {
+        memcpy (eth->h_dest, xf->il2m.dl_dst, 2 * 6);
+        eth->h_proto = xf->il2m.dl_type;
+    }
+
+#endif
+    iph = (void *) (eth + 1);
+    if (iph + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    iph->version = 4;
+    iph->ihl = 5;
+    iph->tot_len = bpf_htons (xf->pm.l3_len + olen);
+    iph->ttl = 64;
+    iph->protocol = IPPROTO_UDP;
+    iph->saddr = sip;
+    iph->daddr = rip;
+    dp_ipv4_new_csum ((void *) iph);
+    udp = (void *) (iph + 1);
+    if (udp + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    udp->source = xf->l34m.source + VXLAN_OUDP_SPORT;
+    udp->dest = bpf_htons (VXLAN_OUDP_DPORT);
+    udp->check = 0;
+    udp->len = bpf_htons (xf->pm.l3_len + olen - sizeof (*iph));
+    vx = (void *) (udp + 1);
+    if (vx + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    vx->vx_vni = tid;
+    vx->vx_flags = VXLAN_VI_FLAG_ON;
+    ieth = (void *) (vx + 1);
+    if (ieth + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    memcpy (ieth->h_dest, xf->il2m.dl_dst, 2 * 6);
+    ieth->h_proto = xf->il2m.dl_type;
+    xf->tm.tun_type = LLB_TUN_VXLAN;
+    xf->tm.tunnel_id = bpf_ntohl (tid);
+    xf->pm.tun_off = sizeof (*eth) + sizeof (*iph) + sizeof (*udp);
+    xf->tm.tun_encap = 1;
+    xf->l2m.vlan[0] = 0;
+    xf->l2m.dl_type = bpf_htons (ETH_P_IP);
+    if (skip_md) {
+        return 0;
+    }
+    memcpy (&xf->il34m, &xf->l34m, sizeof (xf->l34m));
+    memcpy (&xf->il2m, &xf->l2m, sizeof (xf->l2m));
+    xf->il2m.vlan[0] = 0;
+    xf->pm.lkup_dmac[0] = 0xff;
+    xf->l34m.saddr4 = sip;
+    xf->l34m.daddr4 = rip;
+    xf->l34m.source = udp->source;
+    xf->l34m.dest = udp->dest;
+    xf->pm.l3_off = sizeof (*eth);
+    xf->pm.l4_off = sizeof (*eth) + sizeof (*iph);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_strip_gtp (void *md, struct xfi *xf, int olen)" startline="2332" endline="2378">
+static int __always_inline dp_do_strip_gtp (void *md, struct xfi *xf, int olen)
+{
+    struct ethhdr *eth;
+    void *dend;
+    if (olen < sizeof (*eth)) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    if (dp_buf_delete_room (md, olen - sizeof (*eth), BPF_F_ADJ_ROOM_FIXED_GSO) < 0) {
+        LL_DBG_PRINTK ("Failed gtph remove\n");
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    eth = DP_TC_PTR (DP_PDATA (md));
+    dend = DP_TC_PTR (DP_PDATA_END (md));
+    if (eth + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    memcpy (eth->h_dest, xf->l2m.dl_dst, 2 * 6);
+    eth->h_proto = xf->l2m.dl_type;
+    xf->l2m.vlan[0] = 0;
+    xf->l2m.vlan[1] = 0;
+
+#if 0
+    memcpy (&xf->l34m, &xf->il34m, sizeof (xf->l34m));
+    memcpy (xf->pm.lkup_dmac, eth->h_dest, 6);
+    xf->il34m.valid = 0;
+    xf->il2m.valid = 0;
+    xf->tm.tun_decap = 1;
+
+#endif
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_do_ins_gtp (void *md, struct xfi *xf, __be32 rip, __be32 sip, __be32 tid, __u8 qfi, int skip_md)" startline="2380" endline="2528">
+static int __always_inline dp_do_ins_gtp (void *md, struct xfi *xf, __be32 rip, __be32 sip, __be32 tid, __u8 qfi, int skip_md)
+{
+    void *dend;
+    struct gtp_v1_hdr *gh;
+    struct gtp_v1_ehdr *geh;
+    struct gtp_dl_pdu_sess_hdr *gedh;
+    struct ethhdr *eth;
+    struct iphdr *iph;
+    struct udphdr *udp;
+    int olen;
+    __u64 flags;
+    int ghlen;
+    __u8 espn;
+    if (qfi) {
+        ghlen = sizeof (*gh) + sizeof (*geh) + sizeof (*gedh);
+        espn = GTP_EXT_FM;
+    }
+    else {
+        ghlen = sizeof (*gh);
+        espn = 0;
+    }
+    olen = sizeof (*iph) + sizeof (*udp) + ghlen;
+    flags = BPF_F_ADJ_ROOM_FIXED_GSO | BPF_F_ADJ_ROOM_ENCAP_L3_IPV4 | BPF_F_ADJ_ROOM_ENCAP_L4_UDP;
+    if (dp_buf_add_room (md, olen, flags)) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    eth = DP_TC_PTR (DP_PDATA (md));
+    dend = DP_TC_PTR (DP_PDATA_END (md));
+    if (eth + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    iph = (void *) (eth + 1);
+    if (iph + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    iph->version = 4;
+    iph->ihl = 5;
+    iph->tot_len = bpf_htons (xf->pm.l3_len + olen);
+    iph->ttl = 64;
+    iph->protocol = IPPROTO_UDP;
+    iph->saddr = sip;
+    iph->daddr = rip;
+    dp_ipv4_new_csum ((void *) iph);
+    udp = (void *) (iph + 1);
+    if (udp + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    udp->source = bpf_htons (GTPU_UDP_SPORT);
+    udp->dest = bpf_htons (GTPU_UDP_DPORT);
+    udp->check = 0;
+    udp->len = bpf_htons (xf->pm.l3_len + olen - sizeof (*iph));
+    gh = (void *) (udp + 1);
+    if (gh + 1 > dend) {
+        LLBS_PPLN_DROP (xf);
+        return -1;
+    }
+    gh->ver = GTP_VER_1;
+    gh->pt = 1;
+    gh->espn = espn;
+    gh->teid = tid;
+    gh->mt = GTP_MT_TPDU;
+    gh->mlen = bpf_ntohs (xf->pm.l3_len + ghlen);
+    if (qfi) {
+        geh = (void *) (gh + 1);
+        if (geh + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        geh->seq = 0;
+        geh->npdu = 0;
+        geh->next_hdr = GTP_NH_PDU_SESS;
+        gedh = (void *) (geh + 1);
+        if (gedh + 1 > dend) {
+            LLBS_PPLN_DROP (xf);
+            return -1;
+        }
+        gedh->cmn.len = 1;
+        gedh->cmn.pdu_type = GTP_PDU_SESS_DL;
+        gedh->qfi = qfi;
+        gedh->ppp = 0;
+        gedh->rqi = 0;
+        gedh->next_hdr = 0;
+    }
+    xf->tm.tun_type = LLB_TUN_GTP;
+    xf->tm.tunnel_id = bpf_ntohl (tid);
+    xf->pm.tun_off = sizeof (*eth) + sizeof (*iph) + sizeof (*udp);
+    xf->tm.tun_encap = 1;
+    if (skip_md) {
+        return 0;
+    }
+    memcpy (&xf->il34m, &xf->l34m, sizeof (xf->l34m));
+    xf->il2m.vlan[0] = 0;
+    xf->pm.lkup_dmac[0] = 0xff;
+    xf->l34m.saddr4 = sip;
+    xf->l34m.daddr4 = rip;
+    xf->l34m.source = udp->source;
+    xf->l34m.dest = udp->dest;
+    xf->pm.l4_off = xf->pm.l3_off + sizeof (*iph);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline xdp2tc_has_xmd (void *md, struct xfi *xf)" startline="2531" endline="2559">
+static int __always_inline xdp2tc_has_xmd (void *md, struct xfi *xf)
+{
+    void *data = DP_TC_PTR (DP_PDATA (md));
+    void *data_meta = DP_TC_PTR (DP_MDATA (md));
+    struct ll_xmdi *meta = data_meta;
+    if (meta + 1 <= data) {
+        if (meta->pi.skip != 0) {
+            xf->pm.tc = 0;
+            LLBS_PPLN_PASS (xf);
+            return 1;
+        }
+        if (meta->pi.iport) {
+            xf->pm.oport = meta->pi.iport;
+            LLBS_PPLN_REWIRE (xf);
+        }
+        else {
+            xf->pm.oport = meta->pi.oport;
+            LLBS_PPLN_RDR (xf);
+        }
+        xf->pm.tc = 0;
+        meta->pi.skip = 1;
+        return 1;
+    }
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_cdefs.h" funcheader="static int __always_inline dp_tail_call (void *ctx, struct xfi *xf, void *fa, __u32 idx)" startline="2561" endline="2581">
+static int __always_inline dp_tail_call (void *ctx, struct xfi *xf, void *fa, __u32 idx)
+{
+    int z = 0;
+    if (xf->nm.ct_sts != 0) {
+        return DP_PASS;
+    }
+
+#ifdef HAVE_DP_FC
+    bpf_map_update_elem (&fcas, &z, fa, BPF_ANY);
+
+#endif
+    bpf_map_update_elem (&xfis, &z, xf, BPF_ANY);
+    bpf_tail_call (ctx, &pgm_tbl, idx);
+    return DP_PASS;
+}
+</source>
+</doc>

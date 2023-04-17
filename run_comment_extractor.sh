@@ -28,3 +28,6 @@ python3 src/utils/comment_extractor.py -s projects/netobserv-bpf-main/human_anno
 
 #ingress-node-firewall-master
 python3 src/utils/comment_extractor.py -s projects/ingress-node-firewall-master/human_annotated -d  projects/ingress-node-firewall-master/human_annotated/ingress-node-firewall-master.db_comments.db
+
+#ebpf-samples
+python3 src/utils/comment_extractor.py -s projects/ebpf-samples/human_annotated -d  projects/ebpf-samples/human_annotated/ebpf-samples.db_comments.db

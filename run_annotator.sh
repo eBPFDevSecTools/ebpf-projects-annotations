@@ -34,5 +34,8 @@ python3 src/annotator.py -o op/kpng-master/txl_kpng-master -s examples/kpng-mast
 #vpf-ebpf
 python3 src/annotator.py -o op/vpf-ebpf-src/txl_vpf-ebpf-src -s examples/vpf-ebpf-src -c op/vpf-ebpf-src/commented_vpf-ebpf-src -t op/vpf-ebpf-src/vpf-ebpf-src.function_file_list.json -u op/vpf-ebpf-src/vpf-ebpf-src.struct_file_list.json -p vpf-ebpf-src
 
+#ebpf-samples
+python3 src/annotator.py -o projects/ebpf-samples/intermediate/txl_ebpf-samples -s projects/ebpf-samples/original_source -c projects/ebpf-samples/human_annotated -t projects/ebpf-samples/intermediate/ebpf-samples.function_file_list.json -u projects/ebpf-samples/intermediate/ebpf-samples.struct_file_list.json -p ebpf-samples
+
 #tpc-ebpf
 python3 src/annotator.py -o projects/tpc-ebpf/intermediate/txl_tpc-ebpf -s projects/tpc-ebpf/original_source -c projects/tpc-ebpf/human_annotated/ -t projects/tpc-ebpf/intermediate/tpc-ebpf.function_file_list.json -u projects/tpc-ebpf/intermediate/tpc-ebpf.struct_file_list.json -p tpc-ebpf

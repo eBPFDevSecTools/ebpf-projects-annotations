@@ -1,0 +1,49 @@
+{
+  "took" : 5,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 2,
+    "successful" : 2,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 2,
+      "relation" : "eq"
+    },
+    "max_score" : 3.2301855,
+    "hits" : [
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "MSTzlIcB3wQjaaj4M_qn",
+        "_score" : 3.2301855,
+        "_ignored" : [
+          "capabilities.map_update.Description.keyword"
+        ],
+        "_source" : {
+          "funcName" : "get_packet_dst",
+          "updateMaps" : [
+            " lru_map"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "ZiTzlIcB3wQjaaj4M_qn",
+        "_score" : 3.0612798,
+        "_ignored" : [
+          "capabilities.map_update.Description.keyword"
+        ],
+        "_source" : {
+          "funcName" : "tcp_hdr_opt_lookup",
+          "updateMaps" : [
+            " lru_map"
+          ]
+        }
+      }
+    ]
+  }
+}

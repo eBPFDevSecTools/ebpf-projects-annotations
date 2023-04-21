@@ -1,0 +1,129 @@
+{
+  "took" : 3,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 2,
+    "successful" : 2,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 9,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "PyTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.0,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword",
+          "developer_inline_comments.text.keyword",
+          "capabilities.pkt_alter_or_redo_processing_or_interface.Description.keyword"
+        ],
+        "_source" : {
+          "funcName" : "process_packet",
+          "call_depth" : 2
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "QiTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.0,
+        "_source" : {
+          "funcName" : "get_packet_hash",
+          "call_depth" : 2
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "TiTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.0,
+        "_source" : {
+          "funcName" : "gue_csum",
+          "call_depth" : 2
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "VyTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.0,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword"
+        ],
+        "_source" : {
+          "funcName" : "create_v4_hdr",
+          "call_depth" : 2
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "eyTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.0,
+        "_ignored" : [
+          "capabilities.pkt_alter_or_redo_processing_or_interface.Description.keyword"
+        ],
+        "_source" : {
+          "funcName" : "send_icmp4_too_big",
+          "call_depth" : 2
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "fCTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.0,
+        "_ignored" : [
+          "capabilities.pkt_alter_or_redo_processing_or_interface.Description.keyword"
+        ],
+        "_source" : {
+          "funcName" : "send_icmp6_too_big",
+          "call_depth" : 2
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "QCTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.0,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword"
+        ],
+        "_source" : {
+          "funcName" : "process_packet",
+          "call_depth" : 2
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "eSTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.0,
+        "_source" : {
+          "funcName" : "send_icmp_reply",
+          "call_depth" : 2
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "fiTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.0,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword"
+        ],
+        "_source" : {
+          "funcName" : "parse_icmpv6",
+          "call_depth" : 2
+        }
+      }
+    ]
+  }
+}

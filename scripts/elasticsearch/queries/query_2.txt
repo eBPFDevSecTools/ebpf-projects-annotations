@@ -1,0 +1,13 @@
+GET /tmp2/_search?size=1000
+{
+  "_source": ["readMaps", "updateMaps"],
+  "query": {
+    "fuzzy": {
+      "File": "katran"
+    }
+  },
+  "fields": [
+    "readMaps",
+    "updateMaps"
+  ]
+}

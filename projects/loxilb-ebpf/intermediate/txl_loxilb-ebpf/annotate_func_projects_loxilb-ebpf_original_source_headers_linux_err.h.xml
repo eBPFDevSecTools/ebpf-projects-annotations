@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<doc>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/headers/linux/err.h" funcheader="static inline void *ERR_PTR (long error_)" startline="13" endline="16">
+static inline void *ERR_PTR (long error_)
+{
+    return (void *) error_;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/headers/linux/err.h" funcheader="static inline long PTR_ERR (const void *ptr)" startline="18" endline="21">
+static inline long PTR_ERR (const void *ptr)
+{
+    return (long) ptr;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/headers/linux/err.h" funcheader="static inline bool IS_ERR (const void *ptr)" startline="23" endline="26">
+static inline bool IS_ERR (const void *ptr)
+{
+    return IS_ERR_VALUE ((unsigned long) ptr);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/headers/linux/err.h" funcheader="static inline bool IS_ERR_OR_NULL (const void *ptr)" startline="28" endline="31">
+static inline bool IS_ERR_OR_NULL (const void *ptr)
+{
+    return (!ptr) || IS_ERR_VALUE ((unsigned long) ptr);
+}
+</source>
+</doc>

@@ -3,6 +3,25 @@
     {
       "capabilities": [
         {
+          "capability": "pkt_go_to_next_module",
+          "pkt_go_to_next_module": [
+            {
+              "Project": "libbpf",
+              "Return Type": "int",
+              "Input Params": [],
+              "Function Name": "XDP_PASS",
+              "Return": 2,
+              "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
+              "compatible_hookpoints": [
+                "xdp"
+              ],
+              "capabilities": [
+                "pkt_go_to_next_module"
+              ]
+            }
+          ]
+        },
+        {
           "capability": "map_read",
           "map_read": [
             {
@@ -64,62 +83,43 @@
               ]
             }
           ]
-        },
-        {
-          "capability": "pkt_go_to_next_module",
-          "pkt_go_to_next_module": [
-            {
-              "Project": "libbpf",
-              "Return Type": "int",
-              "Input Params": [],
-              "Function Name": "XDP_PASS",
-              "Return": 2,
-              "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
-              "compatible_hookpoints": [
-                "xdp"
-              ],
-              "capabilities": [
-                "pkt_go_to_next_module"
-              ]
-            }
-          ]
         }
       ],
       "helperCallParams": {},
       "startLine": 73,
       "endLine": 99,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
       "funcName": "hash_ipv4",
       "developer_inline_comments": [
         {
           "start_line": 1,
           "end_line": 16,
-          "text": "/* Copyright (C) 2019 Open Information Security Foundation\n *\n * You can copy, redistribute or modify this Program under the terms of\n * the GNU General Public License version 2 as published by the Free\n * Software Foundation.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * version 2 along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA\n * 02110-1301, USA.\n */"
+          "text": " Copyright (C) 2019 Open Information Security Foundation * * You can copy, redistribute or modify this Program under the terms of * the GNU General Public License version 2 as published by the Free * Software Foundation. * * This program is distributed in the hope that it will be useful, * but WITHOUT ANY WARRANTY; without even the implied warranty of * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the * GNU General Public License for more details. * * You should have received a copy of the GNU General Public License * version 2 along with this program; if not, write to the Free Software * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA * 02110-1301, USA. "
         },
         {
           "start_line": 26,
           "end_line": 26,
-          "text": "/* Workaround to avoid the need of 32bit headers */"
+          "text": " Workaround to avoid the need of 32bit headers "
         },
         {
           "start_line": 40,
           "end_line": 40,
-          "text": "/* Hashing initval */"
+          "text": " Hashing initval "
         },
         {
           "start_line": 43,
           "end_line": 43,
-          "text": "/* Increase CPUMAP_MAX_CPUS if ever you have more than 128 CPUs */"
+          "text": " Increase CPUMAP_MAX_CPUS if ever you have more than 128 CPUs "
         },
         {
           "start_line": 51,
           "end_line": 51,
-          "text": "/* Special map type that can XDP_REDIRECT frames to another CPU */"
+          "text": " Special map type that can XDP_REDIRECT frames to another CPU "
         },
         {
           "start_line": 85,
           "end_line": 85,
-          "text": "/* IP-pairs hit same CPU */"
+          "text": " IP-pairs hit same CPU "
         }
       ],
       "updateMaps": [],
@@ -133,11 +133,11 @@
       ],
       "output": "staticint__always_inline",
       "helper": [
-        "bpf_map_lookup_elem",
-        "XDP_ABORTED",
         "bpf_redirect_map",
+        "XDP_PASS",
+        "bpf_map_lookup_elem",
         "bpf_redirect",
-        "XDP_PASS"
+        "XDP_ABORTED"
       ],
       "compatibleHookpoints": [
         "xdp"
@@ -196,6 +196,25 @@
     {
       "capabilities": [
         {
+          "capability": "pkt_go_to_next_module",
+          "pkt_go_to_next_module": [
+            {
+              "Project": "libbpf",
+              "Return Type": "int",
+              "Input Params": [],
+              "Function Name": "XDP_PASS",
+              "Return": 2,
+              "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
+              "compatible_hookpoints": [
+                "xdp"
+              ],
+              "capabilities": [
+                "pkt_go_to_next_module"
+              ]
+            }
+          ]
+        },
+        {
           "capability": "map_read",
           "map_read": [
             {
@@ -257,37 +276,18 @@
               ]
             }
           ]
-        },
-        {
-          "capability": "pkt_go_to_next_module",
-          "pkt_go_to_next_module": [
-            {
-              "Project": "libbpf",
-              "Return Type": "int",
-              "Input Params": [],
-              "Function Name": "XDP_PASS",
-              "Return": 2,
-              "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
-              "compatible_hookpoints": [
-                "xdp"
-              ],
-              "capabilities": [
-                "pkt_go_to_next_module"
-              ]
-            }
-          ]
         }
       ],
       "helperCallParams": {},
       "startLine": 101,
       "endLine": 132,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
       "funcName": "hash_ipv6",
       "developer_inline_comments": [
         {
           "start_line": 113,
           "end_line": 113,
-          "text": "/* IP-pairs hit same CPU */"
+          "text": " IP-pairs hit same CPU "
         }
       ],
       "updateMaps": [],
@@ -301,11 +301,11 @@
       ],
       "output": "staticint__always_inline",
       "helper": [
-        "bpf_map_lookup_elem",
-        "XDP_ABORTED",
         "bpf_redirect_map",
+        "XDP_PASS",
+        "bpf_map_lookup_elem",
         "bpf_redirect",
-        "XDP_PASS"
+        "XDP_ABORTED"
       ],
       "compatibleHookpoints": [
         "xdp"
@@ -368,6 +368,28 @@
     {
       "capabilities": [
         {
+          "capability": "update_pkt",
+          "update_pkt": [
+            {
+              "Project": "libbpf",
+              "Return Type": "int",
+              "Description": "Adjust (move) xdp_md->data by <[ delta ]>(IP: 1) bytes. Note that it is possible to use a negative value for delta. This helper can be used to prepare the packet for pushing or popping headers. A call to this helper is susceptible to change the underlying packet buffer. Therefore , at load time , all checks on pointers previously done by the verifier are invalidated and must be performed again , if the helper is used in combination with direct packet access. ",
+              "Return": " 0 on success, or a negative error in case of failure.",
+              "Function Name": "bpf_xdp_adjust_head",
+              "Input Params": [
+                "{Type: struct xdp_buff ,Var: *xdp_md}",
+                "{Type:  int ,Var: delta}"
+              ],
+              "compatible_hookpoints": [
+                "xdp"
+              ],
+              "capabilities": [
+                "update_pkt"
+              ]
+            }
+          ]
+        },
+        {
           "capability": "pkt_go_to_next_module",
           "pkt_go_to_next_module": [
             {
@@ -390,33 +412,33 @@
       "helperCallParams": {},
       "startLine": 134,
       "endLine": 202,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
       "funcName": "filter_gre",
       "developer_inline_comments": [
         {
           "start_line": 161,
           "end_line": 161,
-          "text": "/* Update offset to skip ERPSAN header if we have one */"
+          "text": " Update offset to skip ERPSAN header if we have one "
         },
         {
           "start_line": 174,
           "end_line": 174,
-          "text": "/* we have now data starting at Ethernet header */"
+          "text": " we have now data starting at Ethernet header "
         },
         {
           "start_line": 177,
           "end_line": 177,
-          "text": "/* we want to hash on IP so we need to get to ip hdr */"
+          "text": " we want to hash on IP so we need to get to ip hdr "
         },
         {
           "start_line": 183,
           "end_line": 184,
-          "text": "/* we need to increase offset and update protocol\n     * in the case we have VLANs */"
+          "text": " we need to increase offset and update protocol     * in the case we have VLANs "
         },
         {
           "start_line": 195,
           "end_line": 195,
-          "text": "/* proto should now be IP style */"
+          "text": " proto should now be IP style "
         }
       ],
       "updateMaps": [],
@@ -429,6 +451,7 @@
       ],
       "output": "staticint__always_inline",
       "helper": [
+        "bpf_xdp_adjust_head",
         "XDP_PASS"
       ],
       "compatibleHookpoints": [
@@ -542,7 +565,7 @@
       "helperCallParams": {},
       "startLine": 204,
       "endLine": 214,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
       "funcName": "filter_ipv4",
       "developer_inline_comments": [],
       "updateMaps": [],
@@ -573,11 +596,11 @@
         "}\n"
       ],
       "called_function_list": [
-        "SuperFastHash",
         "hash_ipv4",
+        "SuperFastHash",
+        "get_dport",
         "get_sport",
-        "filter_gre",
-        "get_dport"
+        "filter_gre"
       ],
       "call_depth": 1,
       "humanFuncDescription": [
@@ -608,9 +631,9 @@
               "Project": "libbpf",
               "Return Type": "int",
               "Input Params": [],
-              "Function Name": "XDP_ABORTED",
-              "Return": 0,
-              "Description": "which serves denoting an exception like state from the program and has the same behavior as XDP_DROP only that XDP_ABORTED passes the trace_xdp_exception tracepoint which can be additionally monitored to detect misbehavior.",
+              "Function Name": "XDP_DROP",
+              "Return": 1,
+              "Description": "will drop the packet right at the driver level without wasting any further resources. This is in particular useful for BPF programs implementing DDoS mitigation mechanisms or firewalling in general.",
               "compatible_hookpoints": [
                 "xdp"
               ],
@@ -622,14 +645,33 @@
               "Project": "libbpf",
               "Return Type": "int",
               "Input Params": [],
-              "Function Name": "XDP_DROP",
-              "Return": 1,
-              "Description": "will drop the packet right at the driver level without wasting any further resources. This is in particular useful for BPF programs implementing DDoS mitigation mechanisms or firewalling in general.",
+              "Function Name": "XDP_ABORTED",
+              "Return": 0,
+              "Description": "which serves denoting an exception like state from the program and has the same behavior as XDP_DROP only that XDP_ABORTED passes the trace_xdp_exception tracepoint which can be additionally monitored to detect misbehavior.",
               "compatible_hookpoints": [
                 "xdp"
               ],
               "capabilities": [
                 "pkt_stop_processing_drop_packet"
+              ]
+            }
+          ]
+        },
+        {
+          "capability": "pkt_go_to_next_module",
+          "pkt_go_to_next_module": [
+            {
+              "Project": "libbpf",
+              "Return Type": "int",
+              "Input Params": [],
+              "Function Name": "XDP_PASS",
+              "Return": 2,
+              "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
+              "compatible_hookpoints": [
+                "xdp"
+              ],
+              "capabilities": [
+                "pkt_go_to_next_module"
               ]
             }
           ]
@@ -677,61 +719,42 @@
               ]
             }
           ]
-        },
-        {
-          "capability": "pkt_go_to_next_module",
-          "pkt_go_to_next_module": [
-            {
-              "Project": "libbpf",
-              "Return Type": "int",
-              "Input Params": [],
-              "Function Name": "XDP_PASS",
-              "Return": 2,
-              "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
-              "compatible_hookpoints": [
-                "xdp"
-              ],
-              "capabilities": [
-                "pkt_go_to_next_module"
-              ]
-            }
-          ]
         }
       ],
       "helperCallParams": {},
       "startLine": 235,
       "endLine": 377,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_filter.c",
       "funcName": "filter_ipv4",
       "developer_inline_comments": [
         {
           "start_line": 324,
           "end_line": 324,
-          "text": "/* drop application data for tls 1.2 */"
+          "text": " drop application data for tls 1.2 "
         },
         {
           "start_line": 325,
           "end_line": 325,
-          "text": "/* FIXME better parsing */"
+          "text": " FIXME better parsing "
         },
         {
           "start_line": 354,
           "end_line": 354,
-          "text": "/* IP-pairs + protocol (UDP/TCP/ICMP) hit same CPU */"
+          "text": " IP-pairs + protocol (UDP/TCP/ICMP) hit same CPU "
         },
         {
           "start_line": 370,
           "end_line": 370,
-          "text": "/* IP-pairs + protocol (UDP/TCP/ICMP) hit same CPU */"
+          "text": " IP-pairs + protocol (UDP/TCP/ICMP) hit same CPU "
         }
       ],
       "updateMaps": [],
       "readMaps": [
-        "  flow_table_v4",
-        "  tx_peer_int",
-        " cpus_count",
         "  tls_bypass_count",
-        "  cpus_available"
+        "  cpus_available",
+        " cpus_count",
+        "  flow_table_v4",
+        "  tx_peer_int"
       ],
       "input": [
         "struct xdp_md *ctx",
@@ -743,13 +766,13 @@
       ],
       "output": "staticint__always_inline",
       "helper": [
-        "XDP_ABORTED",
         "bpf_redirect_map",
-        "bpf_redirect",
-        "bpf_trace_printk",
         "XDP_DROP",
+        "XDP_PASS",
         "bpf_map_lookup_elem",
-        "XDP_PASS"
+        "bpf_trace_printk",
+        "bpf_redirect",
+        "XDP_ABORTED"
       ],
       "compatibleHookpoints": [
         "xdp"
@@ -920,11 +943,11 @@
         "}\n"
       ],
       "called_function_list": [
-        "SuperFastHash",
         "hash_ipv4",
+        "SuperFastHash",
+        "get_dport",
         "get_sport",
-        "filter_gre",
-        "get_dport"
+        "filter_gre"
       ],
       "call_depth": 1,
       "humanFuncDescription": [
@@ -953,7 +976,7 @@
       "helperCallParams": {},
       "startLine": 216,
       "endLine": 220,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
       "funcName": "filter_ipv6",
       "developer_inline_comments": [],
       "updateMaps": [],
@@ -967,29 +990,29 @@
       "output": "staticint__always_inline",
       "helper": [],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static int __always_inline filter_ipv6 (struct xdp_md *ctx, void *data, __u64 nh_off, void *data_end)\n",
@@ -1000,9 +1023,9 @@
       ],
       "called_function_list": [
         "SuperFastHash",
+        "get_dport",
         "hash_ipv6",
-        "get_sport",
-        "get_dport"
+        "get_sport"
       ],
       "call_depth": 1,
       "humanFuncDescription": [
@@ -1033,9 +1056,9 @@
               "Project": "libbpf",
               "Return Type": "int",
               "Input Params": [],
-              "Function Name": "XDP_ABORTED",
-              "Return": 0,
-              "Description": "which serves denoting an exception like state from the program and has the same behavior as XDP_DROP only that XDP_ABORTED passes the trace_xdp_exception tracepoint which can be additionally monitored to detect misbehavior.",
+              "Function Name": "XDP_DROP",
+              "Return": 1,
+              "Description": "will drop the packet right at the driver level without wasting any further resources. This is in particular useful for BPF programs implementing DDoS mitigation mechanisms or firewalling in general.",
               "compatible_hookpoints": [
                 "xdp"
               ],
@@ -1047,14 +1070,33 @@
               "Project": "libbpf",
               "Return Type": "int",
               "Input Params": [],
-              "Function Name": "XDP_DROP",
-              "Return": 1,
-              "Description": "will drop the packet right at the driver level without wasting any further resources. This is in particular useful for BPF programs implementing DDoS mitigation mechanisms or firewalling in general.",
+              "Function Name": "XDP_ABORTED",
+              "Return": 0,
+              "Description": "which serves denoting an exception like state from the program and has the same behavior as XDP_DROP only that XDP_ABORTED passes the trace_xdp_exception tracepoint which can be additionally monitored to detect misbehavior.",
               "compatible_hookpoints": [
                 "xdp"
               ],
               "capabilities": [
                 "pkt_stop_processing_drop_packet"
+              ]
+            }
+          ]
+        },
+        {
+          "capability": "pkt_go_to_next_module",
+          "pkt_go_to_next_module": [
+            {
+              "Project": "libbpf",
+              "Return Type": "int",
+              "Input Params": [],
+              "Function Name": "XDP_PASS",
+              "Return": 2,
+              "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
+              "compatible_hookpoints": [
+                "xdp"
+              ],
+              "capabilities": [
+                "pkt_go_to_next_module"
               ]
             }
           ]
@@ -1102,49 +1144,30 @@
               ]
             }
           ]
-        },
-        {
-          "capability": "pkt_go_to_next_module",
-          "pkt_go_to_next_module": [
-            {
-              "Project": "libbpf",
-              "Return Type": "int",
-              "Input Params": [],
-              "Function Name": "XDP_PASS",
-              "Return": 2,
-              "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
-              "compatible_hookpoints": [
-                "xdp"
-              ],
-              "capabilities": [
-                "pkt_go_to_next_module"
-              ]
-            }
-          ]
         }
       ],
       "helperCallParams": {},
       "startLine": 379,
       "endLine": 483,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_filter.c",
       "funcName": "filter_ipv6",
       "developer_inline_comments": [
         {
           "start_line": 453,
           "end_line": 453,
-          "text": "/* IP-pairs + protocol (UDP/TCP/ICMP) hit same CPU */"
+          "text": " IP-pairs + protocol (UDP/TCP/ICMP) hit same CPU "
         },
         {
           "start_line": 472,
           "end_line": 472,
-          "text": "/* IP-pairs + protocol (UDP/TCP/ICMP) hit same CPU */"
+          "text": " IP-pairs + protocol (UDP/TCP/ICMP) hit same CPU "
         }
       ],
       "updateMaps": [],
       "readMaps": [
-        "  cpus_available",
         " cpus_count",
         "  flow_table_v6",
+        "  cpus_available",
         "  tx_peer_int"
       ],
       "input": [
@@ -1157,13 +1180,13 @@
       ],
       "output": "staticint__always_inline",
       "helper": [
-        "XDP_ABORTED",
         "bpf_redirect_map",
-        "bpf_redirect",
-        "bpf_trace_printk",
         "XDP_DROP",
+        "XDP_PASS",
         "bpf_map_lookup_elem",
-        "XDP_PASS"
+        "bpf_trace_printk",
+        "bpf_redirect",
+        "XDP_ABORTED"
       ],
       "compatibleHookpoints": [
         "xdp"
@@ -1287,9 +1310,9 @@
       ],
       "called_function_list": [
         "SuperFastHash",
+        "get_dport",
         "hash_ipv6",
-        "get_sport",
-        "get_dport"
+        "get_sport"
       ],
       "call_depth": 1,
       "humanFuncDescription": [
@@ -1338,7 +1361,7 @@
       "helperCallParams": {},
       "startLine": 222,
       "endLine": 267,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_lb.c",
       "funcName": "xdp_loadfilter",
       "developer_inline_comments": [],
       "updateMaps": [],
@@ -1398,8 +1421,8 @@
         "}\n"
       ],
       "called_function_list": [
-        "filter_ipv6",
-        "filter_ipv4"
+        "filter_ipv4",
+        "filter_ipv6"
       ],
       "call_depth": 2,
       "humanFuncDescription": [
@@ -1428,23 +1451,23 @@
       "helperCallParams": {},
       "startLine": 41,
       "endLine": 57,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/lb.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/lb.c",
       "funcName": "ipv4_hash",
       "developer_inline_comments": [
         {
           "start_line": 1,
           "end_line": 16,
-          "text": "/* Copyright (C) 2018 Open Information Security Foundation\n *\n * You can copy, redistribute or modify this Program under the terms of\n * the GNU General Public License version 2 as published by the Free\n * Software Foundation.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * version 2 along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA\n * 02110-1301, USA.\n */"
+          "text": " Copyright (C) 2018 Open Information Security Foundation * * You can copy, redistribute or modify this Program under the terms of * the GNU General Public License version 2 as published by the Free * Software Foundation. * * This program is distributed in the hope that it will be useful, * but WITHOUT ANY WARRANTY; without even the implied warranty of * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the * GNU General Public License for more details. * * You should have received a copy of the GNU General Public License * version 2 along with this program; if not, write to the Free Software * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA * 02110-1301, USA. "
         },
         {
           "start_line": 53,
           "end_line": 53,
-          "text": "//char fmt2[] = \"Got hash %u\\n\";"
+          "text": "char fmt2[] = \"Got hash %u\\n\";"
         },
         {
           "start_line": 54,
           "end_line": 54,
-          "text": "//bpf_trace_printk(fmt2, sizeof(fmt2), src + dst);"
+          "text": "bpf_trace_printk(fmt2, sizeof(fmt2), src + dst);"
         }
       ],
       "updateMaps": [],
@@ -1457,29 +1480,29 @@
         "bpf_trace_printk"
       ],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static __always_inline int ipv4_hash (struct  __sk_buff *skb)\n",
@@ -1526,7 +1549,7 @@
       "helperCallParams": {},
       "startLine": 59,
       "endLine": 67,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/lb.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/lb.c",
       "funcName": "ipv6_addr_hash",
       "developer_inline_comments": [],
       "updateMaps": [],
@@ -1538,29 +1561,29 @@
       "output": "staticinline__u32",
       "helper": [],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static inline __u32 ipv6_addr_hash (struct  __sk_buff *ctx, __u64 off)\n",
@@ -1600,7 +1623,7 @@
       "helperCallParams": {},
       "startLine": 69,
       "endLine": 81,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/lb.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/lb.c",
       "funcName": "ipv6_hash",
       "developer_inline_comments": [],
       "updateMaps": [],
@@ -1611,29 +1634,29 @@
       "output": "static__always_inlineint",
       "helper": [],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static __always_inline int ipv6_hash (struct  __sk_buff *skb)\n",
@@ -1676,7 +1699,7 @@
       "helperCallParams": {},
       "startLine": 83,
       "endLine": 145,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/lb.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/lb.c",
       "funcName": "lb",
       "developer_inline_comments": [],
       "updateMaps": [],
@@ -1689,29 +1712,29 @@
         "bpf_trace_printk"
       ],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "int  __section (\"loadbalancer\") lb (struct  __sk_buff *skb)\n",
@@ -1790,8 +1813,8 @@
         "}\n"
       ],
       "called_function_list": [
-        "ipv4_hash",
-        "ipv6_hash"
+        "ipv6_hash",
+        "ipv4_hash"
       ],
       "call_depth": 2,
       "humanFuncDescription": [
@@ -1865,48 +1888,48 @@
       "helperCallParams": {},
       "startLine": 88,
       "endLine": 148,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/bypass_filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/bypass_filter.c",
       "funcName": "ipv4_filter",
       "developer_inline_comments": [
         {
           "start_line": 1,
           "end_line": 16,
-          "text": "/* Copyright (C) 2018 Open Information Security Foundation\n *\n * You can copy, redistribute or modify this Program under the terms of\n * the GNU General Public License version 2 as published by the Free\n * Software Foundation.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * version 2 along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA\n * 02110-1301, USA.\n */"
+          "text": " Copyright (C) 2018 Open Information Security Foundation * * You can copy, redistribute or modify this Program under the terms of * the GNU General Public License version 2 as published by the Free * Software Foundation. * * This program is distributed in the hope that it will be useful, * but WITHOUT ANY WARRANTY; without even the implied warranty of * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the * GNU General Public License for more details. * * You should have received a copy of the GNU General Public License * version 2 along with this program; if not, write to the Free Software * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA * 02110-1301, USA. "
         },
         {
           "start_line": 30,
           "end_line": 30,
-          "text": "/* vlan tracking: set it to 0 if you don't use VLAN for flow tracking */"
+          "text": " vlan tracking: set it to 0 if you don't use VLAN for flow tracking "
         },
         {
           "start_line": 83,
           "end_line": 87,
-          "text": "/**\n * IPv4 filter\n *\n * \\return 0 to drop packet out and -1 to accept it\n */"
+          "text": "* * IPv4 filter * * \\return 0 to drop packet out and -1 to accept it "
         },
         {
           "start_line": 99,
           "end_line": 99,
-          "text": "/* only support TCP and UDP for now */"
+          "text": " only support TCP and UDP for now "
         },
         {
           "start_line": 114,
           "end_line": 114,
-          "text": "/*offsetof(struct iphdr, ihl)*/"
+          "text": "offsetof(struct iphdr, ihl)"
         },
         {
           "start_line": 127,
           "end_line": 127,
-          "text": "//__u16 dp = tuple.port16[1];"
+          "text": "__u16 dp = tuple.port16[1];"
         },
         {
           "start_line": 132,
           "end_line": 132,
-          "text": "/* Test if src is in hash */"
+          "text": " Test if src is in hash "
         },
         {
           "start_line": 138,
           "end_line": 138,
-          "text": "//__u16 dp = tuple.port16[1];"
+          "text": "__u16 dp = tuple.port16[1];"
         }
       ],
       "updateMaps": [],
@@ -1924,29 +1947,29 @@
         "bpf_trace_printk"
       ],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "tracepoint",
-        "sk_skb",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static __always_inline int ipv4_filter (struct  __sk_buff *skb, __u16 vlan0, __u16 vlan1)\n",
@@ -2076,13 +2099,13 @@
       "helperCallParams": {},
       "startLine": 46,
       "endLine": 81,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/filter.c",
       "funcName": "ipv4_filter",
       "developer_inline_comments": [
         {
           "start_line": 1,
           "end_line": 16,
-          "text": "/* Copyright (C) 2018 Open Information Security Foundation\n *\n * You can copy, redistribute or modify this Program under the terms of\n * the GNU General Public License version 2 as published by the Free\n * Software Foundation.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * version 2 along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA\n * 02110-1301, USA.\n */"
+          "text": " Copyright (C) 2018 Open Information Security Foundation * * You can copy, redistribute or modify this Program under the terms of * the GNU General Public License version 2 as published by the Free * Software Foundation. * * This program is distributed in the hope that it will be useful, * but WITHOUT ANY WARRANTY; without even the implied warranty of * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the * GNU General Public License for more details. * * You should have received a copy of the GNU General Public License * version 2 along with this program; if not, write to the Free Software * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA * 02110-1301, USA. "
         }
       ],
       "updateMaps": [],
@@ -2098,29 +2121,29 @@
         "bpf_trace_printk"
       ],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "tracepoint",
-        "sk_skb",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static __always_inline int ipv4_filter (struct  __sk_buff *skb)\n",
@@ -2235,58 +2258,58 @@
       "helperCallParams": {},
       "startLine": 155,
       "endLine": 210,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/bypass_filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/bypass_filter.c",
       "funcName": "ipv6_filter",
       "developer_inline_comments": [
         {
           "start_line": 150,
           "end_line": 154,
-          "text": "/**\n * IPv6 filter\n *\n * \\return 0 to drop packet out and -1 to accept it\n */"
+          "text": "* * IPv6 filter * * \\return 0 to drop packet out and -1 to accept it "
         },
         {
           "start_line": 165,
           "end_line": 165,
-          "text": "/* get next header */"
+          "text": " get next header "
         },
         {
           "start_line": 168,
           "end_line": 168,
-          "text": "/* only support direct TCP and UDP for now */"
+          "text": " only support direct TCP and UDP for now "
         },
         {
           "start_line": 189,
           "end_line": 189,
-          "text": "/* Parse TCP */"
+          "text": " Parse TCP "
         },
         {
           "start_line": 190,
           "end_line": 190,
-          "text": "/* IPV6_HEADER_LEN */"
+          "text": " IPV6_HEADER_LEN "
         },
         {
           "start_line": 198,
           "end_line": 198,
-          "text": "//char fmt[] = \"Now Got IPv6 port %u and %u\\n\";"
+          "text": "char fmt[] = \"Now Got IPv6 port %u and %u\\n\";"
         },
         {
           "start_line": 199,
           "end_line": 199,
-          "text": "//bpf_trace_printk(fmt, sizeof(fmt), tuple.port16[0], tuple.port16[1]);"
+          "text": "bpf_trace_printk(fmt, sizeof(fmt), tuple.port16[0], tuple.port16[1]);"
         },
         {
           "start_line": 200,
           "end_line": 200,
-          "text": "/* Test if src is in hash */"
+          "text": " Test if src is in hash "
         },
         {
           "start_line": 203,
           "end_line": 203,
-          "text": "//char fmt[] = \"Got a match IPv6: %u and %u\\n\";"
+          "text": "char fmt[] = \"Got a match IPv6: %u and %u\\n\";"
         },
         {
           "start_line": 204,
           "end_line": 204,
-          "text": "//bpf_trace_printk(fmt, sizeof(fmt), tuple.port16[0], tuple.port16[1]);"
+          "text": "bpf_trace_printk(fmt, sizeof(fmt), tuple.port16[0], tuple.port16[1]);"
         }
       ],
       "updateMaps": [],
@@ -2303,29 +2326,29 @@
         "bpf_map_lookup_elem"
       ],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static __always_inline int ipv6_filter (struct  __sk_buff *skb, __u16 vlan0, __u16 vlan1)\n",
@@ -2396,7 +2419,7 @@
       "helperCallParams": {},
       "startLine": 83,
       "endLine": 86,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/filter.c",
       "funcName": "ipv6_filter",
       "developer_inline_comments": [],
       "updateMaps": [],
@@ -2407,29 +2430,29 @@
       "output": "static__always_inlineint",
       "helper": [],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static __always_inline int ipv6_filter (struct  __sk_buff *skb)\n",
@@ -2465,18 +2488,18 @@
       "helperCallParams": {},
       "startLine": 220,
       "endLine": 256,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/bypass_filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/bypass_filter.c",
       "funcName": "hashfilter",
       "developer_inline_comments": [
         {
           "start_line": 212,
           "end_line": 219,
-          "text": "/**\n * filter function\n *\n * It is loaded in kernel by Suricata that uses the section name specified\n * by the SEC call to find it in the Elf binary object and load it.\n *\n * \\return 0 to drop packet out and -1 to accept it\n */"
+          "text": "* * filter function * * It is loaded in kernel by Suricata that uses the section name specified * by the SEC call to find it in the Elf binary object and load it. * * \\return 0 to drop packet out and -1 to accept it "
         },
         {
           "start_line": 231,
           "end_line": 231,
-          "text": "/* one vlan layer is stripped by OS so get vlan 1 at first pass */"
+          "text": " one vlan layer is stripped by OS so get vlan 1 at first pass "
         }
       ],
       "updateMaps": [],
@@ -2489,29 +2512,29 @@
         "bpf_trace_printk"
       ],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "int SEC (\"filter\") hashfilter (struct  __sk_buff *skb)\n",
@@ -2581,18 +2604,18 @@
       "helperCallParams": {},
       "startLine": 25,
       "endLine": 36,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/vlan_filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/vlan_filter.c",
       "funcName": "hashfilter",
       "developer_inline_comments": [
         {
           "start_line": 1,
           "end_line": 16,
-          "text": "/* Copyright (C) 2018 Open Information Security Foundation\n *\n * You can copy, redistribute or modify this Program under the terms of\n * the GNU General Public License version 2 as published by the Free\n * Software Foundation.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * version 2 along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA\n * 02110-1301, USA.\n */"
+          "text": " Copyright (C) 2018 Open Information Security Foundation * * You can copy, redistribute or modify this Program under the terms of * the GNU General Public License version 2 as published by the Free * Software Foundation. * * This program is distributed in the hope that it will be useful, * but WITHOUT ANY WARRANTY; without even the implied warranty of * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the * GNU General Public License for more details. * * You should have received a copy of the GNU General Public License * version 2 along with this program; if not, write to the Free Software * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA * 02110-1301, USA. "
         },
         {
           "start_line": 27,
           "end_line": 27,
-          "text": "/* accept VLAN 2 and 4 and drop the rest */"
+          "text": " accept VLAN 2 and 4 and drop the rest "
         }
       ],
       "updateMaps": [],
@@ -2603,29 +2626,29 @@
       "output": "\\filter\\)",
       "helper": [],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "int SEC (\"filter\") hashfilter (struct  __sk_buff *skb)\n",
@@ -2670,7 +2693,7 @@
       "helperCallParams": {},
       "startLine": 88,
       "endLine": 110,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/filter.c",
       "funcName": "hashfilter",
       "developer_inline_comments": [],
       "updateMaps": [],
@@ -2681,29 +2704,29 @@
       "output": "\\filter\\)",
       "helper": [],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "int SEC (\"filter\") hashfilter (struct  __sk_buff *skb)\n",
@@ -2757,73 +2780,73 @@
       "helperCallParams": {},
       "startLine": 191,
       "endLine": 211,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_filter.c",
       "funcName": "get_sport",
       "developer_inline_comments": [
         {
           "start_line": 1,
           "end_line": 16,
-          "text": "/* Copyright (C) 2018 Open Information Security Foundation\n *\n * You can copy, redistribute or modify this Program under the terms of\n * the GNU General Public License version 2 as published by the Free\n * Software Foundation.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * version 2 along with this program; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA\n * 02110-1301, USA.\n */"
+          "text": " Copyright (C) 2018 Open Information Security Foundation * * You can copy, redistribute or modify this Program under the terms of * the GNU General Public License version 2 as published by the Free * Software Foundation. * * This program is distributed in the hope that it will be useful, * but WITHOUT ANY WARRANTY; without even the implied warranty of * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the * GNU General Public License for more details. * * You should have received a copy of the GNU General Public License * version 2 along with this program; if not, write to the Free Software * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA * 02110-1301, USA. "
         },
         {
           "start_line": 36,
           "end_line": 36,
-          "text": "/* Hashing initval */"
+          "text": " Hashing initval "
         },
         {
           "start_line": 39,
           "end_line": 40,
-          "text": "/* Set BUILD_CPUMAP to 0 if you want to run XDP bypass on kernel\n * older than 4.15 */"
+          "text": " Set BUILD_CPUMAP to 0 if you want to run XDP bypass on kernel * older than 4.15 "
         },
         {
           "start_line": 42,
           "end_line": 42,
-          "text": "/* Increase CPUMAP_MAX_CPUS if ever you have more than 64 CPUs */"
+          "text": " Increase CPUMAP_MAX_CPUS if ever you have more than 64 CPUs "
         },
         {
           "start_line": 45,
           "end_line": 46,
-          "text": "/* Set to 1 to bypass encrypted packets of TLS sessions. Suricata will\n * be blind to these packets or forged packets looking alike. */"
+          "text": " Set to 1 to bypass encrypted packets of TLS sessions. Suricata will * be blind to these packets or forged packets looking alike. "
         },
         {
           "start_line": 49,
           "end_line": 50,
-          "text": "/* Set it to 0 if for example you plan to use the XDP filter in a\n * network card that don't support per CPU value (like netronome) */"
+          "text": " Set it to 0 if for example you plan to use the XDP filter in a * network card that don't support per CPU value (like netronome) "
         },
         {
           "start_line": 52,
           "end_line": 52,
-          "text": "/* Set it to 0 if your XDP subsystem don't handle XDP_REDIRECT (like netronome) */"
+          "text": " Set it to 0 if your XDP subsystem don't handle XDP_REDIRECT (like netronome) "
         },
         {
           "start_line": 55,
           "end_line": 56,
-          "text": "/* set to non 0 to load balance in hardware mode on RSS_QUEUE_NUMBERS queues\n * and unset BUILD_CPUMAP (number must be a power of 2 for netronome) */"
+          "text": " set to non 0 to load balance in hardware mode on RSS_QUEUE_NUMBERS queues * and unset BUILD_CPUMAP (number must be a power of 2 for netronome) "
         },
         {
           "start_line": 59,
           "end_line": 60,
-          "text": "/* no vlan tracking: set it to 0 if you don't use VLAN for tracking. Can\n * also be used as workaround of some hardware offload issue */"
+          "text": " no vlan tracking: set it to 0 if you don't use VLAN for tracking. Can * also be used as workaround of some hardware offload issue "
         },
         {
           "start_line": 134,
           "end_line": 134,
-          "text": "/* Special map type that can XDP_REDIRECT frames to another CPU */"
+          "text": " Special map type that can XDP_REDIRECT frames to another CPU "
         },
         {
           "start_line": 158,
           "end_line": 160,
-          "text": "/* Map has only one element as we don't handle any sort of\n * routing for now. Key value set by user space is 0 and\n * value is the peer interface. */"
+          "text": " Map has only one element as we don't handle any sort of * routing for now. Key value set by user space is 0 and * value is the peer interface. "
         },
         {
           "start_line": 168,
           "end_line": 170,
-          "text": "/* single entry to indicate if we have peer, key value\n * set in user space is 0. It is only used to see if\n * a interface has a peer we need to send the information to */"
+          "text": " single entry to indicate if we have peer, key value * set in user space is 0. It is only used to see if * a interface has a peer we need to send the information to "
         },
         {
           "start_line": 181,
           "end_line": 181,
-          "text": "/* single entry to indicate if global bypass switch is on */"
+          "text": " single entry to indicate if global bypass switch is on "
         }
       ],
       "updateMaps": [],
@@ -2836,29 +2859,29 @@
       "output": "static__always_inlineint",
       "helper": [],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static __always_inline int get_sport (void *trans_data, void *data_end, __u8 protocol)\n",
@@ -2909,7 +2932,7 @@
       "helperCallParams": {},
       "startLine": 213,
       "endLine": 233,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_filter.c",
       "funcName": "get_dport",
       "developer_inline_comments": [],
       "updateMaps": [],
@@ -2922,29 +2945,29 @@
       "output": "static__always_inlineint",
       "helper": [],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static __always_inline int get_dport (void *trans_data, void *data_end, __u8 protocol)\n",
@@ -3012,6 +3035,25 @@
           ]
         },
         {
+          "capability": "pkt_go_to_next_module",
+          "pkt_go_to_next_module": [
+            {
+              "Project": "libbpf",
+              "Return Type": "int",
+              "Input Params": [],
+              "Function Name": "XDP_PASS",
+              "Return": 2,
+              "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
+              "compatible_hookpoints": [
+                "xdp"
+              ],
+              "capabilities": [
+                "pkt_go_to_next_module"
+              ]
+            }
+          ]
+        },
+        {
           "capability": "map_read",
           "map_read": [
             {
@@ -3054,31 +3096,12 @@
               ]
             }
           ]
-        },
-        {
-          "capability": "pkt_go_to_next_module",
-          "pkt_go_to_next_module": [
-            {
-              "Project": "libbpf",
-              "Return Type": "int",
-              "Input Params": [],
-              "Function Name": "XDP_PASS",
-              "Return": 2,
-              "Description": "The XDP_PASS return code means that the packet is allowed to be passed up to the kernel\u2019s networking stack. Meaning, the current CPU that was processing this packet now allocates a skb, populates it, and passes it onwards into the GRO engine. This would be equivalent to the default packet handling behavior without XDP.",
-              "compatible_hookpoints": [
-                "xdp"
-              ],
-              "capabilities": [
-                "pkt_go_to_next_module"
-              ]
-            }
-          ]
         }
       ],
       "helperCallParams": {},
       "startLine": 485,
       "endLine": 552,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_filter.c",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/xdp_filter.c",
       "funcName": "xdp_hashfilter",
       "developer_inline_comments": [],
       "updateMaps": [],
@@ -3092,10 +3115,10 @@
       "output": "\\xdp\\)",
       "helper": [
         "bpf_redirect_map",
-        "bpf_redirect",
         "XDP_DROP",
+        "XDP_PASS",
         "bpf_map_lookup_elem",
-        "XDP_PASS"
+        "bpf_redirect"
       ],
       "compatibleHookpoints": [
         "xdp"
@@ -3172,8 +3195,8 @@
         "}\n"
       ],
       "called_function_list": [
-        "filter_ipv6",
-        "filter_ipv4"
+        "filter_ipv4",
+        "filter_ipv6"
       ],
       "call_depth": 2,
       "humanFuncDescription": [
@@ -3202,28 +3225,28 @@
       "helperCallParams": {},
       "startLine": 9,
       "endLine": 55,
-      "File": "/home/palani/github/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/hash_func01.h",
+      "File": "/home/sayandes/ebpf-projects-annotations/projects/suricata-master/original_source/ebpf/hash_func01.h",
       "funcName": "SuperFastHash",
       "developer_inline_comments": [
         {
           "start_line": 1,
           "end_line": 5,
-          "text": "/* SPDX-License-Identifier: LGPL-2.1\n *\n * Based on Paul Hsieh's (LGPG 2.1) hash function\n * From: http://www.azillionmonkeys.com/qed/hash.html\n */"
+          "text": " SPDX-License-Identifier: LGPL-2.1 * * Based on Paul Hsieh's (LGPG 2.1) hash function * From: http:www.azillionmonkeys.com/qed/hash.html "
         },
         {
           "start_line": 20,
           "end_line": 20,
-          "text": "/* Main loop */"
+          "text": " Main loop "
         },
         {
           "start_line": 30,
           "end_line": 30,
-          "text": "/* Handle end cases */"
+          "text": " Handle end cases "
         },
         {
           "start_line": 46,
           "end_line": 46,
-          "text": "/* Force \"avalanching\" of final 127 bits */"
+          "text": " Force \"avalanching\" of final 127 bits "
         }
       ],
       "updateMaps": [],
@@ -3236,29 +3259,29 @@
       "output": "static__always_inline__u32",
       "helper": [],
       "compatibleHookpoints": [
+        "raw_tracepoint_writable",
+        "socket_filter",
+        "perf_event",
+        "lwt_in",
+        "sk_reuseport",
+        "kprobe",
+        "lwt_xmit",
+        "sched_act",
+        "sock_ops",
+        "lwt_seg6local",
+        "cgroup_skb",
+        "sched_cls",
+        "lwt_out",
         "xdp",
+        "cgroup_sock",
+        "flow_dissector",
+        "sk_msg",
+        "cgroup_device",
+        "sk_skb",
         "raw_tracepoint",
         "cgroup_sysctl",
         "cgroup_sock_addr",
-        "cgroup_sock",
-        "socket_filter",
-        "lwt_xmit",
-        "sk_skb",
-        "tracepoint",
-        "sched_act",
-        "cgroup_skb",
-        "sched_cls",
-        "sk_msg",
-        "raw_tracepoint_writable",
-        "perf_event",
-        "sk_reuseport",
-        "lwt_out",
-        "cgroup_device",
-        "flow_dissector",
-        "sock_ops",
-        "kprobe",
-        "lwt_seg6local",
-        "lwt_in"
+        "tracepoint"
       ],
       "source": [
         "static __always_inline __u32 SuperFastHash (const char *data, int len, __u32 initval)\n",

@@ -248,7 +248,7 @@ def get_called_fn_list(fn_name, db_file_name, manpage_info_dict):
         if "Search string:" not in en:
             fn_det_list = en.split("\t")
             func = fn_det_list[0].replace("*","")
-            if func not in manpage_info_dict and func != "DECLARE":
+            if func not in manpage_info_dict and func != "DECLARE" and func != '':
                 called_fn_dict.add(func)
     return list(called_fn_dict)
 

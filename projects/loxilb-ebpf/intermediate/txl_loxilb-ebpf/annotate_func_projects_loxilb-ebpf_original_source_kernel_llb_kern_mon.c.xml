@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<doc>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_mon.c" funcheader="static void __always_inline log_map_update (struct pt_regs *ctx, struct bpf_map *updated_map, char *pKey, char *pValue, enum map_updater update_type)" startline="19" endline="72">
+static void __always_inline log_map_update (struct pt_regs *ctx, struct bpf_map *updated_map, char *pKey, char *pValue, enum map_updater update_type)
+{
+    uint32_t map_id = MEM_READ (updated_map -> id);
+    uint32_t key_size = MEM_READ (updated_map -> key_size);
+    uint32_t value_size = MEM_READ (updated_map -> value_size);
+    char filter [] = {'c', 't', '_', 'm', 'a', 'p', '\0'};
+    int i;
+    struct map_update_data out_data;
+    __builtin_memset (&out_data, 0, sizeof (out_data));
+    bpf_probe_read_str (out_data.name, BPF_NAME_LEN, updated_map->name);
+
+#pragma unroll
+    for (i = 0; i < sizeof (filter); i++) {
+        if (out_data.name[i] != filter[i]) {
+            return;
+        }
+    }
+    out_data.key_size = key_size;
+    out_data.value_size = value_size;
+    out_data.map_id = map_id;
+    out_data.pid = (unsigned int) bpf_get_current_pid_tgid ();
+    out_data.updater = update_type;
+    if (key_size <= MAX_KEY_SIZE) {
+        bpf_probe_read (out_data.key, key_size, pKey);
+    }
+    else {
+        bpf_probe_read (out_data.key, MAX_KEY_SIZE, pKey);
+    }
+    if (pValue) {
+        if (value_size <= MAX_VALUE_SIZE) {
+            bpf_probe_read (out_data.value, value_size, pValue);
+        }
+        else {
+            bpf_probe_read (out_data.value, MAX_VALUE_SIZE, pValue);
+        }
+    }
+    else {
+        out_data.value_size = 0;
+    }
+    bpf_perf_event_output (ctx, &map_events, BPF_F_CURRENT_CPU, &out_data, sizeof (out_data));
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_mon.c" funcheader="int bpf_prog_kern_hmapupdate (struct pt_regs *ctx)" startline="75" endline="84">
+int bpf_prog_kern_hmapupdate (struct pt_regs *ctx)
+{
+    struct bpf_map *updated_map = (struct bpf_map *) PT_REGS_PARM1 (ctx);
+    char *pKey = (char *) PT_REGS_PARM2 (ctx);
+    char *pValue = (char *) PT_REGS_PARM3 (ctx);
+    log_map_update (ctx, updated_map, pKey, pValue, UPDATER_KERNEL);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_mon.c" funcheader="int bpf_prog_kern_hmapdelete (struct pt_regs *ctx)" startline="87" endline="96">
+int bpf_prog_kern_hmapdelete (struct pt_regs *ctx)
+{
+    struct bpf_map *updated_map = (struct bpf_map *) PT_REGS_PARM1 (ctx);
+    char *pKey = (char *) PT_REGS_PARM2 (ctx);
+    char *pValue = NULL;
+    log_map_update (ctx, updated_map, pKey, pValue, DELETE_KERNEL);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_mon.c" funcheader="int bpf_prog_kern_hmaplkdelete (struct pt_regs *ctx)" startline="99" endline="108">
+int bpf_prog_kern_hmaplkdelete (struct pt_regs *ctx)
+{
+    struct bpf_map *updated_map = (struct bpf_map *) PT_REGS_PARM1 (ctx);
+    char *pKey = (char *) PT_REGS_PARM2 (ctx);
+    char *pValue = (char *) PT_REGS_PARM3 (ctx);
+    log_map_update (ctx, updated_map, pKey, pValue, DELETE_KERNEL);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_mon.c" funcheader="int bpf_prog_user_mapupdate (struct pt_regs *ctx)" startline="113" endline="123">
+int bpf_prog_user_mapupdate (struct pt_regs *ctx)
+{
+    struct bpf_map *updated_map = (struct bpf_map *) PT_REGS_PARM1 (ctx);
+    char *pKey = (char *) PT_REGS_PARM3 (ctx);
+    char *pValue = (char *) PT_REGS_PARM4 (ctx);
+    log_map_update (ctx, updated_map, pKey, pValue, UPDATER_USERMODE);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_mon.c" funcheader="int bpf_prog_kern_mapupdate (struct pt_regs *ctx)" startline="126" endline="135">
+int bpf_prog_kern_mapupdate (struct pt_regs *ctx)
+{
+    struct bpf_map *updated_map = (struct bpf_map *) PT_REGS_PARM1 (ctx);
+    char *pKey = (char *) PT_REGS_PARM2 (ctx);
+    char *pValue = (char *) PT_REGS_PARM3 (ctx);
+    log_map_update (ctx, updated_map, pKey, pValue, UPDATER_KERNEL);
+    return 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/kernel/llb_kern_mon.c" funcheader="int bpf_prog_syscall (struct syscall_bpf_args *args)" startline="151" endline="190">
+int bpf_prog_syscall (struct syscall_bpf_args *args)
+{
+    if (args->cmd == BPF_MAP_GET_FD_BY_ID) {
+        unsigned int map_id = 0;
+        bpf_probe_read (&map_id, sizeof (map_id), &args->uattr->map_id);
+        struct map_update_data out_data;
+        __builtin_memset (&out_data, 0, sizeof (out_data));
+        out_data.map_id = map_id;
+        out_data.pid = (unsigned int) bpf_get_current_pid_tgid ();
+        out_data.updater = UPDATER_SYSCALL_GET;
+        out_data.key_size = 0;
+        out_data.value_size = 0;
+        bpf_perf_event_output (args, &map_events, BPF_F_CURRENT_CPU, &out_data, sizeof (out_data));
+    }
+    else if (args->cmd == BPF_MAP_UPDATE_ELEM) {
+        int map_fd = 0;
+        bpf_probe_read (&map_fd, sizeof (map_fd), &args->uattr->map_fd);
+        struct map_update_data out_data;
+        __builtin_memset (&out_data, 0, sizeof (out_data));
+        out_data.map_id = map_fd;
+        out_data.pid = (unsigned int) bpf_get_current_pid_tgid ();
+        out_data.updater = UPDATER_SYSCALL_UPDATE;
+        out_data.key_size = 0;
+        out_data.value_size = 0;
+        bpf_perf_event_output (args, &map_events, BPF_F_CURRENT_CPU, &out_data, sizeof (out_data));
+    }
+    return 0;
+}
+</source>
+</doc>

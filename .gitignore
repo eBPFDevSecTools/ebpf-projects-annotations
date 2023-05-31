@@ -7,6 +7,7 @@ cscope.files
 tags
 *.out
 *~
+*.*~
 *#*
 wip
 src/a.py

@@ -18,7 +18,7 @@ RUN apt-get update && apt-get upgrade && apt-get dist-upgrade && apt-get install
 	python3-pip \
 	exuberant-ctags \
 	vim 
-i
+
 #install python dependencies
 RUN python3 -m pip install command
 RUN python3 -m pip install pytest-shutil
@@ -40,7 +40,8 @@ RUN ./InstallTxl
 WORKDIR /root
 ADD asset asset
 ADD src src
-ADD run1.sh run1.sh
-ADD op op
-ADD examples examples
+ADD run_annotator.sh run_annotator.sh
+ADD run_comment_extractor.sh run_comment_extractor.sh
+ADD projects projects
+#ADD examples examples
 #RUN ./run.sh

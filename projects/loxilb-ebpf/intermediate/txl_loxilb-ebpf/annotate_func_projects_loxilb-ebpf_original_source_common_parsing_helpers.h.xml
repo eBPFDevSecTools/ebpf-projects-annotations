@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/common/parsing_helpers.h" funcheader="static __always_inline int ip_is_fragment (const struct iphdr *iph)" startline="143" endline="146">
+static __always_inline int ip_is_fragment (const struct iphdr *iph)
+{
+    return (iph->frag_off & bpf_htons (IP_MF | IP_OFFSET)) != 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/common/parsing_helpers.h" funcheader="static __always_inline int ip_is_first_fragment (const struct iphdr *iph)" startline="148" endline="151">
+static __always_inline int ip_is_first_fragment (const struct iphdr *iph)
+{
+    return (iph->frag_off & bpf_htons (IP_OFFSET)) == 0;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/common/parsing_helpers.h" funcheader="static __always_inline int proto_is_vlan (__be16 h_proto)" startline="153" endline="157">
+static __always_inline int proto_is_vlan (__be16 h_proto)
+{
+    return !!(h_proto == bpf_htons (ETH_P_8021Q) || h_proto == bpf_htons (ETH_P_8021AD));
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/common/parsing_helpers.h" funcheader="static __always_inline int ip_decrease_ttl (struct iphdr *iph)" startline="160" endline="166">
+static __always_inline int ip_decrease_ttl (struct iphdr *iph)
+{
+    __be32 check = iph->check;
+    check += bpf_htons (0x0100);
+    iph->check = (__be16) (check + (check >= 0xFFFF));
+    return --iph->ttl;
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/common/parsing_helpers.h" funcheader="static inline int ipv6_addr_is_multicast (const struct in6_addr *addr)" startline="168" endline="171">
+static inline int ipv6_addr_is_multicast (const struct in6_addr *addr)
+{
+    return (addr->s6_addr32[0] & bpf_htonl (0xFF000000)) == bpf_htonl (0xFF000000);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/common/parsing_helpers.h" funcheader="static __always_inline __be16 csum_fold_helper (__be32 csum)" startline="173" endline="177">
+static __always_inline __be16 csum_fold_helper (__be32 csum)
+{
+    return ~((csum & 0xffff) + (csum >> 16));
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/common/parsing_helpers.h" funcheader="static __always_inline void ipv4_csum (void *data_start, int data_size, __be32 *csum)" startline="179" endline="186">
+static __always_inline void ipv4_csum (void *data_start, int data_size, __be32 *csum)
+{
+    *csum = bpf_csum_diff (0, 0, data_start, data_size, *csum);
+    *csum = csum_fold_helper (*csum);
+}
+</source>
+<source file="/home/sayandes/ebpf-projects-annotations/projects/loxilb-ebpf/original_source/common/parsing_helpers.h" funcheader="static __always_inline void ipv4_l4_csum (void *data_start, __be32 data_size, __u64 *csum, struct iphdr *iph)" startline="188" endline="201">
+static __always_inline void ipv4_l4_csum (void *data_start, __be32 data_size, __u64 *csum, struct iphdr *iph)
+{
+    __be32 tmp = 0;
+    *csum = bpf_csum_diff (0, 0, &iph->saddr, sizeof (__be32), *csum);
+    *csum = bpf_csum_diff (0, 0, &iph->daddr, sizeof (__be32), *csum);
+    tmp = __builtin_bswap32 ((__be32) (iph -> protocol));
+    *csum = bpf_csum_diff (0, 0, &tmp, sizeof (__be32), *csum);
+    tmp = __builtin_bswap32 ((__be32) (data_size));
+    *csum = bpf_csum_diff (0, 0, &tmp, sizeof (__be32), *csum);
+    *csum = bpf_csum_diff (0, 0, data_start, data_size, *csum);
+    *csum = csum_fold_helper (*csum);
+}
+</source>
+</doc>

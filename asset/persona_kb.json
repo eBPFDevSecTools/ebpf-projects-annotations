@@ -1,0 +1,279 @@
+{
+  "map_read": {
+    "Name": "map_read",
+    "Persona": [
+      {
+        "Name": "",
+        "Feature_of_interest": ""
+      }
+    ],
+    "Helpers": [
+      "bpf_map_lookup_elem",
+      "bpf_map_pop_elem",
+      "bpf_map_peek_elem",
+      "map_lookup_elem",
+      "map_pop_elem",
+      "map_peek_elem"
+    ]
+  },
+  "map_update": {
+    "Name": "map_update",
+    "Persona": [
+      {
+        "Name": "",
+        "Feature_of_interest": ""
+      }
+    ],
+    "Helpers": [
+      "bpf_map_update_elem",
+      "bpf_map_delete_elem",
+      "bpf_sock_map_update",
+      "bpf_map_push_elem",
+      "bpf_map_pop_elem",
+      "map_update_elem",
+      "map_delete_elem",
+      "sock_map_update",
+      "map_push_elem",
+      "map_pop_elem"
+    ]
+  },
+  "read_sys_info": {
+    "Name": "read_sys_info",
+    "Persona": [
+      {
+        "Name": "",
+        "Feature_of_interest": ""
+      }
+    ],
+    "Helpers": [
+      "bpf_probe_read",
+      "bpf_ktime_get_ns",
+      "bpf_get_prandom_u32",
+      "bpf_get_smp_processor_id",
+      "bpf_get_current_pid_tgid",
+      "bpf_get_current_uid_gid",
+      "bpf_get_current_comm",
+      "bpf_get_cgroup_classid",
+      "bpf_skb_get_tunnel_key",
+      "bpf_perf_event_read",
+      "bpf_get_route_realm",
+      "bpf_get_stackid",
+      "bpf_skb_get_tunnel_opt",
+      "bpf_skb_under_cgroup",
+      "bpf_get_hash_recalc",
+      "bpf_get_current_task",
+      "bpf_current_task_under_cgroup",
+      "bpf_get_numa_node_id",
+      "bpf_probe_read_str",
+      "bpf_get_socket_cookie",
+      "bpf_get_socket_uid",
+      "bpf_perf_event_read_value",
+      "bpf_perf_prog_read_value",
+      "bpf_getsockopt",
+      "bpf_skb_get_xfrm_state",
+      "bpf_get_stack",
+      "bpf_fib_lookup",
+      "bpf_skb_cgroup_id",
+      "bpf_get_current_cgroup_id",
+      "bpf_get_local_storage",
+      "bpf_skb_ancestor_cgroup_id",
+      "bpf_sk_lookup_tcp",
+      "bpf_sk_lookup_udp",
+      "bpf_get_listener_sock",
+      "bpf_skc_lookup_tcp",
+      "bpf_sysctl_get_name",
+      "bpf_sysctl_get_current_value",
+      "bpf_sysctl_get_new_value",
+      "bpf_sk_storage_get",
+      "probe_read",
+      "ktime_get_ns",
+      "get_prandom_u32",
+      "get_smp_processor_id",
+      "get_current_pid_tgid",
+      "get_current_uid_gid",
+      "get_current_comm",
+      "get_cgroup_classid",
+      "skb_get_tunnel_key",
+      "perf_event_read",
+      "get_route_realm",
+      "get_stackid",
+      "skb_get_tunnel_opt",
+      "skb_under_cgroup",
+      "get_hash_recalc",
+      "get_current_task",
+      "current_task_under_cgroup",
+      "get_numa_node_id",
+      "probe_read_str",
+      "get_socket_cookie",
+      "get_socket_uid",
+      "perf_event_read_value",
+      "perf_prog_read_value",
+      "getsockopt",
+      "skb_get_xfrm_state",
+      "get_stack",
+      "fib_lookup",
+      "skb_cgroup_id",
+      "get_current_cgroup_id",
+      "get_local_storage",
+      "skb_ancestor_cgroup_id",
+      "sk_lookup_tcp",
+      "sk_lookup_udp",
+      "get_listener_sock",
+      "skc_lookup_tcp",
+      "sysctl_get_name",
+      "sysctl_get_current_value",
+      "sysctl_get_new_value",
+      "sk_storage_get"
+    ]
+  },
+  "update_pkt": {
+    "Name": "update_pkt",
+    "Persona": [
+      {
+        "Name": "",
+        "Feature_of_interest": ""
+      }
+    ],
+    "Helpers": [
+      "bpf_skb_store_bytes",
+      "bpf_l3_csum_replace",
+      "bpf_l4_csum_replace",
+      "bpf_skb_vlan_push",
+      "bpf_skb_vlan_pop",
+      "bpf_skb_set_tunnel_key",
+      "bpf_skb_set_tunnel_opt",
+      "bpf_skb_change_proto",
+      "bpf_skb_change_type",
+      "bpf_skb_change_tail",
+      "bpf_skb_pull_data",
+      "bpf_csum_update",
+      "bpf_set_hash_invalid",
+      "bpf_skb_change_head",
+      "bpf_xdp_adjust_head",
+      "bpf_set_hash",
+      "bpf_setsockopt",
+      "bpf_skb_adjust_room",
+      "bpf_xdp_adjust_meta",
+      "bpf_sock_ops_cb_flags_set",
+      "bpf_msg_pull_data",
+      "bpf_xdp_adjust_tail",
+      "bpf_lwt_push_encap",
+      "bpf_lwt_seg6_store_bytes",
+      "bpf_lwt_seg6_adjust_srh",
+      "bpf_lwt_seg6_action",
+      "bpf_msg_push_data",
+      "bpf_msg_pop_data",
+      "bpf_skb_ecn_set_ce",
+      "skb_store_bytes",
+      "l3_csum_replace",
+      "l4_csum_replace",
+      "skb_vlan_push",
+      "skb_vlan_pop",
+      "skb_set_tunnel_key",
+      "skb_set_tunnel_opt",
+      "skb_change_proto",
+      "skb_change_type",
+      "skb_change_tail",
+      "skb_pull_data",
+      "csum_update",
+      "set_hash_invalid",
+      "skb_change_head",
+      "xdp_adjust_head",
+      "set_hash",
+      "setsockopt",
+      "skb_adjust_room",
+      "xdp_adjust_meta",
+      "sock_ops_cb_flags_set",
+      "msg_pull_data",
+      "xdp_adjust_tail",
+      "lwt_push_encap",
+      "lwt_seg6_store_bytes",
+      "lwt_seg6_adjust_srh",
+      "lwt_seg6_action",
+      "msg_push_data",
+      "msg_pop_data",
+      "skb_ecn_set_ce"
+    ]
+  },
+  "read_skb": {
+    "Name": "read_skb",
+    "Persona": [
+      {
+        "Name": "",
+        "Feature_of_interest": ""
+      }
+    ],
+    "Helpers": [
+      "bpf_skb_get_tunnel_key",
+      "bpf_skb_load_bytes",
+      "bpf_csum_diff",
+      "bpf_skb_get_tunnel_opt",
+      "bpf_skb_under_cgroup",
+      "bpf_skb_get_xfrm_state",
+      "bpf_skb_load_bytes_relative",
+      "bpf_skb_cgroup_id",
+      "bpf_skb_ancestor_cgroup_id",
+      "bpf_tcp_check_syncookie",
+      "skb_get_tunnel_key",
+      "skb_load_bytes",
+      "csum_diff",
+      "skb_get_tunnel_opt",
+      "skb_under_cgroup",
+      "skb_get_xfrm_state",
+      "skb_load_bytes_relative",
+      "skb_cgroup_id",
+      "skb_ancestor_cgroup_id",
+      "tcp_check_syncookie"
+    ]
+  },
+  "pkt_go_to_next_module": {
+    "Name": "pkt_go_to_next_module",
+    "Persona": [
+      {
+        "Name": "",
+        "Feature_of_interest": ""
+      }
+    ],
+    "Helpers": [
+      "TC_ACT_UNSPEC",
+      "TC_ACT_OK",
+      "TC_ACT_RECLASSIFY",
+      "TC_ACT_PIPE",
+      "XDP_PASS",
+      "CTX_ACT_OK"
+    ]
+  },
+  "pkt_stop_processing_drop_packet": {
+    "Name": "pkt_stop_processing_drop_packet",
+    "Persona": [
+      {
+        "Name": "",
+        "Feature_of_interest": ""
+      }
+    ],
+    "Helpers": [
+      "TC_ACT_SHOT",
+      "TC_ACT_STOLEN",
+      "TC_ACT_TRAP",
+      "XDP_ABORTED",
+      "XDP_DROP"
+    ]
+  },
+  "pkt_alter_or_redo_processing_or_interface": {
+    "Name": "pkt_alter_or_redo_processing_or_interface",
+    "Persona": [
+      {
+        "Name": "",
+        "Feature_of_interest": ""
+      }
+    ],
+    "Helpers": [
+      "TC_ACT_REPEAT",
+      "TC_ACT_REDIRECT",
+      "XDP_TX",
+      "XDP_REDIRECT",
+      "CTX_ACT_REDIRECT",
+      "CTX_ACT_TX"
+    ]
+  }
+}

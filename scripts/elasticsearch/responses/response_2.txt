@@ -1,0 +1,1146 @@
+{
+  "took" : 12,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 2,
+    "successful" : 2,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 80,
+      "relation" : "eq"
+    },
+    "max_score" : 2.6241803,
+    "hits" : [
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "MCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.read_sys_info.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            " stats"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            " stats"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "MSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.map_update.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [
+            " lru_map"
+          ],
+          "readMaps" : [
+            " reals",
+            "  lpm_src_v4",
+            "  lpm_src_v6",
+            " stats",
+            "  ch_rings"
+          ]
+        },
+        "fields" : {
+          "updateMaps" : [
+            " lru_map"
+          ],
+          "readMaps" : [
+            " reals",
+            "  lpm_src_v4",
+            "  lpm_src_v6",
+            " stats",
+            "  ch_rings"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "MiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.read_sys_info.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            " reals",
+            " lru_map"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            " reals",
+            " lru_map"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "NCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword",
+          "humanFuncDescription.description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "NiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "NyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            " stats",
+            " global_lru_maps"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            " stats",
+            " global_lru_maps"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "PSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            " stats"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            " stats"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "PyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword",
+          "developer_inline_comments.text.keyword",
+          "capabilities.pkt_alter_or_redo_processing_or_interface.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            "  ctl_array",
+            "  stats",
+            "  reals_stats",
+            " lru_mapping",
+            " server_id_map",
+            " stats",
+            "  vip_map",
+            "  reals"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            "  ctl_array",
+            "  stats",
+            "  reals_stats",
+            " lru_mapping",
+            " server_id_map",
+            " stats",
+            "  vip_map",
+            "  reals"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "QSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "QiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "SCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword",
+          "capabilities.pkt_stop_processing_drop_packet.Description.keyword",
+          "developer_inline_comments.text.keyword",
+          "capabilities.update_pkt.Description.keyword",
+          "humanFuncDescription.description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            "  hc_stats_map",
+            " hc_ctrl_map",
+            " hc_reals_map"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            "  hc_stats_map",
+            " hc_ctrl_map",
+            " hc_reals_map"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "SSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword",
+          "developer_inline_comments.text.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            " ctl_array",
+            " cntrs_array"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            " ctl_array",
+            " cntrs_array"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "SyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "TSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "TiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "TyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            "  pckt_srcs"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            "  pckt_srcs"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "UCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            "  pckt_srcs"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            "  pckt_srcs"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "UiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "VyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "WyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "XSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "YCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "YSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "ZCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "ZSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "ZyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "aSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "bCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.read_skb.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "cCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.read_skb.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "dCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword",
+          "capabilities.read_skb.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "dyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword",
+          "capabilities.pkt_alter_or_redo_processing_or_interface.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "eiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "eyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.pkt_alter_or_redo_processing_or_interface.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "fCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_ignored" : [
+          "capabilities.pkt_alter_or_redo_processing_or_interface.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "fSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.6241803,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "MyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "NSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            " decap_dst",
+            "  stats"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            " decap_dst",
+            "  stats"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "OCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "OSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "OiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "OyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "humanFuncDescription.description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "PCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            " stats"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            " stats"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "PiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            " stats"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            " stats"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "QCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            "  decap_counters"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            "  decap_counters"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "QyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "RCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "RSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword",
+          "developer_inline_comments.text.keyword",
+          "humanFuncDescription.description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "RiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword",
+          "humanFuncDescription.description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "RyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword",
+          "capabilities.pkt_stop_processing_drop_packet.Description.keyword",
+          "developer_inline_comments.text.keyword",
+          "humanFuncDescription.description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            " hc_reals_map",
+            " hc_ctrl_map",
+            " per_hckey_stats",
+            "  hc_pckt_macs",
+            " hc_key_map",
+            "  hc_stats_map"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            " hc_reals_map",
+            " hc_ctrl_map",
+            " per_hckey_stats",
+            "  hc_pckt_macs",
+            " hc_key_map",
+            "  hc_stats_map"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "SiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "TCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "USTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "UyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "VCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            "  hc_pckt_srcs_map"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            "  hc_pckt_srcs_map"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "VSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "ViTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            "  hc_pckt_srcs_map"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            "  hc_pckt_srcs_map"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "WCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "WSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "WiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "XCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "XiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "XyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [
+            "  ctl_array"
+          ]
+        },
+        "fields" : {
+          "readMaps" : [
+            "  ctl_array"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "YiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "YyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "ZiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.map_update.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [
+            " lru_map"
+          ],
+          "readMaps" : [
+            " reals",
+            " lru_map",
+            " server_id_map"
+          ]
+        },
+        "fields" : {
+          "updateMaps" : [
+            " lru_map"
+          ],
+          "readMaps" : [
+            " reals",
+            " lru_map",
+            " server_id_map"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "aCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "aiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "developer_inline_comments.text.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "ayTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "bSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "biTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.read_skb.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "byTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.read_skb.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "cSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.read_skb.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "ciTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.read_skb.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "cyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.read_skb.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "dSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.read_skb.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "diTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.read_skb.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "eCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "eSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "fiTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "fyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3564737,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword"
+        ],
+        "_source" : {
+          "updateMaps" : [ ],
+          "readMaps" : [ ]
+        }
+      }
+    ]
+  }
+}

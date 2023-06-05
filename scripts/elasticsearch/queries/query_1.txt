@@ -1,0 +1,13 @@
+GET /tmp2/_search?size=1000
+{
+  "query": {
+    "match": {
+      "helper": "bpf_sock_map_update"
+    }
+  },
+  "fields": [
+    "File",
+    "funcName"
+  ]
+  , "_source": false
+}

@@ -1,0 +1,18 @@
+GET tmp2/_search
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "match_phrase": {
+          "File": "/katran"
+        }
+      },
+      "must": {
+        "match_phrase": {
+          "call_depth": 2
+        }
+      }
+    }
+  },
+  "_source": ["funcName", "call_depth"]
+}

@@ -1,0 +1,18 @@
+GET tmp2/_search
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "match_phrase": {
+          "File": "/katran"
+        }
+      },
+      "must": {
+        "match_phrase": {
+          "updateMaps": "lru_map"
+        }
+      }
+    }
+  },
+  "_source": ["funcName", "updateMaps"]
+}

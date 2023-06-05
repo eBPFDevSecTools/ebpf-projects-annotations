@@ -1,0 +1,139 @@
+{
+  "took" : 3,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 2,
+    "successful" : 2,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 8,
+      "relation" : "eq"
+    },
+    "max_score" : 3.1406963,
+    "hits" : [
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "PCTzlIcB3wQjaaj4M_qn",
+        "_score" : 3.1406963,
+        "_source" : {
+          "funcName" : "increment_quic_cid_version_stats",
+          "readMaps" : [
+            " stats"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "PiTzlIcB3wQjaaj4M_qn",
+        "_score" : 3.1406963,
+        "_source" : {
+          "funcName" : "increment_quic_cid_drop_real_0",
+          "readMaps" : [
+            " stats"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "MCTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.7348495,
+        "_ignored" : [
+          "capabilities.read_sys_info.Description.keyword"
+        ],
+        "_source" : {
+          "funcName" : "is_under_flood",
+          "readMaps" : [
+            " stats"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "PSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.7348495,
+        "_source" : {
+          "funcName" : "increment_quic_cid_drop_no_real",
+          "readMaps" : [
+            " stats"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "NSTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.3527865,
+        "_source" : {
+          "funcName" : "check_decap_dst",
+          "readMaps" : [
+            " decap_dst",
+            "  stats"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "NyTzlIcB3wQjaaj4M_qn",
+        "_score" : 2.106713,
+        "_source" : {
+          "funcName" : "perform_global_lru_lookup",
+          "readMaps" : [
+            " stats",
+            " global_lru_maps"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "PyTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.5080528,
+        "_ignored" : [
+          "capabilities.pkt_go_to_next_module.Description.keyword",
+          "developer_inline_comments.text.keyword",
+          "capabilities.pkt_alter_or_redo_processing_or_interface.Description.keyword"
+        ],
+        "_source" : {
+          "funcName" : "process_packet",
+          "readMaps" : [
+            "  ctl_array",
+            "  stats",
+            "  reals_stats",
+            " lru_mapping",
+            " server_id_map",
+            " stats",
+            "  vip_map",
+            "  reals"
+          ]
+        }
+      },
+      {
+        "_index" : "tmp2",
+        "_type" : "_doc",
+        "_id" : "MSTzlIcB3wQjaaj4M_qn",
+        "_score" : 1.2472873,
+        "_ignored" : [
+          "capabilities.map_update.Description.keyword"
+        ],
+        "_source" : {
+          "funcName" : "get_packet_dst",
+          "readMaps" : [
+            " reals",
+            "  lpm_src_v4",
+            "  lpm_src_v6",
+            " stats",
+            "  ch_rings"
+          ]
+        }
+      }
+    ]
+  }
+}

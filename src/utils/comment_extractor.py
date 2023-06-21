@@ -251,7 +251,7 @@ if __name__ == "__main__":
 
     files = []
     files.append(src_dir)
-    files.append(comments_db_file)
+    #files.append(comments_db_file)
     if authors_file != None:
         files.append(authors_file)
 

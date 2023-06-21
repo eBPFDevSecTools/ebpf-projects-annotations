@@ -31,3 +31,6 @@ python3 src/utils/comment_extractor.py -s projects/ingress-node-firewall-master/
 
 #ebpf-samples
 python3 src/utils/comment_extractor.py -s projects/ebpf-samples/human_annotated -d  projects/ebpf-samples/human_annotated/ebpf-samples.db_comments.db
+
+#xdp-tutorials
+python3 src/utils/comment_extractor.py -s projects/xdp-tutorials/human_annotated -d  projects/xdp-tutorials/human_annotated/xdp-tutorials.db_comments.db

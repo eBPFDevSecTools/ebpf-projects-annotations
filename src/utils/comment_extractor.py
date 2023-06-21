@@ -25,6 +25,10 @@ def update_human_func_description(comments_db,comment_dict):
     #res = comments_db.search(q.funcName.search(funcName))
     print("Query Result1: " + str(len(res)))
     print(res)
+    # if first instance of adding comment to db, just insert
+    if len(res) == 0:
+        insert_to_db(comments_db,comment_dict)
+        return
 
     for e in res:
         print(e['funcName'])

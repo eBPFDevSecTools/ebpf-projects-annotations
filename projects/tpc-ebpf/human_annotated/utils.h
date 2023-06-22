@@ -331,10 +331,10 @@ struct flow_tuple {
   "call_depth": -1,
   "humanFuncDescription": [
     {
-      "description": "",
-      "author": "",
-      "authorEmail": "",
-      "date": ""
+      "description": "The get_flow_id_from_sock function captures the flow_tuple fields such as- local IPv6 address, remote IPv6 address, local and remote ports from the bpf_sock_ops structure. The remote port address is converted to host byte order before storing. This information is later helpful in controlling the flow of the packets based on the internal policies set in the network.",
+      "author": "Madhuri Annavazzala",
+      "authorEmail": "madhuriannavazzala@gmail.com",
+      "date": "2023-04-09"
     }
   ],
   "AI_func_description": [

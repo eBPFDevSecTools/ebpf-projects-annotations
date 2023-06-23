@@ -1,1 +1,0 @@
-Source: [PREVAIL github repo](https://github.com/vbpf/ebpf-samples/tree/master/suricata)
